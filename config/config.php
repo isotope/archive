@@ -31,7 +31,6 @@
  */
 $GLOBALS['FE_MOD']['isotope']['iso_registry_manager']	= 'ModuleGiftRegistryManager';
 $GLOBALS['FE_MOD']['isotope']['iso_registry_search']	= 'ModuleGiftRegistrySearch';
-$GLOBALS['FE_MOD']['isotope']['iso_registry_results']	= 'ModuleGiftRegistryResults';
 $GLOBALS['FE_MOD']['isotope']['iso_registry_reader']	= 'ModuleGiftRegistryReader';
 
 
