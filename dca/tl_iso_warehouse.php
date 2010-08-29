@@ -116,6 +116,13 @@ $GLOBALS['TL_DCA']['tl_iso_warehouse'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['show'],
 				'href'                => 'act=show',
 				'icon'                => 'show.gif',
+			),
+			'quantities' => array
+			( 
+			  'label'               => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['edit'],
+			  'href'                => 'key=quantities',
+			  'icon'                => 'tablewizard.gif',
+			  'button_callback'     => array( 'tl_iso_warehouse', 'getQuantityButton' )
 			)
 		)
 	),
@@ -262,6 +269,12 @@ $GLOBALS['TL_DCA']['tl_iso_warehouse'] = array
  */
 class tl_iso_warehouse extends Backend
 {
+	
+	public function getQuantityButton(  $row, $href, $label, $title, $icon, $attribute )
+    {
+		$href .= '&id=' . $row[ 'id' ];
+		return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ';
+    }
 	
 	public function checkPermission($dc)
 	{				

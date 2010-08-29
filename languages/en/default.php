@@ -33,3 +33,4 @@ $GLOBALS['TL_LANG']['MSC']['inventory_history']				= 'History';
 $GLOBALS['TL_LANG']['MSC']['id']							= 'Product ID';
 
 $GLOBALS['TL_LANG']['MSC']['noWarehouses']					= 'No warehouses are found, please create one first to control your inventory.';
+$GLOBALS['TL_LANG']['MSC']['noProducts']					= 'No products were found';

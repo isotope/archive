@@ -30,8 +30,9 @@ array_insert($GLOBALS['BE_MOD']['isotope'], 3, array
 (
 	'inventory_warehouses' 	=> array
 	(
-		'tables'				=> array('tl_iso_warehouse'),//,'tl_iso_inventory'),
-		'icon'				=> 'system/modules/isotope_inventory/html/warehouses.png'
+		'tables'			=> array('tl_iso_warehouse'),//,'tl_iso_inventory'),
+		'icon'				=> 'system/modules/isotope_inventory/html/warehouses.png',
+		'quantities'  		=> array( 'ModuleIsotopeInventoryManager', 'compile' )
 	),
 	/*'inventory_manager' 	=> array
 	(
@@ -42,5 +43,7 @@ array_insert($GLOBALS['BE_MOD']['isotope'], 3, array
 	)*/
 ));
 
+$GLOBALS['TL_HOOKS']['iso_getAttributes'][] = array('IsotopeWarehouse','getAttributes');
+$GLOBALS['TL_HOOKS']['iso_getVariantAttributes'][] = array('IsotopeWarehouse','getVariantAttributes');
 
 //$GLOBALS['TL_HOOKS']['iso_writeOrder'][] = array('IsotopeInventory','updateInventory');
