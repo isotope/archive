@@ -37,14 +37,14 @@
 
 class IsotopeWarehouse extends Model
 {
-  protected $strTable = 'tl_iso_warehouse';
+  	protected $strTable = 'tl_iso_warehouse';
 
-  protected $arrProducts;
+  	protected $arrProducts;
 
-  public function __construct()
-  {
-    parent::__construct();
-  }
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
 
 	/**
@@ -118,100 +118,55 @@ class IsotopeWarehouse extends Model
 	/** 
 	 * Set quantity as an attribute for a product
 	 */
-	public function addAttributes($objProduct)
+	public function addAttributes($arrAttributes, $objProduct)
 	{
-		return 'quantity';
+		$arrAttributes[] = 'quantity';
+		
+		return $arrAttributes;
 	}
 	
 	/**
 	 * Set quantity as a variant attribute for a product
 	 */
-	public function addVariantAttributes($objProduct)
+	public function addVariantAttributes($arrAttributes, $objProduct)
 	{
-		return 'quantity';
+		$arrAttributes[] = 'quantity';
+		
+		return $arrAttributes;
 	}
-
-  public function oldGetProducts( $sort = 'id', $where = null, $limit = null, $countOnly = false )
-  {
-    $products   = array();
-    $args       = array( $this->id );
-
-    if ( $countOnly )
-    {
-      $query = 'SELECT COUNT(*) AS count FROM tl_iso_products p';
-    }
-
-    else
-    {
-      //$query = 'select tl_iso_products.id, tl_iso_products.name, tl_iso_inventory.id as inventory_id, tl_iso_inventory.quantity_in_stock as quantity from tl_iso_products join tl_iso_inventory on tl_iso_inventory.pid = ? and tl_iso_inventory.product_id = tl_iso_products.id';
-    	$query = 'SELECT p.name, p.sku, (SELECT quantity_in_stock FROM tl_iso_inventory i WHERE i.pid=? AND i.product_id=p.id) AS quantity FROM tl_iso_products p';
-	}
-
-    if ( $where )
-    {
-      $query .= ' where ' . array_shift( $where );
-      $args   = array_merge( $args, $where );
-    }
-
-    $query .= ' order by ' . $sort;
-
-    if ( $limit )
-    {
-      $query .= ' limit ' . $limit;
-    }
-
-    $records = $this->Database->prepare( $query )->execute( $args );
-
-    if ( $countOnly )
-    {
-      return $records->count;
-    }
-
-    while ( $records->next() )
-    {
-		$records->quantity = $records->quantity ? $records->quantity : 0;
-    	$records->name = $records->name ? $records->name : '<em>variant</em>';
-		$products[] = $records->row();
-    	
-	}
-
-    return $products;
-  }
-
-
-
-  public function searchProducts( $search = array(), $filter = array(), $search_fields = array(), $limit = 10, $countOnly = false )
-  {
-    $where = null;
-
-    if ( count( $search ) or count( $filter ) )
-    {
-      $text   = '';
-      $where  = array();
-
-      foreach ( $search as $key => $value )
-      {
-        if ( in_array( $key, $search_fields ) )
-        {
-          $text   .= 'p.' . $key . ' like ? and ';
-          $where[] = '%' . $value . '%';
-        }
-      }
-
-      foreach ( $filter as $key => $value )
-      {
-        $text   .= 'p.' . $key . ' = ? and ';
-        $where[] = $value;
-      }
-
-      $text = substr( $text, 0, -5 );
-      array_unshift( $where, $text );
-    }
-
-    return $this->getProducts('p.id', $where, $limit, $countOnly);
-  }
   
-  	protected function generateEditLink($intRecordId, $strLinkTitle)
+	public function searchProducts( $search = array(), $filter = array(), $search_fields = array(), $limit = 10, $countOnly = false )
+	{
+		$where = null;
+		
+		if ( count( $search ) or count( $filter ) )
+		{
+		  $text   = '';
+		  $where  = array();
+		
+		  foreach ( $search as $key => $value )
+		  {
+			if ( in_array( $key, $search_fields ) )
+			{
+			  $text   .= 'p.' . $key . ' like ? and ';
+			  $where[] = '%' . $value . '%';
+			}
+		  }
+		
+		  foreach ( $filter as $key => $value )
+		  {
+			$text   .= 'p.' . $key . ' = ? and ';
+			$where[] = $value;
+		  }
+		
+		  $text = substr( $text, 0, -5 );
+		  array_unshift( $where, $text );
+		}
+		
+		return $this->getProducts('p.id', $where, $limit, $countOnly);
+	}
+	
+	protected function generateEditLink($intRecordId, $strLinkTitle)
 	{
 		return '<a href="'.$this->Environment->script.'?do=iso_products&act=edit&id='.$intRecordId.'" title="'.sprintf($GLOBALS['TL_LANG']['tl_iso_products']['edit'][1],$intRecordId).'">'.$strLinkTitle.'</a>';
 	}

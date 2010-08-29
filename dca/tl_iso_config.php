@@ -60,7 +60,7 @@ class tl_iso_config_inventory extends Backend
 			
 		while($objData->next())
 		{
-			$arrReturn[$objData->id] = $objData->title;
+			$arrReturn[$objData->id] = $objData->name;
 		}
 	
 		return $arrReturn;
