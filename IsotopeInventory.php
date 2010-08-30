@@ -26,7 +26,16 @@
  */
 
 class IsotopeInventory extends Controller
-{
+{	
+	public function __construct()
+	{
+		parent::__construct();
+	
+		$this->import('Database');	
+		$this->import('Isotope');
+
+	}
+	
 	/** 
 	 * hook function to update product inventory levels
 	 * @access public
@@ -37,9 +46,10 @@ class IsotopeInventory extends Controller
 	 */
 	public function updateInventory($intOrderId, $blnCheckout, $objOrder)
 	{
-		$arrWarehouses = deserialize($objOrder->Isotope->Config->warehouses, true);
 		
-		if(!$objOrder->Isotope->Config->enableInventory || !count($arrWarehouses))
+		$arrWarehouses = deserialize($this->Isotope->Config->warehouses, true);
+		
+		if(!$this->Isotope->Config->enableInventory || !count($arrWarehouses))
 			return true;
 			
 		//TODO: determine closest eligible warehouse the items should be shipped from
@@ -49,10 +59,12 @@ class IsotopeInventory extends Controller
 		
 		//For now just grab the first warehouse...
 		$intWarehouseId = $arrWarehouses[0];		
-		
-		foreach($objOrder->Isotope->Cart->products as $i=>$objProduct)
+	
+		$arrProducts = $this->Isotope->Cart->getProducts();
+	
+		foreach($arrProducts as $i=>$objProduct)
 		{
-			$this->updateProductQuantity($intWarehouseId, $objProduct->id, $objProduct->quantity_requested);
+			$this->updateProductInventory($intWarehouseId, $objProduct->id, $objProduct->quantity_requested);
 		}
 	
 		return true;
@@ -67,7 +79,16 @@ class IsotopeInventory extends Controller
 	 */
 	protected function updateProductInventory($intWarehouseId, $intProductId, $intQty)
 	{
-		$this->Database->query("UPDATE tl_iso_inventory SET quantity_in_stock=(quantity_in_stock-$intQty) WHERE product_id=$intProductId AND pid=$intWarehouseId");
+		//Get latest inventory record
+		$objLatest = $this->Database->query("SELECT id FROM tl_iso_inventory i WHERE i.pid=$intWarehouseId AND i.product_id=$intProductId ORDER BY tstamp DESC LIMIT 1");
+		
+		if(!$objLatest->numRows)
+			return;	//if there are no inventory records, return.
+		
+		
+		
+		//Update latest inventory record
+		$this->Database->query("UPDATE tl_iso_inventory SET quantity_in_stock=(quantity_in_stock-$intQty) WHERE id={$objLatest->id}");
 	}
 	
 	/** 
