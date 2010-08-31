@@ -53,4 +53,3 @@ $GLOBALS['TL_DCA']['tl_iso_config']['fields']['warehouses'] = array
 	'foreignKey'			=> 'tl_iso_warehouse.name',
 	'eval'					=> array('multiple'=>true, 'mandatory'=>true),
 );
-
