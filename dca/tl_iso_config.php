@@ -25,45 +25,32 @@
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
+
+/**
+ * Palettes
+ */
 $GLOBALS['TL_DCA']['tl_iso_config']['palettes']['__selector__'][] = 'enableInventory';
 $GLOBALS['TL_DCA']['tl_iso_config']['palettes']['default'] .= ';{inventory_legend:hide},enableInventory';
-
 $GLOBALS['TL_DCA']['tl_iso_config']['subpalettes']['enableInventory'] = 'warehouses';
 
-//$GLOBALS['TL_DCA']['tl_iso_config'];
 
+/**
+ * Fields
+ */
 $GLOBALS['TL_DCA']['tl_iso_config']['fields']['enableInventory'] = array
 (
-	'label'                   => &$GLOBALS['TL_LANG']['tl_iso_config']['enableInventory'],
-	'exclude'                 => true,
-	'inputType'               => 'checkbox',
-	'eval'					  => array('submitOnChange'=>true)
+	'label'					=> &$GLOBALS['TL_LANG']['tl_iso_config']['enableInventory'],
+	'exclude'				=> true,
+	'inputType'				=> 'checkbox',
+	'eval'					=> array('submitOnChange'=>true)
 );
 
 $GLOBALS['TL_DCA']['tl_iso_config']['fields']['warehouses'] = array
 (
-	'label'                   => &$GLOBALS['TL_LANG']['tl_iso_config']['warehouses'],
-	'exclude'                 => true,
-	'inputType'				  => 'checkbox',
-	'eval'					  => array('multiple'=>true,'mandatory'=>true),
-	'options_callback'		  => array('tl_iso_config_inventory','getWarehouses')
+	'label'					=> &$GLOBALS['TL_LANG']['tl_iso_config']['warehouses'],
+	'exclude'				=> true,
+	'inputType'				=> 'checkboxWizard',
+	'foreignKey'			=> 'tl_iso_warehouse.name',
+	'eval'					=> array('multiple'=>true, 'mandatory'=>true),
 );
 
-class tl_iso_config_inventory extends Backend
-{
-	public function getWarehouses()
-	{
-		$objData = $this->Database->query("SELECT id, name FROM tl_iso_warehouse");
-		
-		if(!$objData->numRows)
-			return array();
-			
-		while($objData->next())
-		{
-			$arrReturn[$objData->id] = $objData->name;
-		}
-	
-		return $arrReturn;
-	}
-
-}
