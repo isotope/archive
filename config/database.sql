@@ -23,7 +23,7 @@ CREATE TABLE `tl_iso_config` (
 -- Table `tl_iso_warehouse`
 --
 
-CREATE TABLE `tl_iso_warehouse` (
+CREATE TABLE `tl_iso_warehouses` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `pid` int(10) unsigned NOT NULL default '0',
   `tstamp` int(10) unsigned NOT NULL default '0',

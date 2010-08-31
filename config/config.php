@@ -30,7 +30,7 @@ array_insert($GLOBALS['BE_MOD']['isotope'], 3, array
 (
 	'inventory_warehouses' 	=> array
 	(
-		'tables'			=> array('tl_iso_warehouse'),//,'tl_iso_inventory'),
+		'tables'			=> array('tl_iso_warehouses'),//,'tl_iso_inventory'),
 		'icon'				=> 'system/modules/isotope_inventory/html/warehouses.png',
 		'quantities'  		=> array( 'ModuleIsotopeInventoryManager', 'compile' )
 	)

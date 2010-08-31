@@ -30,9 +30,9 @@ $this->loadLanguageFile('subdivisions');
 
 
 /**
- * Table tl_iso_warehouse 
+ * Table tl_iso_warehouses 
  */
-$GLOBALS['TL_DCA']['tl_iso_warehouse'] = array
+$GLOBALS['TL_DCA']['tl_iso_warehouses'] = array
 (
 
 	// Config
@@ -44,11 +44,11 @@ $GLOBALS['TL_DCA']['tl_iso_warehouse'] = array
 		'closed'					  => true,
 		'onload_callback' => array
 		(
-			array('tl_iso_warehouse', 'checkPermission'),
+			array('tl_iso_warehouses', 'checkPermission'),
 		),
 		'ondelete_callback'			  => array
 		(
-			array('tl_iso_warehouse', 'archiveRecord'),
+			array('tl_iso_warehouses', 'archiveRecord'),
 		),*/
 	),
 
@@ -77,7 +77,7 @@ $GLOBALS['TL_DCA']['tl_iso_warehouse'] = array
 			),
 			'new' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['new'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['new'],
 				'href'                => 'act=create',
 				'class'               => 'header_new',
 				'attributes'          => 'onclick="Backend.getScrollOffset();"',
@@ -94,35 +94,35 @@ $GLOBALS['TL_DCA']['tl_iso_warehouse'] = array
 		(
 			'edit' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['edit'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['edit'],
 				'href'                => 'act=edit',
 				'icon'                => 'edit.gif',
 			),
 			'copy' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['copy'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['copy'],
 				'href'                => 'act=copy',
 				'icon'                => 'copy.gif',
 			)/*,
 			'delete' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['delete'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['delete'],
 				'href'                => 'act=delete',
 				'icon'                => 'delete.gif',
 				'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"',
 			)*/,
 			'show' => array
 			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['show'],
+				'label'               => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['show'],
 				'href'                => 'act=show',
 				'icon'                => 'show.gif',
 			),
 			'quantities' => array
 			( 
-			  'label'               => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['edit'],
+			  'label'               => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['edit'],
 			  'href'                => 'key=quantities',
 			  'icon'                => 'tablewizard.gif',
-			  'button_callback'     => array( 'tl_iso_warehouse', 'getQuantityButton' )
+			  'button_callback'     => array( 'tl_iso_warehouses', 'getQuantityButton' )
 			)
 		)
 	),
@@ -138,21 +138,21 @@ $GLOBALS['TL_DCA']['tl_iso_warehouse'] = array
 	(
 		'name' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['name'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['name'],
 			'exclude'                 => true,
 			'inputType'               => 'text',
 			'eval'                    => array('mandatory'=>true, 'unique'=>true, 'maxlength'=>255, 'tl_class'=>'w50'),
 		),
 		'defaultWarehouse' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['defaultWarehouse'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['defaultWarehouse'],
 			'exclude'                 => true,
 			'inputType'               => 'checkbox',
 			'eval'						=> array('tl_class'=>'w50'),
 		),
 		'firstname' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['firstname'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['firstname'],
 			'exclude'                 => true,
 			'search'                  => true,
 			'sorting'                 => true,
@@ -162,7 +162,7 @@ $GLOBALS['TL_DCA']['tl_iso_warehouse'] = array
 		),
 		'lastname' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['lastname'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['lastname'],
 			'exclude'                 => true,
 			'search'                  => true,
 			'sorting'                 => true,
@@ -172,7 +172,7 @@ $GLOBALS['TL_DCA']['tl_iso_warehouse'] = array
 		),
 		'company' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['company'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['company'],
 			'exclude'                 => true,
 			'search'                  => true,
 			'sorting'                 => true,
@@ -182,7 +182,7 @@ $GLOBALS['TL_DCA']['tl_iso_warehouse'] = array
 		),
 		'street_1' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['street_1'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['street_1'],
 			'exclude'                 => true,
 			'search'                  => true,
 			'inputType'               => 'text',
@@ -190,7 +190,7 @@ $GLOBALS['TL_DCA']['tl_iso_warehouse'] = array
 		),
 		'street_2' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['street_2'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['street_2'],
 			'exclude'                 => true,
 			'search'                  => true,
 			'inputType'               => 'text',
@@ -198,7 +198,7 @@ $GLOBALS['TL_DCA']['tl_iso_warehouse'] = array
 		),
 		'street_3' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['street_3'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['street_3'],
 			'exclude'                 => true,
 			'search'                  => true,
 			'inputType'               => 'text',
@@ -206,7 +206,7 @@ $GLOBALS['TL_DCA']['tl_iso_warehouse'] = array
 		),
 		'postal' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['postal'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['postal'],
 			'exclude'                 => true,
 			'search'                  => true,
 			'inputType'               => 'text',
@@ -214,7 +214,7 @@ $GLOBALS['TL_DCA']['tl_iso_warehouse'] = array
 		),
 		'city' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['city'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['city'],
 			'exclude'                 => true,
 			'filter'                  => true,
 			'search'                  => true,
@@ -224,7 +224,7 @@ $GLOBALS['TL_DCA']['tl_iso_warehouse'] = array
 		),
 		'subdivision' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['subdivision'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['subdivision'],
 			'exclude'                 => true,
 			'sorting'                 => true,
 			'inputType'               => 'conditionalselect',
@@ -233,7 +233,7 @@ $GLOBALS['TL_DCA']['tl_iso_warehouse'] = array
 		),
 		'country' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['country'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['country'],
 			'exclude'                 => true,
 			'filter'                  => true,
 			'sorting'                 => true,
@@ -244,7 +244,7 @@ $GLOBALS['TL_DCA']['tl_iso_warehouse'] = array
 		),
 		'phone' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['phone'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['phone'],
 			'exclude'                 => true,
 			'search'                  => true,
 			'inputType'               => 'text',
@@ -252,7 +252,7 @@ $GLOBALS['TL_DCA']['tl_iso_warehouse'] = array
 		),
 		'email' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouse']['email'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['email'],
 			'exclude'                 => true,
 			'search'                  => true,
 			'inputType'               => 'text',
@@ -263,11 +263,11 @@ $GLOBALS['TL_DCA']['tl_iso_warehouse'] = array
 
 
 /**
- * tl_iso_warehouse class.
+ * tl_iso_warehouses class.
  * 
  * @extends Backend
  */
-class tl_iso_warehouse extends Backend
+class tl_iso_warehouses extends Backend
 {
 	
 	public function getQuantityButton(  $row, $href, $label, $title, $icon, $attribute )
@@ -280,7 +280,7 @@ class tl_iso_warehouse extends Backend
 	{				
 		if (strlen($this->Input->get('act')))
 		{
-			$GLOBALS['TL_DCA']['tl_iso_warehouse']['config']['closed'] = false;
+			$GLOBALS['TL_DCA']['tl_iso_warehouses']['config']['closed'] = false;
 		}
 		
 		$this->import('BackendUser', 'User');
@@ -288,7 +288,7 @@ class tl_iso_warehouse extends Backend
 		// Hide archived (used and deleted) configs
 		if ($this->User->isAdmin)
 		{
-			//$arrConfigs = $this->Database->execute("SELECT id FROM tl_iso_warehouse WHERE archive<2")->fetchEach('id');
+			//$arrConfigs = $this->Database->execute("SELECT id FROM tl_iso_warehouses WHERE archive<2")->fetchEach('id');
 		}
 		else
 		{
@@ -297,7 +297,7 @@ class tl_iso_warehouse extends Backend
 				$this->User->iso_configs = array(0);
 			}
 			
-			//$arrConfigs = $this->Database->execute("SELECT id FROM tl_iso_warehouse WHERE id IN ('','" . implode("','", $this->User->iso_configs) . "') AND archive<2")->fetchEach('id');
+			//$arrConfigs = $this->Database->execute("SELECT id FROM tl_iso_warehouses WHERE id IN ('','" . implode("','", $this->User->iso_configs) . "') AND archive<2")->fetchEach('id');
 		}
 		
 		if (!count($arrConfigs))
@@ -305,7 +305,7 @@ class tl_iso_warehouse extends Backend
 			$arrConfigs = array(0);
 		}
 
-		$GLOBALS['TL_DCA']['tl_iso_warehouse']['list']['sorting']['root'] = $arrConfigs;
+		$GLOBALS['TL_DCA']['tl_iso_warehouses']['list']['sorting']['root'] = $arrConfigs;
 
 		// Check current action
 		switch ($this->Input->get('act'))
@@ -316,7 +316,7 @@ class tl_iso_warehouse extends Backend
 			case 'show':
 				if (!in_array($this->Input->get('id'), $arrConfigs))
 				{
-					$this->log('Not enough permissions to '.$this->Input->get('act').' config ID "'.$this->Input->get('id').'"', 'tl_iso_warehouse checkPermission()', TL_ACCESS);
+					$this->log('Not enough permissions to '.$this->Input->get('act').' config ID "'.$this->Input->get('id').'"', 'tl_iso_warehouses checkPermission()', TL_ACCESS);
 					$this->redirect('typolight/main.php?act=error');
 				}
 				break;
