@@ -50,6 +50,6 @@ $GLOBALS['TL_DCA']['tl_iso_config']['fields']['warehouses'] = array
 	'label'					=> &$GLOBALS['TL_LANG']['tl_iso_config']['warehouses'],
 	'exclude'				=> true,
 	'inputType'				=> 'checkboxWizard',
-	'foreignKey'			=> 'tl_iso_warehouse.name',
+	'foreignKey'			=> 'tl_iso_warehouses.name',
 	'eval'					=> array('multiple'=>true, 'mandatory'=>true),
 );
