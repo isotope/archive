@@ -37,7 +37,7 @@
 
 class IsotopeWarehouse extends Model
 {
-  	protected $strTable = 'tl_iso_warehouse';
+  	protected $strTable = 'tl_iso_warehouses';
 
   	protected $arrProducts;
 
