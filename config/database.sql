@@ -55,10 +55,9 @@ CREATE TABLE `tl_iso_warehouses` (
 CREATE TABLE `tl_iso_inventory` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `pid` int(10) unsigned NOT NULL default '0',
-  `sorting` int(10) unsigned NOT NULL default '0',
   `tstamp` int(10) unsigned NOT NULL default '0',
   `product_id` int(10) unsigned NOT NULL default '0',
-  `quantity_in_stock` int(10) NOT NULL default '0'
+  `quantity` int(10) NOT NULL default '0'
   PRIMARY KEY  (`id`),
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

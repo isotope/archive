@@ -64,8 +64,11 @@ class IsotopeInventory extends Controller
 	
 		foreach($arrProducts as $i=>$objProduct)
 		{
-			$this->updateProductInventory($intWarehouseId, $objProduct->id, $objProduct->quantity_requested);
+			$strFields = $intWarehouseId.','.time().','.$objProduct->id.','.(-1)*$objProduct->quantity_requested;
+			$arrRows[] = $strFields;
 		}
+	
+		$this->updateProductInventory($arrRows);
 	
 		return true;
 	}
@@ -77,18 +80,12 @@ class IsotopeInventory extends Controller
 	 * @param integer $intProductId
 	 * @param integer $intQty
 	 */
-	protected function updateProductInventory($intWarehouseId, $intProductId, $intQty)
-	{
-		//Get latest inventory record
-		$objLatest = $this->Database->query("SELECT id FROM tl_iso_inventory i WHERE i.pid=$intWarehouseId AND i.product_id=$intProductId ORDER BY tstamp DESC LIMIT 1");
-		
-		if(!$objLatest->numRows)
-			return;	//if there are no inventory records, return.
-		
-		
+	protected function updateProductInventory($arrRows)
+	{				
+		$strInserts = implode("),(", $arrRows);
 		
 		//Update latest inventory record
-		$this->Database->query("UPDATE tl_iso_inventory SET quantity_in_stock=(quantity_in_stock-$intQty) WHERE id={$objLatest->id}");
+		$this->Database->query("INSERT INTO tl_iso_inventory (pid,tstamp,product_id,quantity) VALUES ($strInserts)");
 	}
 	
 	/** 
