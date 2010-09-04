@@ -25,4 +25,4 @@
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
-$GLOBALS['TL_LANG']['tl_iso_inventory']['quantity_in_stock']	= array('Quantity','');
+$GLOBALS['TL_LANG']['tl_iso_inventory']['quantity']	= array('Quantity','');

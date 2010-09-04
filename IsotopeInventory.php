@@ -95,7 +95,7 @@ class IsotopeInventory extends Controller
 	 */
 	public function checkProductAvailability($intProductId)
 	{
-		$objQuantity = $this->Database->execute("SELECT quantity_in_stock FROM tl_iso_inventory WHERE product_id=$intProductId");
+		$objQuantity = $this->Database->execute("SELECT quantity FROM tl_iso_inventory WHERE product_id=$intProductId");
 		
 		if(!$objQuantity->numRows)	//if no record then assume available?
 			return true;

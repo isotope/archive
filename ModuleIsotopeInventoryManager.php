@@ -32,9 +32,14 @@ class ModuleIsotopeInventoryManager extends BackendModule
 
 	protected $strTemplate = 'be_inventory_quantities';
 
+	public function generate()
+	{
+		return parent::generate();
+	}
+
 	public function compile()
 	{
-		$this->Template = new BackendTemplate('be_inventory_quantities');
+		//$this->Template = new BackendTemplate('be_inventory_quantities');
 		
 		$arrSearchFields = array('name', 'description', 'sku');
 
@@ -92,7 +97,7 @@ class ModuleIsotopeInventoryManager extends BackendModule
 		  	{
 				$strInsertStatements = implode(',', $arrInserts);
 				
-		  		$this->Database->query( 'insert into tl_iso_inventory (pid,tstamp,product_id,quantity_in_stock) VALUES '.$strInsertStatements);
+		  		$this->Database->query( 'insert into tl_iso_inventory (pid,tstamp,product_id,quantity) VALUES '.$strInsertStatements);
 			}		
 		
 			if ( strlen( $this->Input->post( 'saveNclose' ) ) )
@@ -126,7 +131,7 @@ class ModuleIsotopeInventoryManager extends BackendModule
 		}
 		
 		$products = $warehouse->searchProducts( $search_criteria, array(), $arrSearchFields, $session[ 'filter' ][ $name ][ 'limit' ] );
-		
+	
 		if(count($products))
 		{
 			$arrProducts = array();
@@ -162,7 +167,6 @@ class ModuleIsotopeInventoryManager extends BackendModule
 		$this->Template->limit    = $session[ 'filter' ][ $name ][ 'limit' ];
 		$this->Template->perPage  = $perPage;
 	
-		return $this->Template->parse();
 	}
 		
 	

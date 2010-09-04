@@ -78,7 +78,7 @@ class IsotopeWarehouse extends Model
 			  $query .= ' limit ' . $limit;
 			}
 	
-			$objItems = $this->Database->prepare("SELECT p.*, (SELECT quantity_in_stock FROM tl_iso_inventory i WHERE i.pid=? AND i.product_id=p.id ORDER BY tstamp DESC LIMIT 1) AS quantity FROM tl_iso_products p".$query)->execute($this->Input->get('id'), $args);
+			$objItems = $this->Database->prepare("SELECT p.*, (SELECT quantity FROM tl_iso_inventory i WHERE i.pid=? AND i.product_id=p.id ORDER BY tstamp DESC LIMIT 1) AS quantity FROM tl_iso_products p".$query)->execute($this->Input->get('id'), $args);
 			
 			while( $objItems->next() )
 			{
