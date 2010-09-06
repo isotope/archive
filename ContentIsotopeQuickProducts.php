@@ -26,46 +26,50 @@
  */
 
 
-class ContentIsotopeQuickProducts extends ContentElement
+class ContentIsotopeQuickProducts extends ContentIsotope
 {
 
 	/**
 	 * Template
 	 * @var string
 	 */
-	protected $strTemplate = 'ce_iso_products';  
-        
-        
+	protected $strTemplate = 'ce_iso_products';
+	
+	
 	/**
 	 * Display a wildcard in the back end
 	 * @return string
 	 */
 	public function generate()
 	{	
-		$arrProductIds = deserialize($this->productsAlias);
-		$arrProducts = $this->getProducts($arrProductIds);
 		if (TL_MODE == 'BE')
 		{
+			$arrProductIds = deserialize($this->productsAlias);
+			$arrProducts = $this->getProducts($arrProductIds);
+			
 			foreach($arrProducts as $i => $objProduct)
 			{
 				$strLink .= $objProduct->name . '<br />';
 			}
+			
 			$objTemplate = new BackendTemplate('be_wildcard');
 			$objTemplate->wildcard = '### ISOTOPE QUICK PRODUCTS ###';
 			$objTemplate->title = $this->headline;
 			$objTemplate->id = $this->id;
-			$objTemplate->link = $strLink;		
+			$objTemplate->link = $strLink;
+			
 			return $objTemplate->parse();
 		}
+		
 		return parent::generate();
 	}
+	
 	
 	/**
 	 * Generate content element
 	 */
 	protected function compile()
-	{	
-	
+	{
 		$arrProductIds = deserialize($this->productsAlias);
 		$arrProducts = $this->getProducts($arrProductIds);				
 					
@@ -90,51 +94,6 @@ class ContentIsotopeQuickProducts extends ContentElement
 		}
 	
 		$this->Template->products = $arrBuffer;
-	}
-	
-	/**
-	 * Retrieve multiple products by ID.
-	 */
-	protected function getProducts($arrIds)
-	{
-		if (!is_array($arrIds) || !count($arrIds))
-			return array();
-		
-		$arrProducts = array();
-		
-		foreach( $arrIds as $intId )
-		{
-			$objProduct = $this->getProduct($intId);
-		
-			if (is_object($objProduct))
-				$arrProducts[] = $objProduct;
-		}
-		
-		return $arrProducts;
-	}
-	
-	
-	/**
-	 * Shortcut for a single product by ID
-	 */
-	protected function getProduct($intId)
-	{
-		$objProductData = $this->Database->prepare("SELECT *, (SELECT class FROM tl_iso_producttypes WHERE tl_iso_products.type=tl_iso_producttypes.id) AS product_class FROM tl_iso_products WHERE id=?")
-										 ->limit(1)
-										 ->executeUncached($intId);
-									 
-		$strClass = $GLOBALS['ISO_PRODUCT'][$objProductData->product_class]['class'];
-		
-		if (!$this->classFileExists($strClass))
-		{
-			return null;
-		}
-									
-		$objProduct = new $strClass($objProductData->row());
-		
-		$objProduct->reader_jumpTo = $this->iso_reader_jumpTo;
-			
-		return $objProduct;
 	}
 }
 

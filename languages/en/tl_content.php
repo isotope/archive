@@ -30,11 +30,11 @@
 /**
  * Fields
  */
+$GLOBALS['TL_LANG']['tl_content']['productsAlias']		= array('Products', 'Search for your products by keywords (found in name, alias, sku or description) and add products by checking the checkbox.');
 
-$GLOBALS['TL_LANG']['tl_content']['productsAlias'] 		= array('Products', 'Search for your products by keywords (found in name, alias, sku or description) and add products by checking the checkbox.');
-$GLOBALS['TL_LANG']['tl_content']['iso_reader_jumpTo']	= array('Product reader jump to page', 'This setting defines to which page a user will be redirected when clicking a product for more info.');
-$GLOBALS['TL_LANG']['tl_content']['iso_list_layout']	= array('Product list template', 'Please choose a list layout. You can add custom list layouts to folder <em>templates</em>. List template files start with <em>iso_list_</em> and require file extension <em>.tpl</em>.');
+
 /**
  * Legends
  */
-$GLOBALS['TL_LANG']['tl_content']['config_legend']    = 'Configuration settings';
+$GLOBALS['TL_LANG']['tl_content']['config_legend']		= 'Configuration settings';
+

@@ -26,7 +26,9 @@
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
+
 /** 
  * Content elements
  */
 $GLOBALS['TL_CTE']['includes']['iso_quickproducts'] = 'ContentIsotopeQuickProducts';
+

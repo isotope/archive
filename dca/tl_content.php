@@ -51,22 +51,3 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['productsAlias'] = array
 	)
 );
 
-$GLOBALS['TL_DCA']['tl_content']['fields']['iso_reader_jumpTo'] = array
-(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['iso_reader_jumpTo'],
-	'exclude'                 => true,
-	'inputType'               => 'pageTree',
-	'explanation'             => 'jumpTo',
-	'eval'                    => array('fieldType'=>'radio'),
-);
-
-$GLOBALS['TL_DCA']['tl_content']['fields']['iso_list_layout'] = array
-(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['iso_list_layout'],
-	'default'                 => 'iso_list_default',
-	'exclude'                 => true,
-	'inputType'               => 'select',
-	'options'                 => (version_compare(VERSION.BUILD, '2.9.0', '>=')) ? $this->getTemplateGroup('iso_list_', $dc->activeRecord->pid) : $this->getTemplateGroup('iso_list_'),
-	'eval'					  => array('includeBlankOption'=>true),
-);
-

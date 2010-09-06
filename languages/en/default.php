@@ -30,3 +30,4 @@
  * Content elements
  */
 $GLOBALS['TL_LANG']['CTE']['iso_quickproducts'] = array('Isotope Quick Products', 'Drop products in as content elements.');
+
