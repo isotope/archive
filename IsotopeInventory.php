@@ -46,7 +46,9 @@ class IsotopeInventory extends Controller
 	 */
 	public function updateInventory($intOrderId, $blnCheckout, $objOrder)
 	{
-		
+		if(!$blnCheckout)
+			return false; 
+			
 		$arrWarehouses = deserialize($this->Isotope->Config->warehouses, true);
 		
 		if(!$this->Isotope->Config->enableInventory || !count($arrWarehouses))
