@@ -32,14 +32,14 @@ class ModuleIsotopeInventoryManager extends BackendModule
 
 	protected $strTemplate = 'be_inventory_quantities';
 
-	public function generate()
+	/*public function generate()
 	{
 		return parent::generate();
-	}
+	}*/
 
 	public function compile()
 	{
-		//$this->Template = new BackendTemplate('be_inventory_quantities');
+		$this->Template = new BackendTemplate('be_inventory_quantities');
 		
 		$arrSearchFields = array('name', 'description', 'sku');
 
@@ -166,7 +166,7 @@ class ModuleIsotopeInventoryManager extends BackendModule
 		$this->Template->limits   = $limits;
 		$this->Template->limit    = $session[ 'filter' ][ $name ][ 'limit' ];
 		$this->Template->perPage  = $perPage;
-	
+		return $this->Template->parse();
 	}
 		
 	
