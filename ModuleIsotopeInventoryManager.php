@@ -130,6 +130,8 @@ class ModuleIsotopeInventoryManager extends BackendModule
 		  $this->Session->setData( $session );
 		}
 		
+		$arrProducts = array();
+		
 		$products = $warehouse->searchProducts( $search_criteria, array(), $arrSearchFields, $session[ 'filter' ][ $name ][ 'limit' ] );
 	
 		if(count($products))
