@@ -142,15 +142,18 @@ class ModuleIsotopeInventoryManager extends BackendModule
 					$arrQuantities[$objProduct->pid] += $objProduct->quantity;	//establish product quantities by parent id
 				}
 			}
-				
-			foreach($products as $i=>$objProduct)
-			{
-				if($objProduct->pid==0 && array_key_exists($objProduct->id, $arrQuantities))
+			
+			if(count($arrQuantities))
+			{				
+				foreach($products as $i=>$objProduct)
 				{
-					$objProduct->total_quantity = $arrQuantities[$objProduct->id];
-					$objProduct->has_variants = true;
+					if($objProduct->pid==0 && array_key_exists($objProduct->id, $arrQuantities))
+					{
+						$objProduct->total_quantity = $arrQuantities[$objProduct->id];
+						$objProduct->has_variants = true;
+					}
+					$arrProducts[] = $objProduct;
 				}
-				$arrProducts[] = $objProduct;
 			}
 		}
 
