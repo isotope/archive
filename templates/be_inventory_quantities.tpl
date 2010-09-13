@@ -43,7 +43,7 @@
       <?php if($this->products): ?>
       <?php foreach ( $this->products as $product ) : ?>
       <div class="item<?php echo ($product->has_variants ? ' parent' : ''); ?>">
-        <div class="name"><a href="contao/main.php?do=products&act=edit&id=<?php echo $product->id; ?>"><?php echo $product->name; ?></a></div>
+        <div class="name"><a href="contao/main.php?do=iso_products&act=edit&id=<?php echo $product->id; ?>"><?php echo $product->name; ?></a></div>
         <div class="sku"><?php echo $product->sku; ?></div>
         <div class="current"><?php if($product->has_variants): ?>Total <?php else: ?> Currently<?php endif; ?> : <span class="current_quantity"> <?php if($product->has_variants): echo $product->total_quantity; else: echo $product->quantity; endif; ?></span></div>
         <div class="new_value"><?php if(!$product->has_variants): ?><input type="text" class="tl_text" name="quantities[<?php echo $product->id; ?>]" value="0" /><?php else: ?>&nbsp;<?php endif; ?></div>
