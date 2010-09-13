@@ -26,15 +26,17 @@
  */
 
 class IsotopeInventory extends Controller
-{	
+{
+
 	public function __construct()
 	{
 		parent::__construct();
 	
-		$this->import('Database');	
+		$this->import('Database');
 		$this->import('Isotope');
-
+	
 	}
+	
 	
 	/** 
 	 * hook function to update product inventory levels
@@ -60,7 +62,7 @@ class IsotopeInventory extends Controller
 		*/
 		
 		//For now just grab the first warehouse...
-		$intWarehouseId = $arrWarehouses[0];		
+		$intWarehouseId = $arrWarehouses[0];
 	
 		$arrProducts = $this->Isotope->Cart->getProducts();
 	
@@ -75,6 +77,7 @@ class IsotopeInventory extends Controller
 		return true;
 	}
 	
+	
 	/** 
 	 * Update a product inventory level.  Will only be called if product allows backorder or adequate quantities exist.
 	 * @access protected
@@ -83,12 +86,13 @@ class IsotopeInventory extends Controller
 	 * @param integer $intQty
 	 */
 	protected function updateProductInventory($arrRows)
-	{				
+	{
 		$strInserts = implode("),(", $arrRows);
 		
 		//Update latest inventory record
 		$this->Database->query("INSERT INTO tl_iso_inventory (pid,tstamp,product_id,quantity) VALUES ($strInserts)");
 	}
+	
 	
 	/** 
 	 * Check availability of a given product based on backorder setting and inventory level
@@ -104,5 +108,89 @@ class IsotopeInventory extends Controller
 		
 		if($objQuantity->quantity_in_stock<=0)
 			return false;
+	}
+	
+	
+	public function generateInventoryWizard(DataContainer $dc, $xlabel)
+	{
+		// Load language file for the foreign key table.	@TODO: only if file_exists==true;
+		$this->loadLanguageFile('tl_iso_warehouses');
+
+		$intId = $this->Input->get('id');
+				
+		$arrUnits = array();
+				
+		$return = $xlabel;
+		
+		$return .= '<table cellspacing="0" cellpadding="5" id="ctrl_'.$dc->field.'" class="tl_inventorywizard" summary="Inventory wizard">
+  <thead>
+  <tr>
+    <td>'.$GLOBALS['TL_LANG']['tl_iso_products']['warehouse_name'].'</td>
+    <td>'.$GLOBALS['TL_LANG']['tl_iso_products']['quantity'].'</td>
+    <td>'.$GLOBALS['TL_LANG']['tl_iso_products']['new_quantity'].'</td>
+  </tr>
+  </thead>
+  <tbody>';
+		
+		// Get current quantites from inventory
+		$objQty = $this->Database->query("SELECT id, name, (SELECT SUM(quantity) FROM tl_iso_inventory WHERE tl_iso_inventory.pid=tl_iso_warehouses.id AND tl_iso_inventory.product_id=$intId) AS total_quantity FROM tl_iso_warehouses");
+
+		if(!$objQty->numRows)
+		{
+			return '<em>'.$GLOBALS['TL_LANG']['MSC']['noWarehouses'].'</em>';
+		}
+		
+		while($objQty->next())
+		{
+			$arrQty[$objQty->id] = array
+			(
+				'warehouse_name'	=> $objQty->name,
+				'quantity'			=> $objQty->total_quantity
+			);
+		}
+		
+		$return .= '<tbody>';
+		
+		foreach ($arrQty as $key=>$value)
+		{
+			$return .= '<tr>';
+			$return .= '	<td>';
+			$return .= '<strong>'.$value['warehouse_name'].'</strong>';
+			$return .= '	</td>';
+			$return .= '	<td>';
+			$return .= $value['quantity'];
+			$return .= '	</td>';
+			$return .= '	<td>';
+			$return .= '<input type="text" name="'.$dc->field.'['.$key.']" id="ctrl_'.$dc->field.'" class="tl_text_4" value="0" onfocus="Backend.getScrollOffset();" />';
+			$return .= '	</td>';
+			$return .= '</tr>';
+		}
+		
+		$return .= '</tbody>';
+		
+		if($this->Input->post('FORM_SUBMIT')==$dc->table)
+		{
+			$arrInserts = array();
+			
+			$varValue = $this->Input->post($dc->field);
+
+			if(!is_array($varValue) || !count($varValue))
+				return $varValue;
+				
+			foreach($varValue as $i=>$value)
+			{
+				$arrInserts[] = '('.time().','.$i.','.$dc->id.','.$value.')';
+			
+			}
+			
+			if(!count($arrInserts))
+				return $varValue;
+				
+			$strInserts = implode(',', $arrInserts);
+			
+			$this->Database->query("INSERT INTO tl_iso_inventory (tstamp,pid,product_id,quantity)VALUES".$strInserts);
+		}
+		
+		return $return . '</table>';
 	}
 }
