@@ -87,19 +87,23 @@ class ModuleIsotopeInventoryManager extends BackendModule
 	
 			$arrInserts = array();
 			
-			foreach ( $quantities as $id => $new_value )
-			{
-				if($new_value!=0)
-					$arrInserts[] = '('.$this->Input->get( 'id' ).','.time().','.$id.','.$new_value.')';
-			}	
-		
-		  	if(count($arrInserts))
-		  	{
-				$strInsertStatements = implode(',', $arrInserts);
+			if(count($quantities))
+			{	
 				
-		  		$this->Database->query( 'insert into tl_iso_inventory (pid,tstamp,product_id,quantity) VALUES '.$strInsertStatements);
-			}		
-		
+				foreach ( $quantities as $id => $new_value )
+				{
+					if($new_value!=0)
+						$arrInserts[] = '('.$this->Input->get( 'id' ).','.time().','.$id.','.$new_value.')';
+				}	
+			
+				if(count($arrInserts))
+				{
+					$strInsertStatements = implode(',', $arrInserts);
+					
+					$this->Database->query( 'insert into tl_iso_inventory (pid,tstamp,product_id,quantity) VALUES '.$strInsertStatements);
+				}		
+			}
+					
 			if ( strlen( $this->Input->post( 'saveNclose' ) ) )
 			{
 			$this->redirect( $this->getReferer( true ) );
@@ -137,6 +141,8 @@ class ModuleIsotopeInventoryManager extends BackendModule
 		if(count($products))
 		{
 			$arrProducts = array();
+			$arrQuantities = array();
+			
 			foreach($products as $i=>$objProduct)
 			{	
 				if($objProduct->pid!=0)
@@ -144,18 +150,15 @@ class ModuleIsotopeInventoryManager extends BackendModule
 					$arrQuantities[$objProduct->pid] += $objProduct->quantity;	//establish product quantities by parent id
 				}
 			}
-			
-			if(count($arrQuantities))
-			{				
-				foreach($products as $i=>$objProduct)
+				
+			foreach($products as $i=>$objProduct)
+			{
+				if($objProduct->pid==0 && array_key_exists($objProduct->id, $arrQuantities))
 				{
-					if($objProduct->pid==0 && array_key_exists($objProduct->id, $arrQuantities))
-					{
-						$objProduct->total_quantity = $arrQuantities[$objProduct->id];
-						$objProduct->has_variants = true;
-					}
-					$arrProducts[] = $objProduct;
+					$objProduct->total_quantity = $arrQuantities[$objProduct->id];
+					$objProduct->has_variants = true;
 				}
+				$arrProducts[] = $objProduct;
 			}
 		}
 
