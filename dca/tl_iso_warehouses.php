@@ -317,7 +317,7 @@ class tl_iso_warehouses extends Backend
 				if (!in_array($this->Input->get('id'), $arrConfigs))
 				{
 					$this->log('Not enough permissions to '.$this->Input->get('act').' config ID "'.$this->Input->get('id').'"', 'tl_iso_warehouses checkPermission()', TL_ACCESS);
-					$this->redirect('typolight/main.php?act=error');
+					$this->redirect($this->Environment->script.'?act=error');
 				}
 				break;
 
