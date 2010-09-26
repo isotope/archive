@@ -60,8 +60,7 @@ class FlowplayerGallery extends InlineGallery
 		
 		// Pass image size to template
 		$arrSize = null;
-		$arrSizes = deserialize($this->Isotope->Config->imageSizes);
-		foreach( $arrSizes as $size )
+		foreach( (array)$this->Isotope->Config->imageSizes as $size )
 		{
 			if ($size['name'] == $strType)
 			{
