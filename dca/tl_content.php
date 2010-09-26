@@ -44,6 +44,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['productsAlias'] = array
 		'mandatory'				=> true,
 		'tl_class'				=> 'clr',
 		'foreignTable'			=> 'tl_iso_products',
+		'fieldType'				=> 'checkbox',
 		'listFields'			=> array('type'=>'(SELECT name FROM tl_iso_producttypes WHERE tl_iso_products.type=tl_iso_producttypes.id)', 'name', 'sku', 'published'),
 		'searchFields'			=> array('name', 'alias', 'sku', 'description'),
 		'sqlWhere'				=> 'pid=0',
