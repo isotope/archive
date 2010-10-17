@@ -1,0 +1,7 @@
+.header_print_packing
+{
+	padding:2px 0px 3px 20px;
+	background-image:url("packing.png");
+	background-position:left center;
+	background-repeat:no-repeat;
+}
