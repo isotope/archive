@@ -16,6 +16,7 @@
       </div>
 
       <div class="tl_search tl_subpanel">
+      <label for="override"><strong>Override Quantities Mode</strong></label><input type="checkbox" name="override" id="ctrl_override" value="1" />
       <strong><?php echo $GLOBALS[ 'TL_LANG' ][ 'MSC' ][ 'search' ] ?>:</strong>
       <select name="tl_field" class="tl_select">
         <?php foreach ( $this->fields as $field ) : ?>
@@ -28,7 +29,7 @@
 
     <div class="clear"></div>
 </div>
-</form>
+
 
 
 <div id="tl_buttons">
@@ -46,7 +47,7 @@
         <div class="name"><a href="contao/main.php?do=iso_products&act=edit&id=<?php echo $product->id; ?>"><?php echo $product->name; ?></a></div>
         <div class="sku"><?php echo $product->sku; ?></div>
         <div class="current"><?php if($product->has_variants): ?>Total <?php else: ?> Currently<?php endif; ?> : <span class="current_quantity"> <?php if($product->has_variants): echo $product->total_quantity; else: echo $product->quantity; endif; ?></span></div>
-        <div class="new_value"><?php if(!$product->has_variants): ?><input type="text" class="tl_text" name="quantities[<?php echo $product->id; ?>]" value="0" /><?php else: ?>&nbsp;<?php endif; ?></div>
+        <div class="new_value"><?php if(!$product->has_variants): ?><input type="text" class="tl_text" name="quantities[<?php echo $product->id; ?>]" value="" /><?php else: ?>&nbsp;<?php endif; ?></div>
       </div><!-- .item -->
       <?php endforeach ?>
       <?php else: ?>

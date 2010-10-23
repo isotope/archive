@@ -78,42 +78,8 @@ class ModuleIsotopeInventoryManager extends BackendModule
 		
 		  $this->Session->setData( $session );
 		  $this->reload();
-		}
-				
-		// handles update
-		if ( $submit == 'tl_quantities' )
-		{
-			$quantities = $this->Input->post( 'quantities' );
-	
-			$arrInserts = array();
-			
-			if(count($quantities))
-			{	
-				
-				foreach ( $quantities as $id => $new_value )
-				{
-					if($new_value!=0)
-						$arrInserts[] = '('.$this->Input->get( 'id' ).','.time().','.$id.','.$new_value.')';
-				}	
-			
-				if(count($arrInserts))
-				{
-					$strInsertStatements = implode(',', $arrInserts);
-					
-					$this->Database->query( 'insert into tl_iso_inventory (pid,tstamp,product_id,quantity) VALUES '.$strInsertStatements);
-				}		
-			}
-					
-			if ( strlen( $this->Input->post( 'saveNclose' ) ) )
-			{
-			$this->redirect( $this->getReferer( true ) );
-			}
-			
-			else
-			{
-			$this->redirect( $this->Environment->request );
-			}
-		}
+		}	
+
 		
 		// prepare filters
 		$search_criteria  = ( strlen( $session[ 'search' ][ $name ][ 'value' ] ) ) ? array( $session[ 'search' ][ $name ][ 'field' ] => $session[ 'search' ][ $name ][ 'value' ] ) : array();
@@ -134,7 +100,7 @@ class ModuleIsotopeInventoryManager extends BackendModule
 		  $this->Session->setData( $session );
 		}
 		
-		$arrProducts = array();
+		$products = array();
 		
 		$products = $warehouse->searchProducts( $search_criteria, array(), $arrSearchFields, $session[ 'filter' ][ $name ][ 'limit' ] );
 	
@@ -159,6 +125,61 @@ class ModuleIsotopeInventoryManager extends BackendModule
 					$objProduct->has_variants = true;
 				}
 				$arrProducts[] = $objProduct;
+			}
+		}
+
+		// handles update
+		if ( $submit == 'tl_quantities' )
+		{
+			$quantities = $this->Input->post( 'quantities' );
+	
+			$arrInserts = array();
+			
+			if(count($quantities))
+			{	
+				
+				foreach ( $quantities as $id => $new_value )
+				{
+					$blnValueFound = false;
+					
+					if(strlen((string)$new_value)==0)
+						continue;
+	
+					if($this->Input->post('override')=='1')
+					{						
+						if((string)$new_value == "0")
+						{
+							$final_value = -1*$products[$id]->quantity;
+						}
+						else
+						{
+							$final_value = ((int)$new_value >= $products[$id]->quantity ? abs($products[$id]->quantity-(int)$new_value) : (int)$new_value-$products[$id]->quantity);
+						}
+					}
+					else
+					{
+						$final_value = $new_value;
+					}
+										
+					$arrInserts[] = '('.$this->Input->get( 'id' ).','.time().','.$id.','.$final_value.')';
+				}	
+												
+				if(count($arrInserts))
+				{
+					$strInsertStatements = implode(',', $arrInserts);
+															
+					$this->Database->query( 'insert into tl_iso_inventory (pid,tstamp,product_id,quantity) VALUES '.$strInsertStatements);
+				}		
+			}
+					
+			if ( strlen( $this->Input->post( 'saveNclose' ) ) )
+			{
+			$this->redirect( $this->getReferer( true ) );
+			}
+			
+			else
+			{
+			$this->redirect( $this->Environment->request );
 			}
 		}
 
