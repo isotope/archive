@@ -94,12 +94,12 @@ class IsotopeWarehouse extends Model
 						
 					$blnVariants = ($objItems->pid!=0 ? true : false);
 				
-					$objProduct = new $strClass($objProductData->row(), $this->blnLocked);
+					$objProduct = new $strClass($objProductData->row(), null, $this->blnLocked);
 							
 				}
 				catch (Exception $e)
 				{
-					$objProduct = new IsotopeProduct(array('id'=>$objItems->id, 'sku'=>$objItems->sku, 'name'=>$objItems->name), $this->blnLocked);
+					$objProduct = new IsotopeProduct(array('id'=>$objItems->id, 'sku'=>$objItems->sku, 'name'=>$objItems->name), null, $this->blnLocked);
 				}
 						
 				if($objProduct->pid)
