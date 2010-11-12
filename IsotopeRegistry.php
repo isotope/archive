@@ -103,7 +103,7 @@ class IsotopeRegistry extends IsotopeProductCollection
 				
 				$objUser = $this->Database->prepare("SELECT * FROM tl_member WHERE id=?")->limit(1)->execute($this->pid);
 				
-				return array_intersect_key(array_merge($objUser->getData(), array('id'=>0, 'street_1'=>$objUser->street, 'subdivision'=>strtoupper($objUser->country . '-' . $objUser->User->state))), array_flip($this->Isotope->Config->billing_fields));
+				return array_intersect_key(array_merge($objUser->getData(), array('id'=>0, 'street_1'=>$objUser->street, 'subdivision'=>strtoupper($objUser->country . '-' . $objUser->User->state))), array_flip($this->Isotope->Config->billing_fields_raw));
 						
 				
 				return array('postal'=>$this->Isotope->Config->postal, 'subdivision'=>$this->Isotope->Config->subdivision, 'country' => $this->Isotope->Config->country);
