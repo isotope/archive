@@ -253,18 +253,19 @@ class ModuleCollectionManager extends BackendModule
 				{
 					$objProduct = new IsotopeProduct(array('id'=>$intProductId));
 				}
-				$objProduct->reader_jumpTo = $this->Input->post('jumpTo');
+				$strProductReader = $this->generateFrontendUrl($this->Database->prepare("SELECT * FROM tl_page WHERE id=?")->execute($this->Input->post('jumpTo'))->fetchAssoc(), '/product/' . $objProduct->alias);
 				//Product exists - update it
 				if (in_array($objProduct->id, $this->getProductArray($objCollection)))
 				{
 					$objItem = $this->Database->prepare("SELECT id FROM {$arrConfig['ctable']} WHERE pid={$objCollection->id} AND product_id={$objProduct->id}")->limit(1)->execute();
 					$objProduct->cart_id = $objItem->id;
-					$arrSet = array('product_quantity'=>$product['qty'], 'price'=>$product['price']);
+					$arrSet = array('product_quantity'=>$product['qty'], 'price'=>$product['price'], 'href_reader'=>$strProductReader);
 					$blnInsert = $objCollection->updateProduct($objProduct, $arrSet);
 				}
 				//Add new product
 				else
 				{
+					$objProduct->reader_jumpTo = $this->Input->post('jumpTo');
 					$objProduct->price = $product['price'];
 					$blnInsert = $objCollection->addProduct($objProduct, $product['qty']);
 				}
@@ -325,7 +326,8 @@ class ModuleCollectionManager extends BackendModule
 			switch($data['inputType'])
 			{
 				case 'jumpTo':
-					$arrFields[$field] = $this->getSelectWidget($field, $this->getJumptoOptions($data));
+					
+					$arrFields[$field] = $this->getSelectWidget($field, $this->getJumptoOptions($data), $this->getJumpPage($objCollection));
 					break;
 				case 'collectionWizard':
 					$arrFields[$field] = ($field=='products') ? $this->getCollectionWizard($field, $data, $this->getProductArray($objCollection)) : $this->getCollectionWizard($field, $data, $objCollection->$field);
@@ -369,19 +371,20 @@ class ModuleCollectionManager extends BackendModule
 				{
 					$objProduct = new IsotopeProduct(array('id'=>$intProductId));
 				}
-				$objProduct->reader_jumpTo = $this->Input->post('jumpTo');
+				$strProductReader = $this->generateFrontendUrl($this->Database->prepare("SELECT * FROM tl_page WHERE id=?")->execute($this->Input->post('jumpTo'))->fetchAssoc(), '/product/' . $objProduct->alias);
 				//Product exists - update it
 				if (in_array($objProduct->id, $this->getProductArray($objCollection)))
 				{
 					$objItem = $this->Database->prepare("SELECT id FROM {$arrConfig['ctable']} WHERE pid={$objCollection->id} AND product_id={$objProduct->id}")->limit(1)->execute();
 					$objProduct->cart_id = $objItem->id;
-					$arrSet = array('product_quantity'=>$product['qty'], 'price'=>$product['price']);
+					$arrSet = array('product_quantity'=>$product['qty'], 'price'=>$product['price'], 'href_reader'=>$strProductReader);
 					$objCollection->updateProduct($objProduct, $arrSet);
 				}
 				//Add new product
 				else
 				{
 					$objProduct->price = $product['price'];
+					$objProduct->reader_jumpTo = $this->Input->post('jumpTo');
 					$objCollection->addProduct($objProduct, $product['qty']);
 				}
 			}
@@ -571,7 +574,7 @@ class ModuleCollectionManager extends BackendModule
 		{
 			$objDate = new Date(strtotime($session['filter']['tl_iso_collectionmanager']['tstamp']));
 
-			$where[] = "tstamp BETWEEN ? AND ?";
+			$where[] = "c.tstamp BETWEEN ? AND ?";
 			$value[] = $objDate->monthBegin;
 			$value[] = $objDate->monthEnd;
 
@@ -790,7 +793,7 @@ class ModuleCollectionManager extends BackendModule
 		$widget->name = $name;
 		$widget->mandatory = true;
 		$widget->value = $value;
-
+		
 		$widget->label = $GLOBALS['TL_LANG']['tl_iso_collectionmanager'][$name][0];
 
 		if ($GLOBALS['TL_CONFIG']['showHelp'] && strlen($GLOBALS['TL_LANG']['tl_iso_collectionmanager'][$name][1]))
@@ -854,6 +857,19 @@ class ModuleCollectionManager extends BackendModule
 		}
 		
 		return $arrOptions;
+	}
+	
+	
+	protected function getJumpPage($objCollection)
+	{
+		$objJumpPage = $this->Database->prepare("SELECT href_reader FROM {$objCollection->ctable} WHERE pid={$objCollection->id}")->limit(1)->execute();
+		$arrURL = explode('/',$objJumpPage->href_reader);
+		$objPage =  $this->Database->prepare("SELECT id FROM tl_page WHERE alias=?")->limit(1)->execute($arrURL[0]);
+		if($objPage->numRows)
+		{
+			return $objPage->id;
+		}
+		return '';
 	}
 
 	
