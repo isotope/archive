@@ -88,11 +88,52 @@ class IsotopeInventory extends Controller
 	protected function updateProductInventory($arrRows)
 	{
 		$strInserts = implode("),(", $arrRows);
-		
+		$arrInserts = array();
+		foreach($arrRows as $row)
+		{
+			$arrRow = explode(',',$row);
+			$arrProducts[] = $arrRow[2];
+		}
 		//Update latest inventory record
 		$this->Database->query("INSERT INTO tl_iso_inventory (pid,tstamp,product_id,quantity) VALUES ($strInserts)");
+		
+		foreach($arrProducts as $id)
+		{
+			//Get the inventory... Possibly send admin noptifications
+			$objQuantity = $this->Database->prepare("SELECT SUM(quantity) as quantity_in_stock FROM tl_iso_inventory WHERE product_id=?")->execute($id);
+			if($objQuantity->quantity<3 && $objQuantity->quantity>0)
+			{
+				$strType = 'low';
+				$this->sendAdminNotification($id, $strType);
+			}elseif($objQuantity->quantity<=0)
+			{
+				$strType = 'zero';
+				$this->sendAdminNotification($id, $strType);
+			}
+		}
 	}
 	
+	
+	/**
+	 * Send an admin notification e-mail
+	 * @param integer
+	 * @param array
+	 */
+	protected function sendAdminNotification($intId, $strType)
+	{
+		$objEmail = new Email();
+
+		$objEmail->from = $GLOBALS['TL_ADMIN_EMAIL'];
+		$objEmail->fromName = $GLOBALS['TL_ADMIN_NAME'];
+		$objEmail->subject = $GLOBALS['TL_LANG']['MSC']['inventoryAdminSubject'];
+		
+		$objProduct = $this->getProduct($intId);
+		
+		$objEmail->text = sprintf($GLOBALS['TL_LANG']['MSC']['inventoryAdminText'][$strType], $intId, $objProduct->name . "\n", $objProduct->reader_jumpTo) . "\n";
+		$objEmail->sendTo($GLOBALS['TL_ADMIN_EMAIL']);
+
+		$this->log('A product (ID ' . $intId . ') has triggered an inventory warning', 'IsotopeInventory sendAdminNotification()', TL_ACCESS);
+	}
 	
 	/** 
 	 * Check availability of a given product based on backorder setting and inventory level
@@ -101,13 +142,38 @@ class IsotopeInventory extends Controller
 	 */
 	public function checkProductAvailability($intProductId)
 	{
-		$objQuantity = $this->Database->execute("SELECT quantity FROM tl_iso_inventory WHERE product_id=$intProductId");
+		$objQuantity = $this->Database->execute("SELECT SUM(quantity) as quantity_in_stock FROM tl_iso_inventory WHERE product_id=$intProductId");
 		
 		if(!$objQuantity->numRows)	//if no record then assume available?
 			return true;
 		
 		if($objQuantity->quantity_in_stock<=0)
 			return false;
+	}
+	
+	/**
+	 * Shortcut for a single product by ID
+	 */
+	protected function getProduct($intId)
+	{
+		global $objPage;
+		
+		$objProductData = $this->Database->prepare("SELECT *, (SELECT class FROM tl_iso_producttypes WHERE tl_iso_products.type=tl_iso_producttypes.id) AS product_class FROM tl_iso_products WHERE pid=$intId OR id=$intId")
+										 ->limit(1)
+										 ->executeUncached();
+									 
+		$strClass = $GLOBALS['ISO_PRODUCT'][$objProductData->product_class]['class'];
+		
+		if (!$this->classFileExists($strClass))
+		{
+			return null;
+		}
+									
+		$objProduct = new $strClass($objProductData->row());
+		
+		$objProduct->reader_jumpTo = $this->iso_reader_jumpTo ? $this->iso_reader_jumpTo : $objPage->id;
+			
+		return $objProduct;
 	}
 	
 	

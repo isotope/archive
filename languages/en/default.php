@@ -34,3 +34,7 @@ $GLOBALS['TL_LANG']['MSC']['id']							= 'Product ID';
 
 $GLOBALS['TL_LANG']['MSC']['noWarehouses']					= 'No warehouses are found, please create one first to control your inventory.';
 $GLOBALS['TL_LANG']['MSC']['noProducts']					= 'No products were found';
+
+$GLOBALS['TL_LANG']['MSC']['inventoryAdminSubject']			= 'Inventory Warning';
+$GLOBALS['TL_LANG']['MSC']['inventoryAdminText']['zero']			= 'A product (ID %s, NAME %s) has dropped to a zero level inventory and is no longer being listed. Click here to view the product. %s';
+$GLOBALS['TL_LANG']['MSC']['inventoryAdminText']['low']			= 'A product (ID %s, NAME %s) has dropped to a low inventory. Click here to view the product. %s';

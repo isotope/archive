@@ -29,6 +29,13 @@
 /**
  * Fields
  */
+$GLOBALS['TL_LANG']['tl_iso_products']['inventory'] = array('Inventory');
+
+
+/**
+ * References
+ */
 $GLOBALS['TL_LANG']['tl_iso_products']['warehouse_name']	= 'Warehouse';
 $GLOBALS['TL_LANG']['tl_iso_products']['quantity']			= 'Current Qty';
 $GLOBALS['TL_LANG']['tl_iso_products']['new_quantity']		= 'New Qty';
+
