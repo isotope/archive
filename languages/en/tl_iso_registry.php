@@ -30,12 +30,14 @@
  * tl_registry
  */
  
-$GLOBALS['TL_LANG']['tl_iso_registry']['fields']['name'] = array('Name of Person on Registry', '');
-$GLOBALS['TL_LANG']['tl_iso_registry']['fields']['second_party_name'] = array('Name of Second Party', '');
-$GLOBALS['TL_LANG']['tl_iso_registry']['fields']['date'] = array('Date of Event', '');
-$GLOBALS['TL_LANG']['tl_iso_registry']['fields']['event_type'] = array('Type of Event', '');
-$GLOBALS['TL_LANG']['tl_iso_registry']['fields']['description'] = array('Description of Event', '');
-
+$GLOBALS['TL_LANG']['tl_iso_registry']['name'] = array('Name of Person on Registry', '');
+$GLOBALS['TL_LANG']['tl_iso_registry']['second_party_name'] = array('Name of Second Party', '');
+$GLOBALS['TL_LANG']['tl_iso_registry']['date'] = array('Date of Event', '');
+$GLOBALS['TL_LANG']['tl_iso_registry']['event_type'] = array('Type of Event', '');
+$GLOBALS['TL_LANG']['tl_iso_registry']['description'] = array('Description of Event', '');
+$GLOBALS['TL_LANG']['tl_iso_registry']['price']				= array('Price','');
+$GLOBALS['TL_LANG']['tl_iso_registry']['product_quantity']	= array('Quantity','');
+$GLOBALS['TL_LANG']['tl_iso_registry']['item_total']			= array('Total','');
 
 /**
  * Reference
@@ -43,5 +45,16 @@ $GLOBALS['TL_LANG']['tl_iso_registry']['fields']['description'] = array('Descrip
 $GLOBALS['TL_LANG']['tl_iso_registry']['wedding'] = 'Wedding';
 $GLOBALS['TL_LANG']['tl_iso_registry']['bar_mitzvah'] = 'Bar Mitzvah';
 $GLOBALS['TL_LANG']['tl_iso_registry']['bat_mitzvah'] = 'Bat Mitzvah';
+
+
+/**
+ * Operations
+ */
+$GLOBALS['TL_LANG']['tl_iso_registry']['new'] = 'Create New Registry';
+$GLOBALS['TL_LANG']['tl_iso_registry']['edit_items'] = array('Edit Registry Items', 'Edit items for registry ID %s');
+
+
+
+
 
 ?>

@@ -31,5 +31,4 @@
  */
 $GLOBALS['TL_LANG']['FMD']['iso_registry_manager']	= array('Gift Registry Manager', 'A fully-featured gift registry module.  Allows users to create and manage their own gift registries.');
 $GLOBALS['TL_LANG']['FMD']['iso_registry_search']		= array('Gift Registry Search', 'Allow customers to search for existing Gift Registries');
-$GLOBALS['TL_LANG']['FMD']['iso_registry_results']	= array('Gift Registry Search Results', 'Allow customers to search for existing Gift Registries');
 $GLOBALS['TL_LANG']['FMD']['iso_registry_reader']		= array('Gift Registry Reader', 'Allow customers to view existing Gift Registries');
