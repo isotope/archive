@@ -135,7 +135,114 @@ var BackendImport =
 				}
 			}
 		}
-	}
+	},
+	/**
+	 * Category wizard
+	 * @param object
+	 * @param string
+	 * @param string
+	 */
+	categoryAutomatch: function(selList_1, selList_2, parentTbl)
+	{
+		var searchArray = new Array();
+		
+		var list1 = $(selList_1);
+		var list2 = $(selList_2);
+		
+		if(list1)
+		{
+			var arrChildren1 = list1.getChildren('option');
+			
+			if(list2.getElement('optgroup'))
+			{
+				var optgroup = list2.getElement('optgroup');
+				var arrChildren2 = optgroup.getChildren('option');
+			}
+			else
+			{
+				var arrChildren2 = list2.getChildren('option');
+			}
+				
+			var spRegex = RegExp(/&nbsp;/g);	
+						
+			arrChildren2.each(function(item,index) {	//new category options				
+				searchArray.push(item.get('html').replace(spRegex,'').trim());	//new category option html values (the labels are our basis for comparison)
+			});
+			
+			var matchingCats = new Array();
+			var sourceCats = new Array();
+				
+			arrChildren1.each(function(item,index) {
+				if(item.get('html')!=='-')
+				{				
+					var currValue = item.get('html').replace(spRegex,'').trim();
+										
+					blnSuccess = false;
+										
+					if(searchArray.contains(currValue));
+					{											
+						arrChildren2.each(function(nitem,index) {	//find corresponding value in the second list.							
+							var compValue = nitem.get('html').replace(spRegex,'').trim();
+							if(compValue==currValue)
+							{
+								sourceCats.push(nitem.get('value'));
+								blnSuccess = true;
+							}
+						});
+						
+						if(blnSuccess)
+							matchingCats.push(item.get('value'));
+					}
+				}
+			});
+						
+			matchingCats.each(function(item,index) {
+			
+				$(list1).set('value',item);
+				$(list2).set('value',sourceCats[index]);
+				
+				var table = $(parentTbl);
+				var tbody = table.getFirst().getNext();
+				var rows = tbody.getChildren();
+				var parent = $(list1).getParent('tr');
+				var tr = new Element('tr');
+				var childs = parent.getChildren();
 
+				for (var i=0; i<childs.length; i++)
+				{
+					var next = childs[i].clone(true).injectInside(tr);
+					next.getFirst().value = childs[i].getFirst().value;
+
+					if (next.getFirst().type == 'checkbox')
+					{
+						next.getFirst().checked = childs[i].getFirst().checked ? 'checked' : '';
+						if (Browser.Engine.trident && Browser.Engine.version < 5) next.innerHTML = next.innerHTML.replace(/CHECKED/ig, 'checked="checked"');
+					}
+				}
+
+				tr.injectAfter(parent);
+				
+				rows = tbody.getChildren();
+				var fieldnames = new Array('value', 'label', 'default');
+		
+				for (var i=0; i<rows.length; i++)
+				{
+					var childs = rows[i].getChildren();
+		
+					for (var j=0; j<childs.length; j++)
+					{
+						var first = childs[j].getFirst();
+		
+						if (first.type == 'text' || first.type == 'checkbox' || first.get('tag') == 'select')
+						{
+							first.name = first.name.replace(/\[[0-9]+\]/ig, '[' + i + ']')
+						}
+					}
+				}
+				
+			});
+			
+		}
+	}
 }
 	

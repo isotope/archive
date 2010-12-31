@@ -32,6 +32,7 @@
 <h3>Old Database Name: <?php echo $this->oldDb; ?></h3>
 <div>
 <h3><label for="ctrl_options">Category Mapping</label></h3>
+<div style="padding-top:10px;padding-bottom:10px;"><input type="button" name="automap" class="tl_submit" id="ctrl_automap" value="Suggest Category Mappings" /></div>
 <table cellspacing="0" cellpadding="0" class="tl_optionwizard" id="ctrl_options" summary="Field wizard">
   <thead>
     <tr>
@@ -95,3 +96,14 @@
 </form>
 <?php endif; ?>
 </div>
+<script type="text/javascript" language="javascript">
+	window.addEvent('domready', function() {
+		if($('ctrl_automap'))
+		{
+			$('ctrl_automap').addEvent('click', function() {
+				BackendImport.categoryAutomatch('options_value_0','options_label_0','ctrl_options');
+			});
+		}
+	
+	});
+</script>
