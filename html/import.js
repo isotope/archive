@@ -137,8 +137,8 @@ var BackendImport =
 		}
 	},
 	/**
-	 * Category wizard
-	 * @param object
+	 * Category Automatch
+	 * @param string
 	 * @param string
 	 * @param string
 	 */
