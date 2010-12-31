@@ -190,17 +190,19 @@ var BackendImport =
 							}
 						});
 						
-						if(blnSuccess)
-							matchingCats.push(item.get('value'));
+						if(blnSuccess)	//interesting to note we can't blindly push to the matchingCats array if contains() returns true as it will return true
+							matchingCats.push(item.get('value')); //on partial matches.
 					}
 				}
 			});
-						
+	
 			matchingCats.each(function(item,index) {
-			
+				
+				//source & matching lists are synched ordinally, we can set each corresponding.
 				$(list1).set('value',item);
 				$(list2).set('value',sourceCats[index]);
 				
+				//Interface cloning script
 				var table = $(parentTbl);
 				var tbody = table.getFirst().getNext();
 				var rows = tbody.getChildren();
