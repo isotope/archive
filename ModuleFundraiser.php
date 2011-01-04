@@ -47,6 +47,12 @@ class ModuleFundraiser extends ModuleIsotope
 	protected $strUserId;
 	
 	/**
+	 * URL cache array
+	 * @var array
+	 */
+	private static $arrUrlCache = array();
+	
+	/**
 	 * Display a wildcard in the back end
 	 * @return string
 	 */
