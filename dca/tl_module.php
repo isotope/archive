@@ -47,7 +47,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['iso_fundraiser_layout'] = array
 	'default'                 => 'iso_fundraiser_manage',
 	'exclude'                 => true,
 	'inputType'               => 'select',
-	'options'                 => $this->getTemplateGroup('iso_fundraiser_manage')
+	'options_callback'		  => array('tl_module_isotope_fundraiser', 'getManageTemplates'),
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['iso_fundraiser_reader'] = array
@@ -56,7 +56,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['iso_fundraiser_reader'] = array
 	'default'                 => 'iso_fundraiser_full',
 	'exclude'                 => true,
 	'inputType'               => 'select',
-	'options'                 => $this->getTemplateGroup('iso_fundraiser_full')
+	'options_callback'		  => array('tl_module_isotope_fundraiser', 'getFullTemplates'),
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['iso_fundraiser_results'] = array
@@ -65,7 +65,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['iso_fundraiser_results'] = array
 	'default'                 => 'iso_fundraiser_searchlister',
 	'exclude'                 => true,
 	'inputType'               => 'select',
-	'options'                 => $this->getTemplateGroup('iso_fundraiser_search')
+	'options_callback'		  => array('tl_module_isotope_fundraiser', 'getSearchTemplates'),
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['iso_fundraiser_jumpTo'] = array
@@ -76,4 +76,62 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['iso_fundraiser_jumpTo'] = array
 	'explanation'             => 'jumpTo',
 	'eval'                    => array('fieldType'=>'radio')
 );
+
+
+class tl_module_isotope_fundraiser extends Backend
+{
+	
+	/**
+	 * Return fundraiser templates as array
+	 * @param object
+	 * @return array
+	 */
+	public function getManageTemplates(DataContainer $dc)
+	{
+		$intPid = $dc->activeRecord->pid;
+
+		if ($this->Input->get('act') == 'overrideAll')
+		{
+			$intPid = $this->Input->get('id');
+		}
+
+		return $this->getTemplateGroup('iso_fundraiser_manage', $intPid);
+	}
+	
+	
+	/**
+	 * Return fundraiser templates as array
+	 * @param object
+	 * @return array
+	 */
+	public function getFullTemplates(DataContainer $dc)
+	{
+		$intPid = $dc->activeRecord->pid;
+
+		if ($this->Input->get('act') == 'overrideAll')
+		{
+			$intPid = $this->Input->get('id');
+		}
+
+		return $this->getTemplateGroup('iso_fundraiser_full', $intPid);
+	}
+	
+	
+	/**
+	 * Return fundraiser templates as array
+	 * @param object
+	 * @return array
+	 */
+	public function getSearchTemplates(DataContainer $dc)
+	{
+		$intPid = $dc->activeRecord->pid;
+
+		if ($this->Input->get('act') == 'overrideAll')
+		{
+			$intPid = $this->Input->get('id');
+		}
+
+		return $this->getTemplateGroup('iso_fundraiser_search', $intPid);
+	}
+}
 
