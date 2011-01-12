@@ -39,4 +39,4 @@ array_insert($GLOBALS['BE_MOD']['isotope'], 3, array
 $GLOBALS['TL_HOOKS']['iso_getAttributes'][] = array('IsotopeWarehouse','getAttributes');
 $GLOBALS['TL_HOOKS']['iso_getVariantAttributes'][] = array('IsotopeWarehouse','getVariantAttributes');
 
-$GLOBALS['TL_HOOKS']['iso_writeOrder'][] = array('IsotopeInventory','updateInventory');
+$GLOBALS['ISO_HOOKS']['checkout'][] = array('IsotopeInventory','updateInventory');

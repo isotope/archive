@@ -41,16 +41,12 @@ class IsotopeInventory extends Controller
 	/** 
 	 * hook function to update product inventory levels
 	 * @access public
-	 * @param integer $intOrderid
-	 * @param boolean $blnCheckout
 	 * @param object $objOrder
+	 * @param object $objCart
 	 * @return boolean
 	 */
-	public function updateInventory($intOrderId, $blnCheckout, $objOrder)
+	public function updateInventory($objOrder, $objCart)
 	{
-		if(!$blnCheckout)
-			return false; 
-			
 		$arrWarehouses = deserialize($this->Isotope->Config->warehouses, true);
 		
 		if(!$this->Isotope->Config->enableInventory || !count($arrWarehouses))
@@ -64,7 +60,7 @@ class IsotopeInventory extends Controller
 		//For now just grab the first warehouse...
 		$intWarehouseId = $arrWarehouses[0];
 	
-		$arrProducts = $this->Isotope->Cart->getProducts();
+		$arrProducts = $objCart->getProducts();
 	
 		foreach($arrProducts as $i=>$objProduct)
 		{
