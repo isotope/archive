@@ -8,12 +8,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
@@ -53,7 +53,7 @@ $GLOBALS['TL_DCA']['tl_iso_fundraiser'] = array
 	(
 		'sorting' => array
 		(
-			
+
 			'mode'                    => 1,
 			'fields'                  => array('name'),
 			'flag'                    => 1,
@@ -147,17 +147,17 @@ $GLOBALS['TL_DCA']['tl_iso_fundraiser'] = array
 
 class tl_iso_fundraiser extends Backend
 {
-	
+
 	public function checkPermission($dc)
 	{
 		if (strlen($this->Input->get('act')))
 		{
 			$GLOBALS['TL_DCA']['tl_iso_fundraiser']['config']['closed'] = false;
 		}
-		
+
 		// Hide archived (used and deleted) tax classes
 		$arrModules = $this->Database->execute("SELECT id FROM tl_iso_fundraiser WHERE archive<2")->fetchEach('id');
-		
+
 		if (!count($arrModules))
 		{
 			$arrModules = array(0);
@@ -188,15 +188,15 @@ class tl_iso_fundraiser extends Backend
 				break;
 		}
 	}
-	
-	
+
+
 	/**
 	 * Record is deleted, archive if necessary
 	 */
 	public function archiveRecord($dc)
 	{
 	}
-	
+
 
 }
 

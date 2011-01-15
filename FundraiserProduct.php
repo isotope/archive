@@ -8,12 +8,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at http://www.gnu.org/licenses/.
@@ -27,7 +27,7 @@
 
 class FundraiserProduct extends IsotopeProduct
 {
-		
+
 	/**
 	 * Set a property
 	 */
@@ -39,24 +39,24 @@ class FundraiserProduct extends IsotopeProduct
 				parent::__set($strKey, $varValue);
 		}
 	}
-	
+
 	/**
 	 * Generate a product template - FundraiserProduct does not need to validate widgets since all options are pre-selected
 	 */
 	public function generate($strTemplate, &$objModule)
-	{		
+	{
 		$objTemplate = new FrontendTemplate($strTemplate);
-		
+
 		$arrProductOptions = array();
 		$arrAjaxOptions = array();
 		$arrAttributes = $this->getAttributes();
-		
+
 		foreach( $arrAttributes as $attribute => $varValue )
 		{
 				$objTemplate->$attribute = $this->generateAttribute($attribute, $varValue);
         }
-        
-        
+
+
         // Buttons
 		$arrButtons = array();
 		if (isset($GLOBALS['TL_HOOKS']['isoButtons']) && is_array($GLOBALS['TL_HOOKS']['isoButtons']))
@@ -66,12 +66,12 @@ class FundraiserProduct extends IsotopeProduct
 				$this->import($callback[0]);
 				$arrButtons = $this->$callback[0]->$callback[1]($arrButtons);
 			}
-			
+
 			$arrButtons = array_intersect_key($arrButtons, array_flip(deserialize($objModule->iso_buttons, true)));
 		}
-				
+
 		if ($this->Input->post('FORM_SUBMIT') == 'iso_product_'.$this->id)
-		{			
+		{
 			foreach( $arrButtons as $button => $data )
 			{
 				if (strlen($this->Input->post($button)))
@@ -85,26 +85,26 @@ class FundraiserProduct extends IsotopeProduct
 				}
 			}
 		}
-		
-		
+
+
 		$objTemplate->buttons = $arrButtons;
 		$objTemplate->quantityLabel = $GLOBALS['TL_LANG']['MSC']['quantity'];
 		$objTemplate->useQuantity = $objModule->iso_use_quantity;
-			
+
 
 		$objTemplate->raw = $this->arrData;
 		$objTemplate->href_reader = $this->href_reader;
-		
+
 		$objTemplate->label_detail = $GLOBALS['TL_LANG']['MSC']['detailLabel'];
-		
-		$objTemplate->options = $arrProductOptions;	
+
+		$objTemplate->options = $arrProductOptions;
 		$objTemplate->hasOptions = count($arrProductOptions) ? true : false;
-		
+
 		$objTemplate->enctype = $this->hasUpload ? 'multipart/form-data' : 'application/x-www-form-urlencoded';
 		$objTemplate->formId = 'iso_product_'.$this->id;
 		$objTemplate->action = ampersand($this->Environment->request, true);
 		$objTemplate->formSubmit = 'iso_product_'.$this->id;
-		
+
 		// HOOK for altering product data before output
 		if (isset($GLOBALS['TL_HOOKS']['iso_generateProduct']) && is_array($GLOBALS['TL_HOOKS']['iso_generateProduct']))
 		{
