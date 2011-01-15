@@ -6,7 +6,7 @@
 		<td style="text-align:right;"><p style="font-size:1.2em; margin-top:0px; margin-bottom:10px; padding:0px;"><?php echo $this->invoiceTitle; ?></p></td>
 		</tr>
 	</table>
-		
+
 	<h2><?php echo $this->orderDetailsHeadline; ?></h2>
 	<table cellspacing="0" cellpadding="8" summary="Order details">
 	<tr>
@@ -30,7 +30,7 @@
 	</td>
 	</tr>
 	<div class="clear">&nbsp;</div>
-	
+
 	<table cellspacing="0" cellpadding="8" summary="Order items" style="border:1px solid #000; width:650px;">
 		<thead>
 			<tr class="header">
@@ -57,11 +57,11 @@
 	<?php endforeach; ?>
 		</tbody>
 	</table>
-	
-	
+
+
 	<?php if (count($this->downloads)): ?>
 	<h2><?php echo $this->downloadsLabel; ?></h2>
 	<?php foreach( $this->downloads as $download ): ?>
 	<div class="download"><?php if ($download['downloadable']): ?><a href="<?php echo $download['href']; ?>" /><?php endif; echo $download['title']; if ($download['downloadable']): ?></a><?php endif; echo $download['remaining']; ?></div>
-	<?php endforeach; endif; ?>	
+	<?php endforeach; endif; ?>
 </div>
