@@ -8,12 +8,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
@@ -34,8 +34,8 @@ class ModuleIsotopeSkusearch extends ModuleIsotopeProductList
 	 * @var string
 	 */
 	protected $strTemplate = 'mod_iso_skusearch';
-	
-	
+
+
 	public function generate()
 	{
 		if (TL_MODE == 'BE')
@@ -50,15 +50,15 @@ class ModuleIsotopeSkusearch extends ModuleIsotopeProductList
 
 			return $objTemplate->parse();
 		}
-		
+
 		return parent::generate();
 	}
-	
-	
+
+
 	protected function findProducts()
 	{
 		$strKeywords = $this->Input->get('keywords');
-		
+
 		if (strpos($strKeywords, '*') === false)
 		{
 			$strKeywords = '%'.$strKeywords.'%';
@@ -67,37 +67,37 @@ class ModuleIsotopeSkusearch extends ModuleIsotopeProductList
 		{
 			$strKeywords = str_replace('*', '%', $strKeywords);
 		}
-		
+
 		$arrProducts = array();
 		$arrIds = $this->Database->prepare("SELECT id FROM tl_iso_products WHERE sku LIKE ? AND published='1'")->execute($strKeywords)->fetchEach('id');
-		
+
 		foreach( $arrIds as $intId )
 		{
 			$objProduct = $this->getProduct($intId);
-			
+
 			if (is_object($objProduct))
 			{
 				$arrProducts[] = $objProduct;
 			}
 		}
-		
+
 		// No products found, display message
 		if (!count($arrProducts))
 		{
 			$this->iso_noProducts = sprintf($GLOBALS['TL_LANG']['MSC']['sNoResult'], $this->Input->get('keywords'));
 			return array();
 		}
-		
+
 		// One product found, redirect to reader page
 		elseif (count($arrProducts) == 1 && $this->iso_reader_jumpTo > 0)
 		{
 			$objProduct = reset($arrProducts);
-			
+
 			$objProduct->reader_jumpTo = $this->iso_reader_jumpTo;
-			
+
 			$this->redirect($objProduct->href_reader);
 		}
-		
+
 		// Multiple products found, show the product list
 		else
 		{
