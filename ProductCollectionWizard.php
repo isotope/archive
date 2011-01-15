@@ -8,12 +8,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
@@ -40,7 +40,7 @@ class ProductCollectionWizard extends Widget
 	 * @var string
 	 */
 	protected $strTemplate = 'be_widget';
-	
+
 	/**
 	 * Allowed row ids
 	 * @var array
@@ -53,20 +53,20 @@ class ProductCollectionWizard extends Widget
 	 * @param array
 	 */
 	public function __construct($arrAttributes=false)
-	{		
+	{
 		$this->strId = $arrAttributes['id'];
-		
+
 		parent::__construct($arrAttributes);
-		
+
 		$_SESSION['AJAX-FFL'][$this->strId]['type'] = 'collectionWizard';
-		
+
 		$this->import('Database');
 	}
-	
-	
+
+
 	/**
 	 * Store config for ajax upload.
-	 * 
+	 *
 	 * @access public
 	 * @param string $strKey
 	 * @param mixed $varValue
@@ -78,13 +78,13 @@ class ProductCollectionWizard extends Widget
 		{
 			$_SESSION['AJAX-FFL'][$this->strId][$strKey] = $varValue;
 		}
-		
+
 		switch ($strKey)
 		{
 			case 'allowedIds':
 				$this->arrIds = deserialize($varValue);
 				break;
-				
+
 			case 'searchFields':
 				$arrFields = array();
 				foreach( $varValue as $k => $v )
@@ -100,7 +100,7 @@ class ProductCollectionWizard extends Widget
 				}
 				parent::__set($strKey, $arrFields);
 				break;
-				
+
 			case 'mandatory':
 				$this->arrConfiguration['mandatory'] = $varValue ? true : false;
 				break;
@@ -110,8 +110,8 @@ class ProductCollectionWizard extends Widget
 				break;
 		}
 	}
-	
-	
+
+
 	/**
 	 * Validate input and set value
 	 */
@@ -121,12 +121,12 @@ class ProductCollectionWizard extends Widget
 		{
 			$this->addError(sprintf($GLOBALS['TL_LANG']['ERR']['mandatory'], $this->strLabel));
 		}
-		
+
 		return $varInput;
 	}
 
-	
-	
+
+
 	/**
 	 * Generate the widget and return it as string
 	 * @return string
@@ -135,9 +135,9 @@ class ProductCollectionWizard extends Widget
 	{
 		$GLOBALS['TL_CSS'][] = 'system/modules/collectionwizard/html/collectionwizard.css';
 		$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/collectionwizard/html/collectionwizard.js';
-		
+
 		$this->loadLanguageFile($this->foreignTable);
-		
+
 		$strClass = $this->collectionType;
 
         if (!$this->classFileExists($strClass))
@@ -148,7 +148,7 @@ class ProductCollectionWizard extends Widget
 		$objCollection->findBy('id', $this->collectionId);
 		$arrProducts = $objCollection->getProducts();
 		$strResults = $this->listResults($arrProducts);
-					
+
 			$strResults .= '
     <tr class="search" style="display:none">
       <td colspan="' . (count($this->listFields)+5) . '"><label for="ctrl_' . $this->strId . '_search">' . ($this->searchLabel=='' ? $GLOBALS['TL_LANG']['MSC']['searchLabel'] : $this->searchLabel) . ':</label> <input type="text" id="ctrl_' . $this->strId . '_search" name="keywords" class="tl_text" autocomplete="off" /></td>
@@ -157,26 +157,26 @@ class ProductCollectionWizard extends Widget
       <td colspan="' . (count($this->listFields)+5) . '"><a href="' . $this->addToUrl('noajax=1') . '">' . $GLOBALS['TL_LANG']['MSC']['tlwJavascript'] . '</a></td>
     </tr>'
     ;
-		
-		
+
+
 		$strBuffer = '
 <table cellspacing="0" cellpadding="0" id="ctrl_' . $this->strId . '" class="tl_collectionwizard" summary="Table data">
   <thead>
     <tr>
       <th class="head_0 col_first">&nbsp;</th>
       <th class="head_1">'. $GLOBALS['TL_LANG']['tl_iso_products']['type'][0] .'</th>';
-      
+
       	$i = 2;
       	foreach( $this->listFields as $k => $v )
       	{
       		$field = is_numeric($k) ? $v : $k;
-      		
+
       		$strBuffer .= '
   	  <th class="head_' . $i . ($i==count($this->listFields) ? ' col_last' : '') . '">' . $GLOBALS['TL_LANG'][$this->foreignTable][$field][0] . '</th>';
-      		
+
       		$i++;
       	}
-      	
+
   	  	$strBuffer .= '
     <th class="head_options">'. $GLOBALS['TL_LANG']['MSC']['optionsLabel'] .'</th>
 	<th class="head_qty">'. $GLOBALS['TL_LANG']['MSC']['qtyLabel'] .'</th>
@@ -196,32 +196,32 @@ window.addEvent('domready', function() {
 </script>';
 		return $strBuffer;
 	}
-	
-	
+
+
 	public function generateAjax()
 	{
-		
+
 		$arrKeywords = trimsplit(' ', $this->Input->post('keywords'));
 
 		$strFilter = '';
 		$arrProcedures = array();
 		$arrValues = array();
-		
+
 		foreach( $arrKeywords as $keyword )
 		{
 			if (!strlen($keyword))
 				continue;
-				
+
 			$arrProcedures[] .= implode(' LIKE ? OR ', $this->searchFields) . ' LIKE ?';
 			foreach($this->searchFields as $field)
 			{
 				$arrValues[] = '%'.$keyword.'%';
 			}
 		}
-		
+
 		if (!count($arrProcedures))
 			return '';
-		
+
 		$typeArray = $this->Input->post($this->strName);
 		if (is_array($typeArray) && count($typeArray))
 		{
@@ -237,16 +237,16 @@ window.addEvent('domready', function() {
 		{
 			$strFilter = ") AND id NOT IN (" . $typeData;
 		}
-		
+
 		$objItems = $this->Database->prepare("SELECT * FROM {$this->foreignTable} WHERE (" . implode(' OR ', $arrProcedures) . $strFilter . ")" . (strlen($this->sqlWhere) ? " AND {$this->sqlWhere}" : ''))
 									  ->execute($arrValues);
-									  
+
 		while( $objItems->next() )
 		{
 			$objProductData = $this->Database->prepare("SELECT *, (SELECT class FROM tl_iso_producttypes WHERE tl_iso_products.type=tl_iso_producttypes.id) AS product_class FROM tl_iso_products WHERE pid={$objItems->id} OR id={$objItems->id}")->limit(1)->execute();
-							
+
 			$strClass = $GLOBALS['ISO_PRODUCT'][$objProductData->product_class]['class'];
-			
+
 			try
 			{
 				$objProduct = new $strClass($objProductData->row());
@@ -255,69 +255,69 @@ window.addEvent('domready', function() {
 			{
 				$objProduct = new IsotopeProduct(array('id'=>$objItems->product_id, 'sku'=>$objItems->product_sku, 'name'=>$objItems->product_name, 'price'=>$objItems->price));
 			}
-		
+
 			$arrResults[] = $objProduct;
-		}	
+		}
 		$strBuffer .= $this->listResults($arrResults, true);
-		
+
 		if (!strlen($strBuffer))
 			return '<tr class="found empty"><td colspan="' . (count($this->listFields)+1) . '">' . sprintf($GLOBALS['TL_LANG']['MSC']['tlwNoResults'], $this->Input->post('keywords')) . '</td></tr>';
-			
+
 		return $strBuffer;
 	}
-	
-	
+
+
 	protected function listResults($arrProducts, $blnAjax=false)
 	{
 		$c=0;
 		$strResults = '';
-				
+
 		if(count($arrProducts))
 		{
 			foreach( $arrProducts as $objProduct)
 			{
 				if (is_array($this->arrIds) && !in_array($objProduct->id, $this->arrIds))
 					continue;
-					
+
 				$objType = $this->Database->prepare("SELECT name FROM tl_iso_producttypes WHERE id=?")->limit(1)->execute($objProduct->type);
-					
+
 				$strResults .= '
 			    <tr class="' . ($c%2 ? 'even' : 'odd') . ($c==0 ? ' row_first' : '') . ($blnAjax ? ' found' : ' existing') . '">
 			      <td class="col_0 col_first"><input type="checkbox" class="checkbox" name="' . ($blnAjax ? $this->strName . '-found' :  $this->strName . '['.$c.'][product]') .'" value="' . ($objProduct->pid ? $objProduct->pid : $objProduct->id) . '"' . ($blnAjax ? '' : $this->optionChecked($objProduct->id, $this->varValue)) . ' /></td>';
-					
+
 	      		$strResults .= '<td class="col_1">' . $objType->name . '</td>';
-	      		
+
 	      		$i = 2;
 	      		foreach( $this->listFields as $field )
 	      		{
-	      				
+
 	      			$strResults .= '
 	      <td class="col_' . $i . '">' . $objProduct->$field . '</td>';
-	      
+
 	      			$i++;
 	      		}
 	      		$intOrder = $blnAjax ? 'x' : $c;
 	      		$strResults .= $this->getProductOptions($objProduct, $intOrder, $blnAjax);
-	      						
+
 				$strResults .= '<td class="col_qty"><input style="width:20px;" type="text" class="text qty" maxlength="3" name="' . ($blnAjax ? $this->strName . '-qty' :  $this->strName . '['.$c.'][qty]') .'" value="' . ($objProduct->quantity_requested ? $objProduct->quantity_requested : '1') . '" /></td>';
-				
+
 				$strResults .= '<td class="col_price"><input style="width:40px;" type="text" class="text price" name="' . ($blnAjax ? $this->strName . '-price' :  $this->strName . '['.$c.'][price]') .'" value="' . $objProduct->price . '" /></td>';
-	      		
+
 	      		$strResults .= '
 	    </tr>';
-	    		
+
 	    		$c++;
 			}
 		}
-		
+
 		return $strResults;
 	}
-	
+
 	protected function getProductOptions($objProduct, $intOrder, $blnAjax=false)
 	{
 		$this->loadDataContainer('tl_iso_products');
 		$this->loadLanguageFile('tl_iso_products');
-		
+
 		$arrAttributes = $objProduct->getAttributes();
 		foreach($arrAttributes as $attribute => $varValue )
 		{
@@ -325,12 +325,12 @@ window.addEvent('domready', function() {
 			{
 				$arrOptionKeys[] = $attribute;
 			}
-		}						
-		$productId = $objProduct->pid ? $objProduct->pid : $objProduct->id;	
+		}
+		$productId = $objProduct->pid ? $objProduct->pid : $objProduct->id;
 		$arrProductOptions = array();
 		$arrDetails = $GLOBALS['TL_DCA']['tl_iso_products'];
 		if(count($arrOptionKeys))
-		{	
+		{
 			$objVariants = $this->Database->prepare("SELECT id, price, ". implode(', ', $arrOptionKeys) ." FROM tl_iso_products WHERE pid=?")->execute($productId);
 			while($objVariants->next())
 			{
@@ -349,9 +349,9 @@ window.addEvent('domready', function() {
 				}
 				$strLabel .= $objVariants->price;
 				$arrProductOptions['options'][] = array('value'=>$objVariants->id,'label'=>$strLabel);
-			}			
+			}
 		}
-		
+
 		if(count($arrProductOptions))
 		{
 			foreach($arrProductOptions as $name => $options)
@@ -373,11 +373,11 @@ window.addEvent('domready', function() {
 					<td class="col_option"></td>';
 		}
 
-				
+
 		return $strResults;
-	
+
 	}
-	
+
 	protected function getOptionLabel($intId)
 	{
       	$this->loadDataContainer('tl_iso_products');
@@ -392,16 +392,16 @@ window.addEvent('domready', function() {
 				{
 					$name = $this->Database->prepare("SELECT name FROM tl_iso_attributes WHERE field_name=?")->limit(1)->execute($attribute);
 					$arrNames[] = ($name->numRows ? $name->name : $GLOBALS['TL_LANG'][$this->foreignTable][$attribute][0]);
-					
+
 				}
 			}
 			$strLabel = implode('/',$arrNames);
 			return $strLabel;
 		}
-		
+
 		return;
-		
+
 	}
-	
+
 }
 
