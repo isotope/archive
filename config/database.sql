@@ -8,9 +8,9 @@
 -- **********************************************************
 
 
--- 
+--
 -- Table `tl_module`
--- 
+--
 
 CREATE TABLE `tl_module` (
   `iso_donationProduct` int(10) unsigned NOT NULL default '0',
