@@ -7,9 +7,9 @@
 -- *                                                        *
 -- **********************************************************
 
--- 
+--
 -- Table `tl_page`
--- 
+--
 
 CREATE TABLE `tl_page` (
   `iso_flowplayer_license` varchar(255) NOT NULL default '',
