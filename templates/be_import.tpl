@@ -21,7 +21,7 @@
 <p class="tl_help tl_tip">Please enter the full name of the old database loaded on the same host. Note that the same user must have full privileges to that one as well.</p>
 </div>
 <div class="tl_submit_container">
-<input type="submit" name="clear" id="clear" class="tl_submit" value="Next" /> 
+<input type="submit" name="clear" id="clear" class="tl_submit" value="Next" />
 </div>
 <?php endif; ?>
 <?php if ($this->setCats): ?>
@@ -54,7 +54,7 @@
 </div>
 </fieldset>
 <div class="tl_submit_container">
-<input type="submit" name="clear" id="clear" class="tl_submit" value="Set Values" /> 
+<input type="submit" name="clear" id="clear" class="tl_submit" value="Set Values" />
 </div>
 <?php endif; ?>
 <?php if ($this->setConfirm): ?>
@@ -80,7 +80,7 @@
 </div>
 </fieldset>
 <div class="tl_submit_container">
-<input type="submit" name="clear" id="clear" class="tl_submit" value="Confirm settings" /> 
+<input type="submit" name="clear" id="clear" class="tl_submit" value="Confirm settings" />
 </div>
 <?php endif; ?>
 </form>
@@ -90,7 +90,7 @@
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_import" />
 <div class="tl_submit_container">
-<input type="submit" name="clear" id="clear" class="tl_submit" value="<?php echo $this->importSubmit; ?>" /> 
+<input type="submit" name="clear" id="clear" class="tl_submit" value="<?php echo $this->importSubmit; ?>" />
 </div>
 </div>
 </form>
@@ -104,6 +104,6 @@
 				BackendImport.categoryAutomatch('options_value_0','options_label_0','ctrl_options');
 			});
 		}
-	
+
 	});
 </script>

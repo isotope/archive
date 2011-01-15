@@ -46,7 +46,7 @@ var ImportRequest =
 			}
 		}).send();
 	},
-	
+
 	getError: function(error)
 	{
 		if(error)
@@ -145,14 +145,14 @@ var BackendImport =
 	categoryAutomatch: function(selList_1, selList_2, parentTbl)
 	{
 		var searchArray = new Array();
-		
+
 		var list1 = $(selList_1);
 		var list2 = $(selList_2);
-		
+
 		if(list1)
 		{
 			var arrChildren1 = list1.getChildren('option');
-			
+
 			if(list2.getElement('optgroup'))
 			{
 				var optgroup = list2.getElement('optgroup');
@@ -162,26 +162,26 @@ var BackendImport =
 			{
 				var arrChildren2 = list2.getChildren('option');
 			}
-				
-			var spRegex = RegExp(/&nbsp;/g);	
-						
-			arrChildren2.each(function(item,index) {	//new category options				
+
+			var spRegex = RegExp(/&nbsp;/g);
+
+			arrChildren2.each(function(item,index) {	//new category options
 				searchArray.push(item.get('html').replace(spRegex,'').trim());	//new category option html values (the labels are our basis for comparison)
 			});
-			
+
 			var matchingCats = new Array();
 			var sourceCats = new Array();
-				
+
 			arrChildren1.each(function(item,index) {
 				if(item.get('html')!=='-')
-				{				
+				{
 					var currValue = item.get('html').replace(spRegex,'').trim();
-										
+
 					blnSuccess = false;
-										
+
 					if(searchArray.contains(currValue));
-					{											
-						arrChildren2.each(function(nitem,index) {	//find corresponding value in the second list.							
+					{
+						arrChildren2.each(function(nitem,index) {	//find corresponding value in the second list.
 							var compValue = nitem.get('html').replace(spRegex,'').trim();
 							if(compValue==currValue)
 							{
@@ -189,19 +189,19 @@ var BackendImport =
 								blnSuccess = true;
 							}
 						});
-						
+
 						if(blnSuccess)	//interesting to note we can't blindly push to the matchingCats array if contains() returns true as it will return true
 							matchingCats.push(item.get('value')); //on partial matches.
 					}
 				}
 			});
-	
+
 			matchingCats.each(function(item,index) {
-				
+
 				//source & matching lists are synched ordinally, we can set each corresponding.
 				$(list1).set('value',item);
 				$(list2).set('value',sourceCats[index]);
-				
+
 				//Interface cloning script
 				var table = $(parentTbl);
 				var tbody = table.getFirst().getNext();
@@ -223,27 +223,27 @@ var BackendImport =
 				}
 
 				tr.injectAfter(parent);
-				
+
 				rows = tbody.getChildren();
 				var fieldnames = new Array('value', 'label', 'default');
-		
+
 				for (var i=0; i<rows.length; i++)
 				{
 					var childs = rows[i].getChildren();
-		
+
 					for (var j=0; j<childs.length; j++)
 					{
 						var first = childs[j].getFirst();
-		
+
 						if (first.type == 'text' || first.type == 'checkbox' || first.get('tag') == 'select')
 						{
 							first.name = first.name.replace(/\[[0-9]+\]/ig, '[' + i + ']')
 						}
 					}
 				}
-				
+
 			});
-			
+
 		}
 	}
 }
