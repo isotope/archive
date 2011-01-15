@@ -12,10 +12,10 @@
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_export" />
 <h3><?php echo $this->checkboxWidget->generateLabel(); ?></h3>
-<?php echo $this->checkboxWidget->generateWithError(); ?> 
+<?php echo $this->checkboxWidget->generateWithError(); ?>
 <br /><br />
 <div class="tl_submit_container">
-<input type="submit" name="clear" id="clear" class="tl_submit" value="<?php echo $this->sLabel; ?>" /> 
+<input type="submit" name="clear" id="clear" class="tl_submit" value="<?php echo $this->sLabel; ?>" />
 </div>
 </div>
 </form>
