@@ -8,12 +8,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
@@ -34,19 +34,19 @@ class ModuleGiftRegistryManager extends ModuleIsotope
 	 * @var string
 	 */
 	protected $strTemplate = 'mod_iso_registry';
-	
+
 	/**
 	 * Template
 	 * @var string
 	 */
 	protected $strFormId = 'iso_registry_create';
-	
+
 	/**
 	 * for widgets, don't submit if certain validation(s) fail
 	 * @var boolean;
 	 */
 	protected $doNotSubmit = false;
-	
+
 	/**
 	 * Display a wildcard in the back end
 	 * @return string
@@ -67,18 +67,18 @@ class ModuleGiftRegistryManager extends ModuleIsotope
 
 		return parent::generate();
 	}
-	
-	
+
+
 	/**
 	 * Generate module
 	 */
 	protected function compile()
 	{
 		$this->import('IsotopeRegistryFrontend');
-		
+
 		global $objPage;
 		$strUrl = $this->generateFrontendUrl($objPage->row());
-	
+
 		//Either load the existing Isotope->Registry object or set it if a registry exists, otherwise allow the user to create one
 		if(!$this->IsotopeRegistryFrontend->registryExists() || $this->Input->get('action')=='edit')
 		{
@@ -86,29 +86,29 @@ class ModuleGiftRegistryManager extends ModuleIsotope
 			$objTemplate = new FrontendTemplate('iso_registry_create');
 			$objTemplate->message = $GLOBALS['TL_LANG']['MSC']['noItemsInRegistry'];
 			$arrWidgets = $this->getWidgets();
-			
+
 			foreach($arrWidgets as $objWidget)
 			{
 				$objWidget->storeValues = true;
-				$objWidget->tableless = true;	
+				$objWidget->tableless = true;
 				$objTemplate->fields .= '<span class="widget '. $objWidget->class .'">';
-		
+
 				if ($this->Input->post('FORM_SUBMIT') == $this->strFormId)
 				{
 					$objWidget->validate();
 					$varValue = $objWidget->value;
-						
-				
+
+
 					// Do not submit if there are errors
 					if ($objWidget->hasErrors())
-					{				
+					{
 						$this->doNotSubmit = true;
 					}
 				}
-				
+
 				$objTemplate->fields .= $objWidget->parse() . '</span><br />';
 			}
-			
+
 			if($this->Input->post('FORM_SUBMIT') == $this->strFormId && !$this->doNotSubmit)
 			{
 				$arrData = array
@@ -121,9 +121,9 @@ class ModuleGiftRegistryManager extends ModuleIsotope
 					'event_type'			=>	$this->Input->post('event_type'),
 					'description'			=>	htmlentities($this->Input->post('description')),
 				);
-				
+
 				$this->import('Isotope');
-				
+
 				if(!$this->Isotope->Registry)
 				{
 					$this->Isotope->Registry = new IsotopeRegistry();
@@ -133,24 +133,24 @@ class ModuleGiftRegistryManager extends ModuleIsotope
 					$this->Isotope->Registry->setData($arrData);
 					$this->Isotope->Registry->save();
 				}
-				
+
 				$this->redirect($strUrl);
-				
+
 			}
-			
+
 			$objTemplate->action = ampersand($this->Environment->request, true);
 			$objTemplate->formId = $this->strFormId;
 			$objTemplate->slabel = specialchars($GLOBALS['TL_LANG']['MSC']['registryManage']);
-			
+
 			$this->Template->registry = $objTemplate->parse();
 			return;
-		
-			
+
+
 		}else
 		{
 			$this->Isotope->Registry->updateSold();
 			$arrProducts = $this->Isotope->Registry->getProducts();
-			
+
 			if (!count($arrProducts))
 			{
 			   $this->Template = new FrontendTemplate('mod_message');
@@ -158,13 +158,13 @@ class ModuleGiftRegistryManager extends ModuleIsotope
 			   $this->Template->message = $GLOBALS['TL_LANG']['MSC']['noItemsInRegistry'];
 			   return;
 			}
-			
+
 			$objTemplate = new FrontendTemplate($this->iso_registry_layout);
-			
+
 			$blnReload = false;
 			$arrQuantity = $this->Input->post('quantity');
 			$arrProductData = array();
-			
+
 			foreach( $arrProducts as $i => $objProduct )
 			{
 				if ($this->Input->get('remove') == $objProduct->cart_id)
@@ -184,7 +184,7 @@ class ModuleGiftRegistryManager extends ModuleIsotope
 						$this->Database->prepare("UPDATE tl_iso_registry_items SET product_quantity=? WHERE id={$objProduct->cart_id}")->executeUncached($arrQuantity[$objProduct->cart_id]);
 					}
 				}
-				
+
 				$arrProductData[] = array_merge($objProduct->getAttributes(), array
 				(
 					'id'				=> $objProduct->id,
@@ -200,9 +200,9 @@ class ModuleGiftRegistryManager extends ModuleIsotope
 					'remove_link_title' => sprintf($GLOBALS['TL_LANG']['MSC']['removeProductLinkTitle'], $objProduct->name),
 					'class'				=> 'row_' . $i . ($i%2 ? ' even' : ' odd') . ($i==0 ? ' row_first' : ''),
 				));
-				
+
 				$this->loadLanguageFile('tl_iso_registry');
-				
+
 				$objTemplate->registryTitle = $GLOBALS['TL_LANG']['MSC']['registryTitle'];
 				$objTemplate->name = $this->Isotope->Registry->name;
 				$objTemplate->second_party_name = $this->Isotope->Registry->second_party_name;
@@ -212,18 +212,18 @@ class ModuleGiftRegistryManager extends ModuleIsotope
 				$objTemplate->editLink = ampersand($strUrl . ($GLOBALS['TL_CONFIG']['disableAlias'] ? '&' : '?') . 'action=edit');
 				$objTemplate->editText = $GLOBALS['TL_LANG']['MSC']['registryEditText'];
 			}
-	
+
 			if ($blnReload)
 			{
 				$this->reload();
 			}
-			
+
 			if (count($arrProductData))
 			{
 				$arrProductData[count($arrProductData)-1]['class'] .= ' row_last';
 			}
-			
-			
+
+
 			$objTemplate->editformId = 'iso_registry_edit';
 			$objTemplate->editformSubmit = 'iso_registry_edit';
 			$objTemplate->formId = 'iso_registry_update';
@@ -231,12 +231,12 @@ class ModuleGiftRegistryManager extends ModuleIsotope
 			$objTemplate->action = $this->Environment->request;
 			$objTemplate->products = $arrProductData;
 			$objTemplate->showOptions = false;	//!@todo make a module option.
-			
+
 			$this->Template->registry = $objTemplate->parse();
 		}
 	}
-	
-	
+
+
 	/**
 	 * Build the widgets for the input form from the DCA fields
 	 * @return array
@@ -245,17 +245,17 @@ class ModuleGiftRegistryManager extends ModuleIsotope
 	{
 		$this->loadDataContainer('tl_iso_registry');
 		$this->loadLanguageFile('tl_iso_registry');
-	
+
 		$arrWidgets = array();
 		$arrFields = $GLOBALS['TL_DCA']['tl_iso_registry']['fields'];
-		
+
 		if(!is_array($arrFields))
 		{
 			return $arrWidgets;
 		}
-		
+
 		foreach($arrFields as $k=>$v)
-		{	
+		{
 			$strClass = $GLOBALS['TL_FFL'][$v['inputType']];
 			$objWidget = new $strClass($this->prepareForWidget($GLOBALS['TL_DCA']['tl_iso_registry']['fields'][$k], $k, ''));
 			$objWidget->label = $GLOBALS['TL_LANG']['tl_iso_registry']['fields'][$k][0];
@@ -269,11 +269,11 @@ class ModuleGiftRegistryManager extends ModuleIsotope
 			}
 			$arrWidgets[] = $objWidget;
 		}
-		
+
 		return $arrWidgets;
 	}
-	
-	
-	
+
+
+
 }
 

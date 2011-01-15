@@ -8,12 +8,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
@@ -24,8 +24,8 @@
  * @author     Andreas Schempp <andreas@schempp.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
- 
- 
+
+
 class ModuleGiftRegistrySearch extends Module
 {
 
@@ -86,9 +86,9 @@ class ModuleGiftRegistrySearch extends Module
 
 		$this->Template->form = $objFormTemplate->parse();
 		$this->Template->results = '';
-		
+
 		$strLastname = $_GET['lastname'];
-		
+
 		$dateQuery = '';
 		$intDate = 0;
 		if(strlen($_GET['date']))
@@ -104,7 +104,7 @@ class ModuleGiftRegistrySearch extends Module
 		if ((strlen($strLastname) || $intDate>0) && $strLastname != '*')
 		{
 			$arrResult = null;
-			
+
 			$nameQuery = 'AND (m.lastname LIKE "%' . $strLastname . '%" OR r.name LIKE "%' . $strLastname . '%" OR r.second_party_name LIKE "%' . $strLastname . '%")';
 
 			// Get result
@@ -122,7 +122,7 @@ class ModuleGiftRegistrySearch extends Module
 				}
 
 			}
-			
+
 			$count = count($arrResult);
 
 			// No results
@@ -135,7 +135,7 @@ class ModuleGiftRegistrySearch extends Module
 
 			$from = 1;
 			$to = $count;
-			
+
 			$this->loadLanguageFile('tl_iso_registry');
 
 			// Get results
@@ -153,10 +153,10 @@ class ModuleGiftRegistrySearch extends Module
 
 				$this->Template->results .= $objTemplate->parse();
 			}
-			
+
 			$strResults = (strlen($strLastname)) ? $GLOBALS['TL_LANG']['MSC']['lastNameLabel'] . ' ' . $strLastname . ' ' : '';
 			$strResults .= (strlen($strDate)) ? $GLOBALS['TL_LANG']['MSC']['dateLabel'] . ' ' . $strDate . ' ' : '';
-			
+
 			$this->Template->header = vsprintf($GLOBALS['TL_LANG']['MSC']['rResults'], array($from, $to, $count, $strResults));
 		}
 	}

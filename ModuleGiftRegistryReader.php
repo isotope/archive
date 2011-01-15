@@ -8,12 +8,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
@@ -35,7 +35,7 @@ class ModuleGiftRegistryReader extends ModuleIsotope
 	 */
 	protected $strTemplate = 'mod_iso_registry_reader';
 
-	
+
 	/**
 	 * Display a wildcard in the back end
 	 * @return string
@@ -53,21 +53,21 @@ class ModuleGiftRegistryReader extends ModuleIsotope
 
 			return $objTemplate->parse();
 		}
-		
+
 		// Return if no registry has been specified
 		if (!strlen($this->Input->get('rid')))
 		{
 			return '';
 		}
-		
+
 		global $objPage;
-		
+
 		$this->iso_reader_jumpTo = $objPage->id;
 
 		return parent::generate();
 	}
-	
-	
+
+
 	/**
 	 * Generate module
 	 */
@@ -80,7 +80,7 @@ class ModuleGiftRegistryReader extends ModuleIsotope
 		$this->Isotope->Registry->findBy('id',$this->Input->get('rid'));
 		$this->Isotope->Registry->updateSold(); //Need to do this until we can hook into writeOrder on checkout
 		$arrProducts = $this->Isotope->Registry->getProducts();
-		
+
 		if (!count($arrProducts))
 		{
 		   $this->Template = new FrontendTemplate('mod_message');
@@ -88,16 +88,16 @@ class ModuleGiftRegistryReader extends ModuleIsotope
 		   $this->Template->message = $GLOBALS['TL_LANG']['MSC']['noItemsInRegistry'];
 		   return;
 		}
-				
+
 		global $objPage;
 		$strUrl = $this->generateFrontendUrl($objPage->row());
-		
+
 		$arrBuffer = array();
-		
+
 		foreach( $arrProducts as $i => $objProduct )
 		{
 			$regInfo = $this->Isotope->Registry->getProductInfo($objProduct);
-			
+
 			$arrBuffer[] = array
 			(
 				'class'			=> ('product' . ($i == 0 ? ' product_first' : '')),
@@ -107,17 +107,17 @@ class ModuleGiftRegistryReader extends ModuleIsotope
 				'options'		=> deserialize($regInfo[0]['product_options'])
 			);
 		}
-	
+
 		// Add "product_last" css class
 		if (count($arrBuffer))
 		{
 			$arrBuffer[count($arrBuffer)-1]['class'] .= ' product_last';
 		}
-		
+
 		$this->loadLanguageFile('tl_iso_registry');
 		$strPeople = $this->Isotope->Registry->name;
 		$strPeople .= ($this->Isotope->Registry->second_party_name) ? ' & ' . $this->Isotope->Registry->second_party_name : '';
-				
+
 		$this->Template->products = $arrBuffer;
 		$this->Template->registryTitle = vsprintf($GLOBALS['TL_LANG']['MSC']['registryOwnerTitle'], $strPeople) ;
 		$this->Template->name = $this->Isotope->Registry->name;
@@ -125,7 +125,7 @@ class ModuleGiftRegistryReader extends ModuleIsotope
 		$this->Template->date = $this->Isotope->Registry->date;
 		$this->Template->event_type = $GLOBALS['TL_LANG']['tl_iso_registry'][$this->Isotope->Registry->event_type];
 		$this->Template->description = $this->Isotope->Registry->description;
-		
-	}	
-	
+
+	}
+
 }
