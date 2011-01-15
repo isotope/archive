@@ -8,12 +8,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
@@ -30,7 +30,7 @@ $this->loadLanguageFile('subdivisions');
 
 
 /**
- * Table tl_iso_warehouses 
+ * Table tl_iso_warehouses
  */
 $GLOBALS['TL_DCA']['tl_iso_warehouses'] = array
 (
@@ -118,7 +118,7 @@ $GLOBALS['TL_DCA']['tl_iso_warehouses'] = array
 				'icon'                => 'show.gif',
 			),
 			'quantities' => array
-			( 
+			(
 			  'label'               => &$GLOBALS['TL_LANG']['tl_iso_warehouses']['edit'],
 			  'href'                => 'key=quantities',
 			  'icon'                => 'tablewizard.gif',
@@ -264,27 +264,27 @@ $GLOBALS['TL_DCA']['tl_iso_warehouses'] = array
 
 /**
  * tl_iso_warehouses class.
- * 
+ *
  * @extends Backend
  */
 class tl_iso_warehouses extends Backend
 {
-	
+
 	public function getQuantityButton(  $row, $href, $label, $title, $icon, $attribute )
     {
 		$href .= '&id=' . $row[ 'id' ];
 		return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ';
     }
-	
+
 	public function checkPermission($dc)
-	{				
+	{
 		if (strlen($this->Input->get('act')))
 		{
 			$GLOBALS['TL_DCA']['tl_iso_warehouses']['config']['closed'] = false;
 		}
-		
+
 		$this->import('BackendUser', 'User');
-		
+
 		// Hide archived (used and deleted) configs
 		if ($this->User->isAdmin)
 		{
@@ -296,10 +296,10 @@ class tl_iso_warehouses extends Backend
 			{
 				$this->User->iso_configs = array(0);
 			}
-			
+
 			//$arrConfigs = $this->Database->execute("SELECT id FROM tl_iso_warehouses WHERE id IN ('','" . implode("','", $this->User->iso_configs) . "') AND archive<2")->fetchEach('id');
 		}
-		
+
 		if (!count($arrConfigs))
 		{
 			$arrConfigs = array(0);
@@ -330,8 +330,8 @@ class tl_iso_warehouses extends Backend
 				break;
 		}
 	}
-	
-	
+
+
 	/**
 	 * Record is deleted, archive if necessary
 	 */

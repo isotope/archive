@@ -8,9 +8,9 @@
 -- **********************************************************
 
 
--- 
+--
 -- Table `tl_iso_config`
--- 
+--
 
 CREATE TABLE `tl_iso_config` (
   `enableInventory` char(1) NOT NULL default '',
@@ -19,7 +19,7 @@ CREATE TABLE `tl_iso_config` (
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table `tl_iso_warehouse`
 --
 
@@ -48,7 +48,7 @@ CREATE TABLE `tl_iso_warehouses` (
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table `tl_iso_inventory`
 --
 

@@ -12,7 +12,7 @@
           <?php foreach ( $this->limits as $limit => $text ) : ?>
           <option value="<?php echo $limit ?>"<?php if ( $this->limit == $limit ) echo ' selected="selected"' ?>><?php echo $text ?></option>
           <?php endforeach ?>
-        </select> 
+        </select>
       </div>
 
       <div class="tl_search tl_subpanel">

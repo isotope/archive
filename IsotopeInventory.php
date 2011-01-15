@@ -8,12 +8,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
@@ -31,14 +31,14 @@ class IsotopeInventory extends Controller
 	public function __construct()
 	{
 		parent::__construct();
-	
+
 		$this->import('Database');
 		$this->import('Isotope');
-	
+
 	}
-	
-	
-	/** 
+
+
+	/**
 	 * hook function to update product inventory levels
 	 * @access public
 	 * @param object $objOrder
@@ -48,33 +48,33 @@ class IsotopeInventory extends Controller
 	public function updateInventory($objOrder, $objCart)
 	{
 		$arrWarehouses = deserialize($this->Isotope->Config->warehouses, true);
-		
+
 		if(!$this->Isotope->Config->enableInventory || !count($arrWarehouses))
 			return true;
-			
+
 		//TODO: determine closest eligible warehouse the items should be shipped from
 		/*
-			
+
 		*/
-		
+
 		//For now just grab the first warehouse...
 		$intWarehouseId = $arrWarehouses[0];
-	
+
 		$arrProducts = $objCart->getProducts();
-	
+
 		foreach($arrProducts as $i=>$objProduct)
 		{
 			$strFields = $intWarehouseId.','.time().','.$objProduct->id.','.(-1)*$objProduct->quantity_requested;
 			$arrRows[] = $strFields;
 		}
-	
+
 		$this->updateProductInventory($arrRows);
-	
+
 		return true;
 	}
-	
-	
-	/** 
+
+
+	/**
 	 * Update a product inventory level.  Will only be called if product allows backorder or adequate quantities exist.
 	 * @access protected
 	 * @param integer $intWarehouseId
@@ -92,7 +92,7 @@ class IsotopeInventory extends Controller
 		}
 		//Update latest inventory record
 		$this->Database->query("INSERT INTO tl_iso_inventory (pid,tstamp,product_id,quantity) VALUES ($strInserts)");
-		
+
 		foreach($arrProducts as $id)
 		{
 			//Get the inventory... Possibly send admin noptifications
@@ -108,8 +108,8 @@ class IsotopeInventory extends Controller
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * Send an admin notification e-mail
 	 * @param integer
@@ -122,16 +122,16 @@ class IsotopeInventory extends Controller
 		$objEmail->from = $GLOBALS['TL_ADMIN_EMAIL'];
 		$objEmail->fromName = $GLOBALS['TL_ADMIN_NAME'];
 		$objEmail->subject = $GLOBALS['TL_LANG']['MSC']['inventoryAdminSubject'];
-		
+
 		$objProduct = $this->getProduct($intId);
-		
+
 		$objEmail->text = sprintf($GLOBALS['TL_LANG']['MSC']['inventoryAdminText'][$strType], $intId, $objProduct->name . "\n", $objProduct->reader_jumpTo) . "\n";
 		$objEmail->sendTo($GLOBALS['TL_ADMIN_EMAIL']);
 
 		$this->log('A product (ID ' . $intId . ') has triggered an inventory warning', 'IsotopeInventory sendAdminNotification()', TL_ACCESS);
 	}
-	
-	/** 
+
+	/**
 	 * Check availability of a given product based on backorder setting and inventory level
 	 * @access public
 	 * @param integer $intProductId
@@ -139,51 +139,51 @@ class IsotopeInventory extends Controller
 	public function checkProductAvailability($intProductId)
 	{
 		$objQuantity = $this->Database->execute("SELECT SUM(quantity) as quantity_in_stock FROM tl_iso_inventory WHERE product_id=$intProductId");
-		
+
 		if(!$objQuantity->numRows)	//if no record then assume available?
 			return true;
-		
+
 		if($objQuantity->quantity_in_stock<=0)
 			return false;
 	}
-	
+
 	/**
 	 * Shortcut for a single product by ID
 	 */
 	protected function getProduct($intId)
 	{
 		global $objPage;
-		
+
 		$objProductData = $this->Database->prepare("SELECT *, (SELECT class FROM tl_iso_producttypes WHERE tl_iso_products.type=tl_iso_producttypes.id) AS product_class FROM tl_iso_products WHERE pid=$intId OR id=$intId")
 										 ->limit(1)
 										 ->executeUncached();
-									 
+
 		$strClass = $GLOBALS['ISO_PRODUCT'][$objProductData->product_class]['class'];
-		
+
 		if (!$this->classFileExists($strClass))
 		{
 			return null;
 		}
-									
+
 		$objProduct = new $strClass($objProductData->row());
-		
+
 		$objProduct->reader_jumpTo = $this->iso_reader_jumpTo ? $this->iso_reader_jumpTo : $objPage->id;
-			
+
 		return $objProduct;
 	}
-	
-	
+
+
 	public function generateInventoryWizard(DataContainer $dc, $xlabel)
 	{
 		// Load language file for the foreign key table.	@TODO: only if file_exists==true;
 		$this->loadLanguageFile('tl_iso_warehouses');
 
 		$intId = $this->Input->get('id');
-				
+
 		$arrUnits = array();
-				
+
 		$return = $xlabel;
-		
+
 		$return .= '<table cellspacing="0" cellpadding="5" id="ctrl_'.$dc->field.'" class="tl_inventorywizard" summary="Inventory wizard">
   <thead>
   <tr>
@@ -193,7 +193,7 @@ class IsotopeInventory extends Controller
   </tr>
   </thead>
   <tbody>';
-		
+
 		// Get current quantites from inventory
 		$objQty = $this->Database->query("SELECT id, name, (SELECT SUM(quantity) FROM tl_iso_inventory WHERE tl_iso_inventory.pid=tl_iso_warehouses.id AND tl_iso_inventory.product_id=$intId) AS total_quantity FROM tl_iso_warehouses");
 
@@ -201,7 +201,7 @@ class IsotopeInventory extends Controller
 		{
 			return '<em>'.$GLOBALS['TL_LANG']['MSC']['noWarehouses'].'</em>';
 		}
-		
+
 		while($objQty->next())
 		{
 			$arrQty[$objQty->id] = array
@@ -210,9 +210,9 @@ class IsotopeInventory extends Controller
 				'quantity'			=> $objQty->total_quantity
 			);
 		}
-		
+
 		$return .= '<tbody>';
-		
+
 		foreach ($arrQty as $key=>$value)
 		{
 			$return .= '<tr>';
@@ -227,32 +227,32 @@ class IsotopeInventory extends Controller
 			$return .= '	</td>';
 			$return .= '</tr>';
 		}
-		
+
 		$return .= '</tbody>';
-		
+
 		if($this->Input->post('FORM_SUBMIT')==$dc->table)
 		{
 			$arrInserts = array();
-			
+
 			$varValue = $this->Input->post($dc->field);
 
 			if(!is_array($varValue) || !count($varValue))
 				return $varValue;
-				
+
 			foreach($varValue as $i=>$value)
 			{
 				$arrInserts[] = '('.time().','.$i.','.$dc->id.','.$value.')';
-			
+
 			}
-			
+
 			if(!count($arrInserts))
 				return $varValue;
-				
+
 			$strInserts = implode(',', $arrInserts);
-			
+
 			$this->Database->query("INSERT INTO tl_iso_inventory (tstamp,pid,product_id,quantity)VALUES".$strInserts);
 		}
-		
+
 		return $return . '</table>';
 	}
 }
