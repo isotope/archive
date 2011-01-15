@@ -12,7 +12,7 @@
 <div class="tl_tbox block">
 <?php foreach ($this->fields as $field): ?>
   <h3><?php echo $field->generateLabel(); ?></h3>
-  <?php echo $field->generateWithError(); ?> 
+  <?php echo $field->generateWithError(); ?>
 <?php if ($field->help): ?>
   <p class="tl_help"><?php echo $field->help; ?></p>
 <?php endif; ?>

@@ -8,12 +8,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
@@ -55,7 +55,7 @@ class ModuleCollectionManager extends BackendModule
 	{
 		$this->import('BackendUser', 'User');
 		$this->loadLanguageFile('tl_iso_collectionmanager');
-		
+
 		if($this->Input->get('tbl'))
 		{
 			$this->loadLanguageFile($this->Input->get('tbl'));
@@ -102,7 +102,7 @@ class ModuleCollectionManager extends BackendModule
 			$this->Session->setData($session);
 			$this->reload();
 		}
-		
+
 		$this->Template->carts = array();
 
 		// Set default variables
@@ -112,7 +112,7 @@ class ModuleCollectionManager extends BackendModule
 		$this->Template->createLabel = $GLOBALS['TL_LANG']['tl_iso_collectionmanager']['new'][1] . $GLOBALS['TL_LANG']['tl_iso_collectionmanager'][$session['type']['tl_iso_collectionmanager']];
 		$this->Template->editLabel = $GLOBALS['TL_LANG']['tl_iso_collectionmanager']['edit'][0];
 		$this->Template->deleteLabel = $GLOBALS['TL_LANG']['tl_iso_collectionmanager']['delete'][0];
-		
+
 		$this->Template->thTitle = $GLOBALS['TL_LANG']['tl_iso_collectionmanager']['title'][0];
 		$this->Template->thDatefilter = $GLOBALS['TL_LANG']['tl_iso_collectionmanager']['datefilter'];
 
@@ -181,16 +181,16 @@ class ModuleCollectionManager extends BackendModule
 	protected function createCollection()
 	{
 		$this->loadDataContainer($this->Input->get('tbl'));
-		
+
 		$this->Template = new BackendTemplate('be_iso_collection_create');
-		
+
 		$arrConfig = $GLOBALS['ISO_COL_MANAGER'][$this->Input->get('tbl')];
-		
+
 		$this->Template->goBack = $GLOBALS['TL_LANG']['MSC']['goBack'];
 		$this->Template->headline = $GLOBALS['TL_LANG']['tl_iso_collectionmanager']['new'][1]. $arrConfig['type'];
-		
+
 		$arrFields=array();
-		
+
 		foreach($arrConfig['fields'] as $field=>$data)
 		{
 			switch($data['inputType'])
@@ -201,21 +201,21 @@ class ModuleCollectionManager extends BackendModule
 				case 'collectionWizard':
 					$arrFields[$field] = ($field=='products') ? $this->getCollectionWizard($field, $data) : $this->getCollectionWizard($field, $data);
 					break;
-					
+
 				case 'tableLookup':
 					$arrFields[$field] = $this->getTableLookupWizard($field, $data);
 					break;
-					
+
 				case 'textarea':
 					$arrFields[$field] = $this->getTextareaWidget($field, $data);
 					break;
-					
+
 				default:
 					$arrFields[$field] = $this->getTextFieldWidget($field, $data);
 					break;
 			}
-			
-		}		
+
+		}
 		$this->Template->fields = $arrFields;
 
 		// Save cart
@@ -236,15 +236,15 @@ class ModuleCollectionManager extends BackendModule
 			}
 			$intId = $objCollection->id;
 			$arrProducts = $this->Input->post('products');
-			
+
 			foreach($arrProducts as $product)
 			{
 				$intProductId = $product['options'] ? $product['options'] : $product['product'];
-				
+
 				$objProductData = $this->Database->prepare("SELECT *, (SELECT class FROM tl_iso_producttypes WHERE tl_iso_products.type=tl_iso_producttypes.id) AS product_class FROM tl_iso_products WHERE id={$intProductId}")->limit(1)->execute();
-							
+
 				$strClass = $GLOBALS['ISO_PRODUCT'][$objProductData->product_class]['class'];
-				
+
 				try
 				{
 					$objProduct = new $strClass($objProductData->row());
@@ -269,9 +269,9 @@ class ModuleCollectionManager extends BackendModule
 					$objProduct->price = $product['price'];
 					$blnInsert = $objCollection->addProduct($objProduct, $product['qty']);
 				}
-					
+
 			}
-			
+
 			$arrValues = array();
 			foreach($arrConfig['fields'] as $field => $value)
 			{
@@ -303,12 +303,12 @@ class ModuleCollectionManager extends BackendModule
 	{
 		$this->loadDataContainer($this->Input->get('tbl'));
 		$this->loadLanguageFile($this->Input->get('tbl'));
-		
+
 		$this->Template = new BackendTemplate('be_iso_collection_edit');
-		
+
 		$this->Template->goBack = $GLOBALS['TL_LANG']['MSC']['goBack'];
 		$this->Template->headline = sprintf($GLOBALS['TL_LANG']['tl_iso_collectionmanager']['edit'][1], $this->Input->get('id'));
-		
+
 		$arrConfig = $GLOBALS['ISO_COL_MANAGER'][$this->Input->get('tbl')];
 
 		$objCollection = new $arrConfig['class'];
@@ -318,51 +318,51 @@ class ModuleCollectionManager extends BackendModule
 			$this->log('Invalid cart ID! "' . $this->Input->get('id') . '"', 'ModuleCollectionManager editCollection()', TL_ERROR);
 			$this->redirect('contao/main.php?act=error');
 		}
-				
+
 		$arrFields=array();
-		
+
 		foreach($arrConfig['fields'] as $field=>$data)
 		{
 			switch($data['inputType'])
 			{
 				case 'jumpTo':
-					
+
 					$arrFields[$field] = $this->getSelectWidget($field, $this->getJumptoOptions($data), $this->getJumpPage($objCollection));
 					break;
 				case 'collectionWizard':
 					$arrFields[$field] = ($field=='products') ? $this->getCollectionWizard($field, $data, $this->getProductArray($objCollection)) : $this->getCollectionWizard($field, $data, $objCollection->$field);
 					break;
-					
+
 				case 'tableLookup':
 					$arrFields[$field] = $this->getTableLookupWizard($field, $data, $objCollection->$field);
 					break;
-					
+
 				case 'textarea':
 					$arrFields[$field] = $this->getTextareaWidget($field, $data, $objCollection->$field);
 					break;
-					
+
 				default:
 					$arrFields[$field] = $this->getTextFieldWidget($field, $data, $objCollection->$field);
 					break;
 			}
-			
-		}		
+
+		}
 		$this->Template->fields = $arrFields;
-		
+
 		// Update cart
 		if ($this->Input->post('FORM_SUBMIT') == 'tl_iso_collectionmanager' && $this->blnSave)
 		{
-		
+
 			$arrProducts = $this->Input->post('products');
-			
+
 			foreach($arrProducts as $product)
 			{
 				$intProductId = $product['options'] ? $product['options'] : $product['product'];
-				
+
 				$objProductData = $this->Database->prepare("SELECT *, (SELECT class FROM tl_iso_producttypes WHERE tl_iso_products.type=tl_iso_producttypes.id) AS product_class FROM tl_iso_products WHERE id={$intProductId}")->limit(1)->execute();
-							
+
 				$strClass = $GLOBALS['ISO_PRODUCT'][$objProductData->product_class]['class'];
-				
+
 				try
 				{
 					$objProduct = new $strClass($objProductData->row());
@@ -402,7 +402,7 @@ class ModuleCollectionManager extends BackendModule
 				$objCollection->save();
 			}
 			//@TODO: Merge carts if one already exists for the PID
-			
+
 			// Go back
 			$this->reload();
 		}
@@ -419,7 +419,7 @@ class ModuleCollectionManager extends BackendModule
 	{
 		$session = $this->Session->getData();
 		$arrTable = $GLOBALS['ISO_COL_MANAGER'][$session['type']['tl_iso_collectionmanager']];
-		
+
 		$objCollection = $this->Database->prepare("SELECT * FROM {$session['type']['tl_iso_collectionmanager']} WHERE id=?")
 								  ->limit(1)
 								  ->execute($this->Input->get('id'));
@@ -451,7 +451,7 @@ class ModuleCollectionManager extends BackendModule
 			$this->redirect('contao/main.php?act=error');
 		}
 		$affected = $objCollection->delete();
-		
+
 		// Delete data and add a log entry
 		if ($affected)
 		{
@@ -472,17 +472,17 @@ class ModuleCollectionManager extends BackendModule
 		$where = array();
 		$value = array();
 		$session = $this->Session->getData();
-		
+
 		//Inner join to limit to collections with members
-		$query = "SELECT c.*, c.id AS id, (SELECT lastname FROM tl_member m WHERE m.id=c.pid) AS lastname, (SELECT firstname FROM tl_member m WHERE m.id=c.pid) AS firstname FROM ". $session['type']['tl_iso_collectionmanager'] ." c INNER JOIN tl_member m ON m.id=c.pid";		
-		
+		$query = "SELECT c.*, c.id AS id, (SELECT lastname FROM tl_member m WHERE m.id=c.pid) AS lastname, (SELECT firstname FROM tl_member m WHERE m.id=c.pid) AS firstname FROM ". $session['type']['tl_iso_collectionmanager'] ." c INNER JOIN tl_member m ON m.id=c.pid";
+
 		// Set filter
 		if ($this->Input->post('FORM_SUBMIT') == 'tl_filters')
 		{
 			// Search
 			$session['search']['tl_iso_collectionmanager']['value'] = '';
 			$session['search']['tl_iso_collectionmanager']['field'] = $this->Input->post('tl_field', true);
-			
+
 			// Types
 			if ($this->Input->post('tl_type') != '')
 			{
@@ -507,12 +507,12 @@ class ModuleCollectionManager extends BackendModule
 					case 'lastname':
 						$strTable = 'tl_member';
 						break;
-					
+
 					default:
 						$strTable = $session['type']['tl_iso_collectionmanager'];
-						break;						
+						break;
 				}
-				
+
 				try
 				{
 					$this->Database->prepare("SELECT * FROM ". $strTable ." WHERE " . $this->Input->post('tl_field', true) . " REGEXP ?")
@@ -521,8 +521,8 @@ class ModuleCollectionManager extends BackendModule
 
 					$session['search']['tl_iso_collectionmanager']['value'] = $this->Input->postRaw('tl_value');
 				}
-				catch (Exception $e) {}		
-				
+				catch (Exception $e) {}
+
 			}
 
 			// Date Filter
@@ -541,12 +541,12 @@ class ModuleCollectionManager extends BackendModule
 				case 'lastname':
 					$strField = 'm.' . $session['search']['tl_iso_collectionmanager']['field'];
 					break;
-				
+
 				default:
 					$strField = $session['search']['tl_iso_collectionmanager']['field'];
-					break;						
+					break;
 			}
-		
+
 			$where[] = "CAST(" . $strField . " AS CHAR) REGEXP ?";
 			$value[] = $session['search']['tl_iso_collectionmanager']['value'];
 
@@ -580,10 +580,10 @@ class ModuleCollectionManager extends BackendModule
 
 			$this->Template->deadlineClass = ' active';
 		}
-		
+
 		//Type Options
 		$typeoptions = '';
-		
+
 		foreach($GLOBALS['ISO_COL_MANAGER'] as $cart => $data)
 		{
 			$typeoptions .= sprintf('<option value="%s"%s>%s</option>', $cart, (($cart == $session['type']['tl_iso_collectionmanager']) ? ' selected="selected"' : ''), (is_array($GLOBALS['TL_LANG']['tl_iso_collectionmanager'][$cart]) ? $GLOBALS['TL_LANG']['tl_iso_collectionmanager'][$cart][0] : $GLOBALS['TL_LANG']['tl_iso_collectionmanager'][$cart]));
@@ -594,17 +594,17 @@ class ModuleCollectionManager extends BackendModule
 		// Filter options - Only filtering by date for the moment
 		$objFilter = $this->Database->prepare("SELECT tstamp FROM ". $session['type']['tl_iso_collectionmanager'])
 									->execute();
-		
+
 		while ($objFilter->next())
 		{
 			$objDate = new Date($objFilter->tstamp);
 			$filters[$objDate->monthBegin] = sprintf('<option value="%s"%s>%s</option>', $objFilter->tstamp, (($objFilter->tstamp == $session['filter']['tl_iso_collectionmanager']['tstamp']) ? ' selected="selected"' : ''), date("F Y", $objDate->monthBegin));
 		}
-		
+
 
 		$this->Template->datefilterOptions = (count($filters) ? implode($filters) : '');
 		$this->Template->datefilter = specialchars($GLOBALS['TL_LANG']['MSC']['filter']);
-		
+
 		// Where
 		if (count($where))
 		{
@@ -613,7 +613,7 @@ class ModuleCollectionManager extends BackendModule
 
 		// Order by
 		$query .= " ORDER BY c.tstamp DESC";
-						
+
 		// Execute query
 		$objCollection = $this->Database->prepare($query)->execute($value);
 
@@ -641,7 +641,7 @@ class ModuleCollectionManager extends BackendModule
 		$widget->decodeEntities = true;
 		$widget->value = $value;
 		$widget->label = $arrData['label'][0];
-		
+
 		if ($GLOBALS['TL_CONFIG']['showHelp'] && strlen($GLOBALS['TL_LANG'][$this->Input->get('tbl')][$strName][1]))
 		{
 			$widget->help = $arrData['label'][1];
@@ -660,8 +660,8 @@ class ModuleCollectionManager extends BackendModule
 
 		return $widget;
 	}
-	
-	
+
+
 	/**
 	 * Return a Textarea widget as object
 	 * @param mixed
@@ -679,7 +679,7 @@ class ModuleCollectionManager extends BackendModule
 		$widget->rows = $arrData['rows'];
 		$widget->cols = $arrData['cols'];
 		$widget->label = $GLOBALS['TL_LANG'][$this->Input->get('tbl')][$strName][0];
-				
+
 		if ($GLOBALS['TL_CONFIG']['showHelp'] && strlen($GLOBALS['TL_LANG'][$this->Input->get('tbl')][$strName][1]))
 		{
 			$widget->help = $arrData['label'][1];
@@ -710,7 +710,7 @@ class ModuleCollectionManager extends BackendModule
 		$widget = new ProductCollectionWizard($arrData);
 
 		$widget->id = $strName;
-		$widget->name = $strName;		
+		$widget->name = $strName;
 		$widget->value = $value;
 		$widget->type = 'collectionWizard';
 		$widget->searchFields = $arrData['searchFields'];
@@ -738,8 +738,8 @@ class ModuleCollectionManager extends BackendModule
 
 		return $widget;
 	}
-	
-	
+
+
 	/**
 	 * Return the TableLookupWizard widget as object
 	 * @param mixed
@@ -750,7 +750,7 @@ class ModuleCollectionManager extends BackendModule
 		$widget = new TableLookupWizard($arrData);
 
 		$widget->id = $strName;
-		$widget->name = $strName;		
+		$widget->name = $strName;
 		$widget->value = $value;
 		$widget->type = 'tableLookup';
 		$widget->fieldType = ($arrData['single']) ? 'radio' : 'checkbox';
@@ -758,7 +758,7 @@ class ModuleCollectionManager extends BackendModule
 		$widget->listFields = $arrData['listFields'];
 		$widget->foreignTable = $arrData['foreignTable'];
 		$widget->label = $arrData['label'][0];
-		
+
 		if ($GLOBALS['TL_CONFIG']['showHelp'] && strlen($arrData['label'][1]))
 		{
 			$widget->help = $arrData['label'][1];
@@ -793,7 +793,7 @@ class ModuleCollectionManager extends BackendModule
 		$widget->name = $name;
 		$widget->mandatory = true;
 		$widget->value = $value;
-		
+
 		$widget->label = $GLOBALS['TL_LANG']['tl_iso_collectionmanager'][$name][0];
 
 		if ($GLOBALS['TL_CONFIG']['showHelp'] && strlen($GLOBALS['TL_LANG']['tl_iso_collectionmanager'][$name][1]))
@@ -816,7 +816,7 @@ class ModuleCollectionManager extends BackendModule
 
 		return $widget;
 	}
-	
+
 	/**
 	 * Return an array of IDs for the collection's products
 	 * @param object
@@ -830,10 +830,10 @@ class ModuleCollectionManager extends BackendModule
 		{
 			$arrIDs[] = $objProduct->id;
 		}
-		
+
 		return $arrIDs;
 	}
-	
+
 	/**
 	 * Return an array of page options for the jumpTo select list
 	 * @param array
@@ -855,11 +855,11 @@ class ModuleCollectionManager extends BackendModule
 				$arrOptions[] = array('value'=>$objPage->id, 'label'=>$objPage->title);
 			}
 		}
-		
+
 		return $arrOptions;
 	}
-	
-	
+
+
 	protected function getJumpPage($objCollection)
 	{
 		$objJumpPage = $this->Database->prepare("SELECT href_reader FROM {$objCollection->ctable} WHERE pid={$objCollection->id}")->limit(1)->execute();
@@ -872,6 +872,6 @@ class ModuleCollectionManager extends BackendModule
 		return '';
 	}
 
-	
+
 }
 
