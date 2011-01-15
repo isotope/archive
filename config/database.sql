@@ -8,9 +8,9 @@
 -- **********************************************************
 
 
--- 
+--
 -- Table `tl_content`
--- 
+--
 
 CREATE TABLE `tl_content` (
   `productsAlias` blob NULL,

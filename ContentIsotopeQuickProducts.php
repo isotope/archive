@@ -8,12 +8,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
@@ -34,45 +34,45 @@ class ContentIsotopeQuickProducts extends ContentIsotope
 	 * @var string
 	 */
 	protected $strTemplate = 'ce_iso_products';
-	
-	
+
+
 	/**
 	 * Display a wildcard in the back end
 	 * @return string
 	 */
 	public function generate()
-	{	
+	{
 		if (TL_MODE == 'BE')
 		{
 			$arrProductIds = deserialize($this->productsAlias);
 			$arrProducts = $this->getProducts($arrProductIds);
-			
+
 			foreach($arrProducts as $i => $objProduct)
 			{
 				$strLink .= $objProduct->name . '<br />';
 			}
-			
+
 			$objTemplate = new BackendTemplate('be_wildcard');
 			$objTemplate->wildcard = '### ISOTOPE QUICK PRODUCTS ###';
 			$objTemplate->title = $this->headline;
 			$objTemplate->id = $this->id;
 			$objTemplate->link = $strLink;
-			
+
 			return $objTemplate->parse();
 		}
-		
+
 		return parent::generate();
 	}
-	
-	
+
+
 	/**
 	 * Generate content element
 	 */
 	protected function compile()
 	{
 		$arrProductIds = deserialize($this->productsAlias);
-		$arrProducts = $this->getProducts($arrProductIds);				
-					
+		$arrProducts = $this->getProducts($arrProductIds);
+
 		if (!is_array($arrProducts) || !count($arrProducts))
 		{
 			$this->Template = new FrontendTemplate('mod_message');
@@ -80,9 +80,9 @@ class ContentIsotopeQuickProducts extends ContentIsotope
 			$this->Template->message = $GLOBALS['TL_LANG']['MSC']['noProducts'];
 			return;
 		}
-		
+
 		$arrBuffer = array();
-		
+
 		foreach( $arrProducts as $i => $objProduct )
 		{
 			$arrBuffer[] = array
@@ -90,9 +90,9 @@ class ContentIsotopeQuickProducts extends ContentIsotope
 				'class'		=> ('product' . ($i == 0 ? ' product_first' : '')),
 				'html'		=> $objProduct->generate((strlen($this->iso_list_layout) ? $this->iso_list_layout : $objProduct->list_template), $this),
 			);
-			
+
 		}
-	
+
 		$this->Template->products = $arrBuffer;
 	}
 }
