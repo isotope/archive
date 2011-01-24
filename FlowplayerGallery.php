@@ -38,10 +38,8 @@ class FlowplayerGallery extends InlineGallery
 
 	public function generateMainImage($strType='medium')
 	{
-		$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/isotope_flowplayer/html/flowplayer.js';
-
 		if (!count($this->arrFiles))
-			return '<span id="' . $this->name . '_' . $strType . 'size"> </span>';
+			return '<div class="iso_attribute" id="' . $this->name . '_' . $strType . 'size"> </div>';
 
 		$arrFile = reset($this->arrFiles);
 
@@ -53,7 +51,6 @@ class FlowplayerGallery extends InlineGallery
 		$objTemplate->name = $this->name;
 		$objTemplate->product_id = $this->product_id;
 		$objTemplate->href_reader = $this->href_reader;
-		$objTemplate->baseUrl = $this->Environment->base;
 
 		list($objTemplate->link, $objTemplate->rel) = explode('|', $arrFile['link']);
 
@@ -75,18 +72,37 @@ class FlowplayerGallery extends InlineGallery
 			$objTemplate->height = $arrSize['height'];
 		}
 
+		$objPlayer = new Flowplayer(array
+		(
+			'play' => array
+			(
+				'opacity'	=> 0,
+			),
+			'clip' => array
+			(
+				'baseUrl'	=> $this->Environment->base,
+			),
+			'playlist' => array($objTemplate->$strType),
+			'onPlaylistReplace' => 'function(playlist) {
+        $f(\'' . $this->name . '_player\').getPlugin(\'controls\').css({display: ([\'jpg\',\'jpeg\',\'png\',\'gif\'].contains(playlist[0].extension) ? \'none\' : \'block\')});
+    }'
+		));
+		
+		$objPlayer->enablePlugin('controls', array
+		(
+			'backgroundColor'	=> '#aedaff',
+			'slowForward'		=> false,
+			'fastForward'		=> false,
+			'scrubber'			=> false,
+			'display'			=> 'none',
+		));
+		
+		$objPlayer->id = $this->name . '_player';
+		
+		$objTemplate->flowplayer = $objPlayer->generate();
+		$objPlayer->injectJavascript();
 
-		// Find commercial Flowplayer license
-		global $objPage;
-		$objRootPage = $this->Database->execute("SELECT * FROM tl_page WHERE id={$objPage->rootId}");
-
-		if ($objRootPage->iso_flowplayer_license != '')
-		{
-			$objTemplate->commercial = true;
-			$objTemplate->license = $objRootPage->iso_flowplayer_license;
-		}
-
-		return '<span id="' . $this->name . '_' . $strType . 'size">'.$objTemplate->parse().'</span>';
+		return '<div id="' . $this->name . '_' . $strType . 'size">'.$objTemplate->parse().'</div>';
 	}
 }
 
