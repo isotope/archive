@@ -285,7 +285,7 @@ class ModuleCollectionManager extends BackendModule
 				$objCollection->setData($arrValues);
 				$objCollection->save();
 			}
-			//@TODO: Merge carts if one already exists for the PID
+			// @todo Merge carts if one already exists for the PID
 			// Go back
 			$this->redirect(str_replace('&act=create', '&act=edit', $this->Environment->request) . '&id=' . $intId);
 		}
@@ -401,7 +401,8 @@ class ModuleCollectionManager extends BackendModule
 				$objCollection->setData($arrValues);
 				$objCollection->save();
 			}
-			//@TODO: Merge carts if one already exists for the PID
+			
+			// @todo Merge carts if one already exists for the PID
 
 			// Go back
 			$this->reload();
