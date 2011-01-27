@@ -47,11 +47,12 @@ class IsotopeRegistryFrontend extends IsotopeFrontend
 	/**
 	 * Callback for add_to_registry button
 	 *
+	 * @todo $objModule is always defined, rework to use it and make sure the module config field is in palettes
+	 *
 	 * @access	public
 	 * @param	object
 	 * @return	void
 	 */
-	//!@todo $objModule is always defined, rework to use it and make sure the module config field is in palettes
 	public function addToMyRegistry($objProduct, $objModule=null)
 	{
 		if(!$this->Isotope->Registry)

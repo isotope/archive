@@ -199,11 +199,12 @@ class tl_iso_registry extends Backend
 	/**
 	 * Return a string of more buttons for the orders module.
 	 *
+	 * @todo I don't think we need that...
+	 *
 	 * @access public
 	 * @param array $arrRow
 	 * @return string
 	 */
-	//!@todo I don't think we need that...
 	public function moduleOperations($arrRow)
 	{
 		if(!count($GLOBALS['ISO_ORDERS']['operations']))
