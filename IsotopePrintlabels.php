@@ -180,7 +180,8 @@ class IsotopePrintlabels extends IsotopePOS
 				$pdf->writeHTML($strArticle, true, 0, true, 0);
 			}
 		}
-		else //@todo: Simplify this into a single function instead of having so much crap. Soooooooooo lazy.
+		// @todo Simplify this into a single function instead of having so much crap. Soooooooooo lazy.
+		else
 		{
 			$pdf->AddPage();
 			$strArticle = '';
