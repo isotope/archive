@@ -46,7 +46,8 @@ class OscommerceImport extends BackendModule
 	/**
 	 * Default Product Type
 	 * Map the old products to a new default product type
-	 * @todo - Make this a widget that allows you to map them via select dropdowns
+	 *
+	 * @todo Make this a widget that allows you to map them via select dropdowns
 	 */
 	protected $defaultType = '6';
 
