@@ -230,7 +230,8 @@ class ModuleFundraiserManager extends ModuleIsotope
 			$objTemplate->formSubmit = 'iso_fundraiser_update';
 			$objTemplate->action = $this->Environment->request;
 			$objTemplate->products = $arrProductData;
-			$objTemplate->showOptions = false;	//!@todo make a module option.
+			// @todo make a module option.
+			$objTemplate->showOptions = false;
 
 			$this->Template->fundraiser = $objTemplate->parse();
 		}

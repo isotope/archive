@@ -335,7 +335,9 @@ class ModuleFundraiser extends ModuleIsotope
 
 	}
 
-	//!@todo images have changed, this will not work here
+	/**
+	 * @todo images have changed, this will not work here
+	 */
 	protected function formatProductData($arrProductData)
 	{
 		global $objPage;
@@ -736,7 +738,9 @@ class ModuleFundraiser extends ModuleIsotope
 
 
 
-	//!@todo THIS IS WRONG!
+	/**
+	 * @todo THIS IS WRONG!
+	 */
 	protected function getCookieTimeWindow($intStoreId)
 	{
 		$objCookieTimeWindow = $this->Database->prepare("SELECT cookie_duration FROM tl_iso_config WHERE id=?")->limit(1)->execute($intStoreId);

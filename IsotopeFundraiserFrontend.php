@@ -47,11 +47,12 @@ class IsotopeFundraiserFrontend extends IsotopeFrontend
 	/**
 	 * Callback for add_to_fundraiser button
 	 *
+	 * @todo $objModule is always defined, rework to use it and make sure the module config field is in palettes
+	 *
 	 * @access	public
 	 * @param	object
 	 * @return	void
 	 */
-	//!@todo $objModule is always defined, rework to use it and make sure the module config field is in palettes
 	public function addToMyFundraiser($objProduct, $objModule=null)
 	{
 		if(!$this->Isotope->Fundraiser)
