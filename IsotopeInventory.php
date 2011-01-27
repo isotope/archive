@@ -175,7 +175,8 @@ class IsotopeInventory extends Controller
 
 	public function generateInventoryWizard(DataContainer $dc, $xlabel)
 	{
-		// Load language file for the foreign key table.	@TODO: only if file_exists==true;
+		// Load language file for the foreign key table.
+		// @todo only if file_exists==true;
 		$this->loadLanguageFile('tl_iso_warehouses');
 
 		$intId = $this->Input->get('id');
