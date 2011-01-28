@@ -43,7 +43,7 @@ class ContentAttributeLinkRepeater extends ContentElement
 	{
 
 		//global $objPage;
-		$objAttributeData = $this->Database->prepare("SELECT name, option_list, use_alternate_source, list_source_table, list_source_field FROM tl_iso_attributes WHERE id=? AND is_filterable='1' AND (type='select' OR type='checkbox')")
+		$objAttributeData = $this->Database->prepare("SELECT name, options, use_alternate_source, list_source_table, list_source_field FROM tl_iso_attributes WHERE id=? AND is_filterable='1' AND (type='select' OR type='checkbox')")
 									  ->limit(1)
 									  ->execute($this->iso_filters);
 
@@ -76,7 +76,7 @@ class ContentAttributeLinkRepeater extends ContentElement
 		}
 		else
 		{
-			$arrLinkValues = deserialize($objAttributeData->option_list);
+			$arrLinkValues = deserialize($objAttributeData->options);
 
 			$filter_name = standardize($objAttributeData->name);
 
@@ -97,7 +97,7 @@ class ContentAttributeLinkRepeater extends ContentElement
 
 			$arrLinks[] = array
 			(
-				'url'		=>	$this->url . '?' . $filter_name . '=' . $k, //$this->addToURL(),
+				'url'		=>	$this->url . '?filters=' . $filter_name . '&' . $filter_name . '=' . $k, //$this->addToURL(),
 				'link'		=>	$v,
 				'title'		=> 	$v
 			);
