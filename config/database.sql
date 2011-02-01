@@ -7,9 +7,9 @@
 -- *                                                      *
 -- ********************************************************
 
--- 
+--
 -- Table `tl_module`
--- 
+--
 
 CREATE TABLE `tl_module` (
   `showProduct` char(1) NOT NULL default '',

@@ -10,12 +10,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
@@ -76,13 +76,13 @@ class ModuleIsotopeBreadcrumb extends ModuleBreadcrumb
 	protected function compile()
 	{
 		global $objPage;
-		
+
 		//Determine if we are on a product reader page. If not, display the normal breadcrumb.
 		if(!$this->Input->get('product'))
-		{			
+		{
 			return parent::compile();
 		}
-		
+
 		$pages = $this->getDeepestPage();
 		$items = array();
 		$type = null;
@@ -92,7 +92,7 @@ class ModuleIsotopeBreadcrumb extends ModuleBreadcrumb
 		{
 			//Pop the last item off since it will be the root page
 			$arrHome = array_pop($pages);
-			
+
 			$items[] = array
 			(
 				'isRoot' => true,
@@ -160,18 +160,18 @@ class ModuleIsotopeBreadcrumb extends ModuleBreadcrumb
 				'title' => (strlen($pages[0]['pageTitle']) ? specialchars($pages[0]['pageTitle']) : specialchars($pages[0]['title'])),
 				'link' => $pages[0]['title']
 			);
-	
+
 
 			if($this->showProduct)
-			{	
+			{
 				$strProductAlias = $this->Input->get('product');
-	
+
 				if (is_null($strProductAlias))
 				{
 					//@todo: Make this editable in a language file
 					$strProductAlias = 'Product';
 				}
-		
+
 				// Get product title
 				$objProduct= $this->Database->prepare("SELECT name FROM tl_iso_products WHERE id=? OR alias=?")
 											 ->limit(1)
@@ -191,12 +191,12 @@ class ModuleIsotopeBreadcrumb extends ModuleBreadcrumb
 
 		$this->Template->items = $items;
 	}
-	
-	
+
+
 	protected function getPageIdFromAlias($strURL)
 	{
 		global $objPage;
-		
+
 		$strAlias = $strURL;
 		$strAlias = preg_replace('/\?.*$/i', '', $strAlias);
 		$strAlias = preg_replace('/' . preg_quote($GLOBALS['TL_CONFIG']['urlSuffix'], '/') . '$/i', '', $strAlias);
@@ -206,7 +206,7 @@ class ModuleIsotopeBreadcrumb extends ModuleBreadcrumb
 		{
 			array_shift($arrAlias);
 		}
-		
+
 		$objCategoryPages = $this->Database->prepare("SELECT id FROM tl_page WHERE alias=?")
 											   ->execute($arrAlias[0]);
 		while($objCategoryPages->next())
@@ -218,29 +218,29 @@ class ModuleIsotopeBreadcrumb extends ModuleBreadcrumb
 				$pageId = $objCategoryPages->id;
 			}
 		}
-		
+
 		return $pageId;
-	
+
 	}
-	
+
 	protected function getReferringPageID()
 	{
 		$strReferer = $this->getReferer();
-								
+
 		return $this->getPageIdFromAlias($strReferer);
 	}
-	
-	
-	
+
+
+
 	protected function getDeepestPage()
 	{
 		global $objPage;
-		
+
 		$objProduct = $this->getProductByAlias($this->Input->get('product'));
 		$arrTrails = $this->getProductPageTrails($objProduct);
 		$intRefId = $this->getReferringPageID();
 		$arrPages = array();
-				
+
 		foreach($arrTrails as $arrTrail)
 		{
 			//We matched a category dead on.
@@ -250,60 +250,60 @@ class ModuleIsotopeBreadcrumb extends ModuleBreadcrumb
 			}
 			//@todo consider even deeper categories
 		}
-		
+
 		if(!count($arrPages))
 		{
 			// We didn't find any pages... Let's just get the first one
 			$arrPages = $arrTrails[0];
 		}
-			
+
 		return $arrPages;
 	}
-	
+
 	protected function getProductPageTrails($objProduct)
 	{
-		
+
 		$arrCats = deserialize($objProduct->pages);
-				
+
 		$arrReturn = array();
-		
+
 		//Add the referring page just in case there are no cats
 		if(!count($arrCats))
 			$arrCats=array($this->getReferringPageID());
-		
+
 		foreach($arrCats as $cat)
 		{
 			$pages = array();
 			$pageId = $cat;
-		
+
 			// Get all pages up to the root page
 			do
 			{
 				$objPages = $this->Database->prepare("SELECT * FROM tl_page WHERE id=?")
 										   ->limit(1)
 										   ->execute($pageId);
-	
+
 				$type = $objPages->type;
 				$pageId = $objPages->pid;
 				$pages[] = $objPages->row();
 			}
 			while ($pageId > 0 && $type != 'root' && $objPages->numRows);
-	
+
 			if ($type == 'root')
-			{	
-				
+			{
+
 				if (!$this->includeRoot)
 				{
-					array_pop($pages);	
+					array_pop($pages);
 				}
-				
+
 				$arrReturn[] = $pages;
 			}
-		}	
-								
+		}
+
 		return $arrReturn;
 	}
-	
+
 	/**
 	 * Shortcut for a single product's pages by alias
 	 */
@@ -313,11 +313,11 @@ class ModuleIsotopeBreadcrumb extends ModuleBreadcrumb
 		$objProduct= $this->Database->prepare("SELECT pages FROM tl_iso_products WHERE id=? OR alias=?")
 									 ->limit(1)
 									 ->execute((is_numeric($strAlias) ? $strAlias : 0), $strAlias);
-		
+
 		return $objProduct;
 	}
-	
-	
+
+
 }
 
 ?>

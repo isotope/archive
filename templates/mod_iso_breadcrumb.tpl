@@ -10,7 +10,7 @@
 <?php if ($item['isActive']): ?>
 <span class="active"><?php echo $item['link']; ?></span>
 <?php else: ?>
-<a href="<?php echo $item['href']; ?>" title="<?php echo $item['title']; ?>"><?php echo $item['link']; ?></a> &#62; 
+<a href="<?php echo $item['href']; ?>" title="<?php echo $item['title']; ?>"><?php echo $item['link']; ?></a> &#62;
 <?php endif; ?>
 <?php endforeach; ?>
 
