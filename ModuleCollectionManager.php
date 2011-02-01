@@ -401,7 +401,7 @@ class ModuleCollectionManager extends BackendModule
 				$objCollection->setData($arrValues);
 				$objCollection->save();
 			}
-			
+
 			// @todo Merge carts if one already exists for the PID
 
 			// Go back
