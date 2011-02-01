@@ -87,7 +87,7 @@ class FlowplayerGallery extends InlineGallery
         $f(\'' . $this->name . '_player\').getPlugin(\'controls\').css({display: ([\'jpg\',\'jpeg\',\'png\',\'gif\'].contains(playlist[0].extension) ? \'none\' : \'block\')});
     }'
 		));
-		
+
 		$objPlayer->enablePlugin('controls', array
 		(
 			'backgroundColor'	=> '#aedaff',
@@ -96,9 +96,9 @@ class FlowplayerGallery extends InlineGallery
 			'scrubber'			=> false,
 			'display'			=> 'none',
 		));
-		
+
 		$objPlayer->id = $this->name . '_player';
-		
+
 		$objTemplate->flowplayer = $objPlayer->generate();
 		$objPlayer->injectJavascript();
 
