@@ -258,7 +258,7 @@ class OscommerceImport extends BackendModule
 
 		while ($objName->next())
 		{
-			$this->Database->prepare("UPDATE tl_iso_products SET alias = ? WHERE id = ?")->execute(standardize($objName->name), $objName->id);
+			$this->Database->prepare("UPDATE tl_iso_products SET alias = ? WHERE id = ?")->execute(standardize($objName->name, true), $objName->id);
 		}
 
 		return array('message' => 'Set product aliases from product names.', 'method' => 'updateP2C');
