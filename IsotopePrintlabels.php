@@ -213,7 +213,7 @@ class IsotopePrintlabels extends IsotopePOS
 
 		// Close and output PDF document
 		$pdf->lastPage();
-		$pdf->Output(standardize(ampersand($strInvoiceTitle, false)) . '.pdf', 'D');
+		$pdf->Output(standardize(ampersand($strInvoiceTitle, false), true) . '.pdf', 'D');
 		$this->Isotope->resetConfig(true); 	//Set store back to default.
 
 		ob_end_clean();
