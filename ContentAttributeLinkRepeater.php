@@ -78,7 +78,7 @@ class ContentAttributeLinkRepeater extends ContentElement
 		{
 			$arrLinkValues = deserialize($objAttributeData->options);
 
-			$filter_name = standardize($objAttributeData->name);
+			$filter_name = standardize($objAttributeData->name, true);
 
 			foreach($arrLinkValues as $value)
 			{
