@@ -81,6 +81,7 @@ class FlowplayerGallery extends InlineGallery
 			'clip' => array
 			(
 				'baseUrl'	=> $this->Environment->base,
+				'scaling'	=> 'orig',
 			),
 			'playlist' => array($objTemplate->$strType),
 			'onPlaylistReplace' => 'function(playlist) {
