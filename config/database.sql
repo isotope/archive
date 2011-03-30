@@ -12,6 +12,6 @@
 -- 
 
 CREATE TABLE `tl_content` (
-  `iso_bundle` text NULL,
+  `iso_bundle` blob NULL,
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

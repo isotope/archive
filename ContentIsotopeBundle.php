@@ -100,6 +100,7 @@ class ContentIsotopeBundle extends ContentIsotope
 
 		$this->Template->products = $arrBuffer;
 		$this->Template->href = $this->Environment->request . '?bundle=' . $this->id;
+		$this->Template->addToCart = $GLOBALS['TL_LANG']['MSC']['buttonLabel']['add_to_cart'];
 	}
 }
 

@@ -29,18 +29,7 @@
 
 
 /**
- * Palettes
+ * Content elements
  */
-$GLOBALS['TL_DCA']['tl_content']['palettes']['iso_bundle'] = '{type_legend},type,headline;{include_legend},iso_bundle;{text_legend},text;{image_legend},addImage;{redirect_legend},iso_reader_jumpTo;{template_legend},iso_list_layout;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
-
-
-/**
- * Fields
- */
-$GLOBALS['TL_DCA']['tl_content']['fields']['iso_bundle'] = array
-(
-	'label'			=> &$GLOBALS['TL_LANG']['tl_content']['iso_bundle'],
-	'inputType'		=> 'productTree',
-	'eval'			=> array('mandatory'=>true, 'fieldType'=>'text', 'variants'=>true, 'variantsOnly'=>true, 'rgxp'=>'digit', 'maxlength'=>2, 'style'=>'width:20px;text-align:center'),
-);
+$GLOBALS['TL_LANG']['CTE']['iso_bundle'] = array('Product Bundle');
 
