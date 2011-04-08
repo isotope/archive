@@ -136,21 +136,21 @@ class IsotopeMember extends Frontend
 		$insertId = $objNewUser->insertId;
 
 		// Assign home directory
-		if ($this->createMember_assignDir && is_dir(TL_ROOT . '/' . $this->createMember_homeDir))
+		if ($this->Isotope->Config->createMember_assignDir && is_dir(TL_ROOT . '/' . $this->Isotope->Config->createMember_homeDir))
 		{
 			$this->import('Files');
 			$strUserDir = strlen($arrData['username']) ? $arrData['username'] : 'user_' . $insertId;
 
 			// Add the user ID if the directory exists
-			if (is_dir(TL_ROOT . '/' . $this->createMember_homeDir . '/' . $strUserDir))
+			if (is_dir(TL_ROOT . '/' . $this->Isotope->Config->createMember_homeDir . '/' . $strUserDir))
 			{
 				$strUserDir .= '_' . $insertId;
 			}
 
-			new Folder($this->createMember_homeDir . '/' . $strUserDir);
+			new Folder($this->Isotope->Config->createMember_homeDir . '/' . $strUserDir);
 
 			$this->Database->prepare("UPDATE tl_member SET homeDir=?, assignDir=1 WHERE id=?")
-						   ->execute($this->createMember_homeDir . '/' . $strUserDir, $insertId);
+						   ->execute($this->Isotope->Config->createMember_homeDir . '/' . $strUserDir, $insertId);
 		}
 
 		// HOOK: send insert ID and user data
