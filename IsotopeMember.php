@@ -172,7 +172,8 @@ class IsotopeMember extends Frontend
 		if ($objJump->numRows)
 		{
 			$strUrl = $this->generateFrontendUrl($objJump->fetchAssoc());
-			$arrData['link'] = $this->Environment->base . $strUrl . (($GLOBALS['TL_CONFIG']['disableAlias'] || strpos($strUrl, '?') !== false) ? '&' : '?') . 'token=' . $arrData['activation'];
+			$strUrl = strpos($strUrl, 'http') === 0 ? $strUrl : $this->Environment->base . $strUrl;
+			$arrData['link'] = $strUrl . (($GLOBALS['TL_CONFIG']['disableAlias'] || strpos($strUrl, '?') !== false) ? '&' : '?') . 'token=' . $arrData['activation'];
 		}
 
 		// Support newsletter extension

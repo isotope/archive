@@ -54,6 +54,16 @@ class ModuleActivateAccount extends ModuleRegistration
 	
 	protected function compile()
 	{
+		if ($this->Input->get('token') == '')
+		{
+			$this->strTemplate = 'mod_message';
+			$this->Template = new FrontendTemplate($this->strTemplate);
+			$this->Template->type = 'error';
+			$this->Template->message = $GLOBALS['TL_LANG']['MSC']['accountError'];
+
+			return;
+		}
+		
 		$this->activateAcount();
 	}
 }
