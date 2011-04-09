@@ -32,3 +32,13 @@ CREATE TABLE `tl_iso_products` (
   `assignMember_groups` blob NULL,
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+-- 
+-- Table `tl_page`
+-- 
+
+CREATE TABLE `tl_page` (
+  `iso_activateAccount` int(10) unsigned NOT NULL default '0',
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+

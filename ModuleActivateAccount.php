@@ -23,20 +23,38 @@
  * PHP version 5
  * @copyright  Isotope eCommerce Workgroup 2009-2011
  * @author     Andreas Schempp <andreas@schempp.ch>
- * @author     Fred Bliss <fred.bliss@intelligentspark.com>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
 
-/**
- * Frontend modules
- */
-$GLOBALS['FE_MOD']['user']['activateaccount'] = 'ModuleActivateAccount';
+class ModuleActivateAccount extends ModuleRegistration
+{
 
+	public function generate()
+	{
+		if (TL_MODE == 'BE')
+		{
+			$objTemplate = new BackendTemplate('be_wildcard');
 
-/**
- * Hooks
- */
-$GLOBALS['ISO_HOOKS']['checkout'][] = array('IsotopeMember', 'triggerAction');
-$GLOBALS['TL_HOOKS']['iso_writeOrder'][] = array('IsotopeMember', 'triggerAction');
+			$objTemplate->wildcard = '### ACTIVATE ACCOUNT ###';
+			$objTemplate->title = $this->headline;
+			$objTemplate->id = $this->id;
+			$objTemplate->link = $this->name;
+			$objTemplate->href = $this->Environment->script.'?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
+
+			return $objTemplate->parse();
+		}
+		
+		// $this->editable must be set or the parent method will return an empty string
+		$this->editable = array(1);
+		
+		return parent::generate();
+	}
+	
+	
+	protected function compile()
+	{
+		$this->activateAcount();
+	}
+}
 

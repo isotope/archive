@@ -103,8 +103,8 @@ class IsotopeMember extends Frontend
 		$arrAddress = deserialize($objOrder->billing_address, true);
 		$arrData = array_intersect_key($arrAddress, array_flip($this->Database->getFieldNames('tl_member')));
 		unset($arrData['id'], $arrData['pid']);
-		$arrData['street'] = $arrAddress['street_1'];
-		$arrData['username'] = $arrData['username'] ? $arrData['username'] : $arrData['email'];
+		$arrData['street'] = (string)$arrAddress['street_1'];
+		$arrData['username'] = $arrData['username'] ? $arrData['username'] : (string)$arrData['email'];
 		
 		// Verify the user does not yet exist (especially when using email address)
 		$objMember = $this->Database->prepare("SELECT * FROM tl_member WHERE username=?")->execute($arrData['username']);
@@ -117,14 +117,14 @@ class IsotopeMember extends Frontend
 		
 		// Create member, based on ModuleRegistration::createMember from Contao 2.9
 		$arrData['tstamp'] = time();
-		$arrData['login'] = '1';
+		$arrData['login'] = $arrData['username'] ? '1' : '';
 		$arrData['activation'] = md5(uniqid(mt_rand(), true));
 		$arrData['dateAdded'] = $arrData['tstamp'];
 		$arrData['groups'] = serialize($this->Isotope->Config->createMember_groups);
 		$arrData['newsletter'] = in_array('newsletter', $this->Config->getActiveModules()) ? deserialize($this->Isotope->Config->createMember_newsletters, true) : array();
 
 		// Disable account
-//		$arrData['disable'] = 1;
+		$arrData['disable'] = 1;
 		
 		// Create random password
 		$strPassword = $this->createRandomPassword();
@@ -165,7 +165,15 @@ class IsotopeMember extends Frontend
 		
 		$arrData['password'] = $strPassword;
 		$arrData['domain'] = $this->Environment->host;
-//		$arrData['link'] = $this->Environment->base . $this->Environment->request . (($GLOBALS['TL_CONFIG']['disableAlias'] || strpos($this->Environment->request, '?') !== false) ? '&' : '?') . 'token=' . $arrData['activation'];
+		
+		// Generate activation link
+		global $objPage;
+		$objJump = $this->Database->execute("SELECT * FROM tl_page WHERE id=(SELECT iso_activateAccount FROM tl_page WHERE id={$objPage->rootId})");
+		if ($objJump->numRows)
+		{
+			$strUrl = $this->generateFrontendUrl($objJump->fetchAssoc());
+			$arrData['link'] = $this->Environment->base . $strUrl . (($GLOBALS['TL_CONFIG']['disableAlias'] || strpos($strUrl, '?') !== false) ? '&' : '?') . 'token=' . $arrData['activation'];
+		}
 
 		// Support newsletter extension
 		if (count($arrData['newsletter']) > 0)

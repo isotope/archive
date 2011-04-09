@@ -23,20 +23,24 @@
  * PHP version 5
  * @copyright  Isotope eCommerce Workgroup 2009-2011
  * @author     Andreas Schempp <andreas@schempp.ch>
- * @author     Fred Bliss <fred.bliss@intelligentspark.com>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
 
 /**
- * Frontend modules
+ * Palettes
  */
-$GLOBALS['FE_MOD']['user']['activateaccount'] = 'ModuleActivateAccount';
+$GLOBALS['TL_DCA']['tl_page']['palettes']['root'] = str_replace('iso_config', 'iso_config,iso_activateAccount', $GLOBALS['TL_DCA']['tl_page']['palettes']['root']);
 
 
 /**
- * Hooks
+ * Fields
  */
-$GLOBALS['ISO_HOOKS']['checkout'][] = array('IsotopeMember', 'triggerAction');
-$GLOBALS['TL_HOOKS']['iso_writeOrder'][] = array('IsotopeMember', 'triggerAction');
+$GLOBALS['TL_DCA']['tl_page']['fields']['iso_activateAccount'] = array
+(
+	'label'			=> &$GLOBALS['TL_LANG']['tl_page']['iso_activateAccount'],
+	'exclude'		=> true,
+	'inputType'		=> 'pageTree',
+	'eval'			=> array('fieldType'=>'radio', 'tl_class'=>'clr'),
+);
 

@@ -23,20 +23,12 @@
  * PHP version 5
  * @copyright  Isotope eCommerce Workgroup 2009-2011
  * @author     Andreas Schempp <andreas@schempp.ch>
- * @author     Fred Bliss <fred.bliss@intelligentspark.com>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
 
 /**
- * Frontend modules
+ * Palettes
  */
-$GLOBALS['FE_MOD']['user']['activateaccount'] = 'ModuleActivateAccount';
-
-
-/**
- * Hooks
- */
-$GLOBALS['ISO_HOOKS']['checkout'][] = array('IsotopeMember', 'triggerAction');
-$GLOBALS['TL_HOOKS']['iso_writeOrder'][] = array('IsotopeMember', 'triggerAction');
+$GLOBALS['TL_DCA']['tl_module']['palettes']['activateaccount'] = '{title_legend},name,headline,type;{redirect_legend},reg_jumpTo;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 

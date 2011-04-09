@@ -23,20 +23,18 @@
  * PHP version 5
  * @copyright  Isotope eCommerce Workgroup 2009-2011
  * @author     Andreas Schempp <andreas@schempp.ch>
- * @author     Fred Bliss <fred.bliss@intelligentspark.com>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
 
 /**
- * Frontend modules
+ * Extension folder
  */
-$GLOBALS['FE_MOD']['user']['activateaccount'] = 'ModuleActivateAccount';
+$GLOBALS['TL_LANG']['MOD']['isotope_member'] = array('Isotope eCommerce: Member adaptions');
 
 
 /**
- * Hooks
+ * Frontend modules
  */
-$GLOBALS['ISO_HOOKS']['checkout'][] = array('IsotopeMember', 'triggerAction');
-$GLOBALS['TL_HOOKS']['iso_writeOrder'][] = array('IsotopeMember', 'triggerAction');
+$GLOBALS['TL_LANG']['FMD']['activateaccount'] = array('Activate account', 'Registration module which provides only the option to activate an account (such as created trough Isotope checkout).');
 
