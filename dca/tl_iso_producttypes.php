@@ -27,6 +27,6 @@
 /**
  * Palettes
  */
-$GLOBALS['TL_DCA']['tl_iso_producttypes']['palettes']['flexprice']	= '{name_legend},name,class,description;{template_legend},list_template,reader_template;{language_legend:hide},languages;{attributes_legend},attributes;{download_legend:hide},downloads';
+$GLOBALS['TL_DCA']['tl_iso_producttypes']['palettes']['flexprice']	= '{name_legend},name,class,description;{template_legend},list_template,reader_template;{attributes_legend},attributes;{download_legend:hide},downloads';
 
 
