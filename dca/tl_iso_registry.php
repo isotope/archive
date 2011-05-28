@@ -113,10 +113,6 @@ $GLOBALS['TL_DCA']['tl_iso_registry'] = array
 				'href'			=> 'key=print_registry',
 				'icon'			=> 'system/modules/isotope_giftregistry/html/printer.png'
 			),
-			'buttons' => array
-			(
-				'button_callback'     => array('tl_iso_registry', 'moduleOperations'),
-			),
 			'edit_items' => array
 			(
 				'label'				  => &$GLOBALS['TL_LANG']['tl_iso_registry']['edit_items'],
@@ -193,51 +189,6 @@ class tl_iso_registry extends Backend
 		parent::__construct();
 
 		$this->import('Isotope');
-	}
-
-
-	/**
-	 * Return a string of more buttons for the orders module.
-	 *
-	 * @todo I don't think we need that...
-	 *
-	 * @access public
-	 * @param array $arrRow
-	 * @return string
-	 */
-	public function moduleOperations($arrRow)
-	{
-		if(!count($GLOBALS['ISO_ORDERS']['operations']))
-		{
-			return;
-		}
-
-		foreach($GLOBALS['ISO_ORDERS']['operations'] as $k=>$v)
-		{
-
-
-			$objPaymentType = $this->Database->prepare("SELECT type FROM tl_iso_payment_modules WHERE id=?")
-											 ->limit(1)
-											 ->execute($arrRow['payment_id']);
-
-			if($objPaymentType->numRows && $objPaymentType->type==$k)
-			{
-					$strClass = $v;
-
-					if (!strlen($strClass) || !$this->classFileExists($strClass))
-						return '';
-
-					try
-					{
-						$objModule = new $strClass($arrRow);
-						$strButtons .= $objModule->moduleOperations($arrRow['id']);
-					}
-					catch (Exception $e) {}
-
-			}
-		}
-
-		return $strButtons;
 	}
 
 
