@@ -34,7 +34,6 @@
 	(
 		'callback'					=> 'ModuleCollectionManager',
 		'icon'						=> 'system/modules/isotope_collectionmanager/html/icon-collectionmanager.png',
-		'stylesheet'				=> 'system/modules/isotope/html/backend.css',
 		'javascript'				=> 'system/modules/isotope/html/backend.js',
 		'print_cart'				=> array('IsotopePOS','printInvoice'),
 	)
