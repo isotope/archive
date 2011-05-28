@@ -32,7 +32,7 @@ $GLOBALS['TL_DCA']['tl_iso_products']['fields']['amount'] = array
 (
 	'label'					=> &$GLOBALS['TL_LANG']['tl_iso_products']['amount'],
 	'inputType'				=> 'text',
-	'attributes'			=> array('legend'=>'pricing_legend','is_customer_defined'=>true,'fixed'=>true)
+	'attributes'			=> array('legend'=>'pricing_legend', 'customer_defined'=>true, 'fixed'=>true)
 );
 
 $GLOBALS['TL_DCA']['tl_iso_products']['fields']['pMin'] = array
@@ -56,7 +56,7 @@ $GLOBALS['TL_DCA']['tl_iso_products']['fields']['message'] = array
 	'label'			=> &$GLOBALS['TL_LANG']['tl_iso_products']['message'],
 	'inputType'		=> 'textarea',
 	'eval'			=> array('rgxp'=>'extnd'),
-	'attributes'	=> array('legend'=>'options_legend','is_customer_defined'=>true)
+	'attributes'	=> array('legend'=>'options_legend', 'customer_defined'=>true)
 );
 
 $GLOBALS['TL_DCA']['tl_iso_products']['fields']['shipto_address'] = array
@@ -64,7 +64,7 @@ $GLOBALS['TL_DCA']['tl_iso_products']['fields']['shipto_address'] = array
 	'label'			=> &$GLOBALS['TL_LANG']['tl_iso_products']['shipto_address'],
 	'inputType'		=> 'textarea',
 	'eval'			=> array('rgxp'=>'extnd'),
-	'attributes'	=> array('legend'=>'options_legend','is_customer_defined'=>true)
+	'attributes'	=> array('legend'=>'options_legend', 'customer_defined'=>true)
 );
 
 class tl_iso_products_flexprice extends Controller

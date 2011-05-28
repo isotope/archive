@@ -33,14 +33,14 @@ class FlexPriceProduct extends IsotopeProduct
 		
 		/* Could allow variants that would have "enter your own value" functionality*/
 		//if($arrData['price']>0)
-			//$GLOBALS['TL_DCA']['tl_iso_products']['fields']['amount']['attributes']['is_customer_defined'] = false;
+			//$GLOBALS['TL_DCA']['tl_iso_products']['fields']['amount']['attributes']['customer_defined'] = false;
 				
 		$GLOBALS['TL_DCA']['tl_iso_products']['fields']['message'] = array
 		(
 			'label'			=> &$GLOBALS['TL_LANG']['tl_iso_products']['message'],
 			'inputType'		=> 'textarea',
 			'eval'			=> array('rgxp'=>'extnd'),
-			'attributes'	=> array('is_customer_defined'=>true)
+			'attributes'	=> array('customer_defined'=>true)
 		);
 		
 		$GLOBALS['TL_DCA']['tl_iso_products']['fields']['shipto_address'] = array
@@ -48,7 +48,7 @@ class FlexPriceProduct extends IsotopeProduct
 			'label'			=> &$GLOBALS['TL_LANG']['tl_iso_products']['shipto_address'],
 			'inputType'		=> 'textarea',
 			'eval'			=> array('rgxp'=>'extnd'),
-			'attributes'	=> array('is_customer_defined'=>true)
+			'attributes'	=> array('customer_defined'=>true)
 		);
 		
 		parent::__construct($arrData, $arrOptions, $blnLocked);
