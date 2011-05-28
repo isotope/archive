@@ -37,11 +37,11 @@ $GLOBALS['FE_MOD']['isotope']['iso_registry_reader']	= 'ModuleGiftRegistryReader
 /**
  * Hook for additional buttons
  */
-$GLOBALS['TL_HOOKS']['isoButtons'][]	= array('IsotopeRegistryFrontend', 'registryButton');
-$GLOBALS['TL_HOOKS']['isoButtons'][]	= array('IsotopeRegistryFrontend', 'registryCartButton');
+$GLOBALS['ISO_HOOKS']['buttons'][]	= array('IsotopeRegistryFrontend', 'registryButton');
+$GLOBALS['ISO_HOOKS']['buttons'][]	= array('IsotopeRegistryFrontend', 'registryCartButton');
 
 
 /**
  * Hook for adding additional checkout addresses
  */
-$GLOBALS['TL_HOOKS']['addCustomAddress'][] = array('IsotopeRegistryFrontend', 'registryAddress');
+$GLOBALS['ISO_HOOKS']['addCustomAddress'][] = array('IsotopeRegistryFrontend', 'registryAddress');
