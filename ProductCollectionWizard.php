@@ -321,7 +321,7 @@ window.addEvent('domready', function() {
 		$arrAttributes = $objProduct->getAttributes();
 		foreach($arrAttributes as $attribute => $varValue )
 		{
-			if ($GLOBALS['TL_DCA']['tl_iso_products']['fields'][$attribute]['attributes']['is_customer_defined'] && $GLOBALS['TL_DCA']['tl_iso_products']['fields'][$attribute]['attributes']['add_to_product_variants'])
+			if ($GLOBALS['TL_DCA']['tl_iso_products']['fields'][$attribute]['attributes']['customer_defined'] && $GLOBALS['TL_DCA']['tl_iso_products']['fields'][$attribute]['attributes']['add_to_product_variants'])
 			{
 				$arrOptionKeys[] = $attribute;
 			}
