@@ -108,9 +108,9 @@ class ModuleFundraiser extends ModuleIsotope
 		global $objPage;
 
 		// Call isotope_shopping_cart_onload_callback (e.g. to check permissions)
-		if (is_array($GLOBALS['TL_HOOKS']['isotope_shopping_cart_onload']))
+		if (is_array($GLOBALS['ISO_HOOKS']['shopping_cart_onload']))
 		{
-			foreach ($GLOBALS['TL_HOOKS']['isotope_shopping_cart_onload'] as $callback)
+			foreach ($GLOBALS['ISO_HOOKS']['shopping_cart_onload'] as $callback)
 			{
 				if (is_array($callback))
 				{
@@ -146,9 +146,9 @@ class ModuleFundraiser extends ModuleIsotope
 				break;
 			default:
 				// Call isotope_shopping_cart_custom_action (e.g. to check permissions)
-				if (is_array($GLOBALS['TL_HOOKS']['isotope_shopping_cart_custom_action']))
+				if (is_array($GLOBALS['ISO_HOOKS']['shopping_cart_custom_action']))
 				{
-					foreach ($GLOBALS['TL_HOOKS']['isotope_shopping_cart_custom_action'] as $callback)
+					foreach ($GLOBALS['ISO_HOOKS']['shopping_cart_custom_action'] as $callback)
 					{
 						if (is_array($callback))
 						{

@@ -59,9 +59,9 @@ class FundraiserProduct extends IsotopeProduct
 
         // Buttons
 		$arrButtons = array();
-		if (isset($GLOBALS['TL_HOOKS']['isoButtons']) && is_array($GLOBALS['TL_HOOKS']['isoButtons']))
+		if (isset($GLOBALS['ISO_HOOKS']['buttons']) && is_array($GLOBALS['ISO_HOOKS']['buttons']))
 		{
-			foreach ($GLOBALS['TL_HOOKS']['isoButtons'] as $callback)
+			foreach ($GLOBALS['ISO_HOOKS']['buttons'] as $callback)
 			{
 				$this->import($callback[0]);
 				$arrButtons = $this->$callback[0]->$callback[1]($arrButtons);
@@ -106,9 +106,9 @@ class FundraiserProduct extends IsotopeProduct
 		$objTemplate->formSubmit = 'iso_product_'.$this->id;
 
 		// HOOK for altering product data before output
-		if (isset($GLOBALS['TL_HOOKS']['iso_generateProduct']) && is_array($GLOBALS['TL_HOOKS']['iso_generateProduct']))
+		if (isset($GLOBALS['ISO_HOOKS']['generateProduct']) && is_array($GLOBALS['ISO_HOOKS']['generateProduct']))
 		{
-			  foreach ($GLOBALS['TL_HOOKS']['iso_generateProduct'] as $callback)
+			  foreach ($GLOBALS['ISO_HOOKS']['generateProduct'] as $callback)
 			  {
 				$this->import($callback[0]);
 				$objTemplate = $this->$callback[0]->$callback[1]($objTemplate, $this);

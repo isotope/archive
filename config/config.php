@@ -37,14 +37,14 @@ $GLOBALS['FE_MOD']['isotope']['iso_fundraiser_reader']	= 'ModuleFundraiserReader
 /**
  * Hook for additional buttons
  */
-$GLOBALS['TL_HOOKS']['isoButtons'][]	= array('IsotopeFundraiserFrontend', 'fundraiserButton');
-$GLOBALS['TL_HOOKS']['isoButtons'][]	= array('IsotopeFundraiserFrontend', 'fundraiserCartButton');
+$GLOBALS['ISO_HOOKS']['buttons'][]	= array('IsotopeFundraiserFrontend', 'fundraiserButton');
+$GLOBALS['ISO_HOOKS']['buttons'][]	= array('IsotopeFundraiserFrontend', 'fundraiserCartButton');
 
 
 /**
  * Hook for adding additional checkout addresses
  */
-$GLOBALS['TL_HOOKS']['addCustomAddress'][] = array('IsotopeFundraiserFrontend', 'fundraiserAddress');
+$GLOBALS['ISO_HOOKS']['customAddress'][] = array('IsotopeFundraiserFrontend', 'fundraiserAddress');
 
 
 /**
