@@ -29,10 +29,4 @@
 /**
  * Backend modules
  */
-
- $GLOBALS['BE_MOD']['isotope']['iso_orders']['print_packing'] = array('IsotopePackingslip','printInvoicesInterface');
-
- if(TL_MODE=='BE')
- {
- 	$GLOBALS['TL_CSS'][] = 'system/modules/isotope_packingslip/html/backend.css';
- }
+$GLOBALS['BE_MOD']['isotope']['iso_orders']['print_packing'] = array('IsotopePackingslip','printInvoicesInterface');
