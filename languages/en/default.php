@@ -27,6 +27,6 @@
 /**
  * Product types
  */
-$GLOBALS['TL_LANG']['ISO_PRODUCT']['flexprice']		= array('Flexible Price Product', 'This product type accepts user input for pricing information. Ideal for gift certificates, donations, etc.');
+$GLOBALS['ISO_LANG']['PRODUCT']['flexprice']		= array('Flexible Price Product', 'This product type accepts user input for pricing information. Ideal for gift certificates, donations, etc.');
 
 $GLOBALS['TL_LANG']['ISO']['checkout_fulfillment_options'] = 'Fulfillment Options';
