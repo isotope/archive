@@ -29,5 +29,5 @@
 /**
  * Galleries
  */
-$GLOBALS['TL_LANG']['GAL']['flowplayer']	= array('Flowplayer', '<p>This gallery uses <a href="http://flowplayer.org/" onclick="window.open(this.href); return false">Flowplayer</a> to display images and videos as the main image.</p>');
+$GLOBALS['ISO_LANG']['GAL']['flowplayer']	= array('Flowplayer', '<p>This gallery uses <a href="http://flowplayer.org/" onclick="window.open(this.href); return false">Flowplayer</a> to display images and videos as the main image.</p>');
 
