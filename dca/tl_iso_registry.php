@@ -111,7 +111,7 @@ $GLOBALS['TL_DCA']['tl_iso_registry'] = array
 			(
 				'label'			=> &$GLOBALS['TL_LANG']['tl_iso_registry']['print_registry'],
 				'href'			=> 'key=print_registry',
-				'icon'			=> 'system/modules/isotope/html/printer.png'
+				'icon'			=> 'system/modules/isotope_giftregistry/html/printer.png'
 			),
 			'buttons' => array
 			(
