@@ -29,10 +29,4 @@
 /**
  * Backend modules
  */
-
- $GLOBALS['BE_MOD']['isotope']['iso_orders']['print_labels'] = array('IsotopePrintlabels','printLabelsInterface');
-
- if(TL_MODE=='BE')
- {
- 	$GLOBALS['TL_CSS'][] = 'system/modules/isotope_printlabels/html/backend.css';
- }
+$GLOBALS['BE_MOD']['isotope']['iso_orders']['print_labels'] = array('IsotopePrintlabels','printLabelsInterface');
