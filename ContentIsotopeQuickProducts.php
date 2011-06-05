@@ -44,8 +44,7 @@ class ContentIsotopeQuickProducts extends ContentIsotope
 	{
 		if (TL_MODE == 'BE')
 		{
-			$arrProductIds = deserialize($this->productsAlias);
-			$arrProducts = $this->getProducts($arrProductIds);
+			$arrProducts = $this->getProducts(deserialize($this->productsAlias));
 
 			foreach($arrProducts as $i => $objProduct)
 			{
@@ -70,8 +69,7 @@ class ContentIsotopeQuickProducts extends ContentIsotope
 	 */
 	protected function compile()
 	{
-		$arrProductIds = deserialize($this->productsAlias);
-		$arrProducts = $this->getProducts($arrProductIds);
+		$arrProducts = $this->getProducts(deserialize($this->productsAlias));
 
 		if (!is_array($arrProducts) || !count($arrProducts))
 		{
@@ -90,7 +88,6 @@ class ContentIsotopeQuickProducts extends ContentIsotope
 				'class'		=> ('product' . ($i == 0 ? ' product_first' : '')),
 				'html'		=> $objProduct->generate((strlen($this->iso_list_layout) ? $this->iso_list_layout : $objProduct->list_template), $this),
 			);
-
 		}
 
 		$this->Template->products = $arrBuffer;
