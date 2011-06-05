@@ -29,27 +29,25 @@
 class ModuleIsotopeBestsellers extends ModuleIsotopeProductList 
 {
 
-	protected $strTemplate = 'mod_iso_bestsellerslist';
-	
 	protected function findProducts() 
 	{
 		$arrCategories = $this->findCategories($this->iso_category_scope);
+
 		$arrIds = array();
 
-		if($this->iso_bestseller_mode=='calculated') //mode is  calculated
+		if ($this->iso_bestseller_mode == 'calculated')
 		{
 			//$strQuery = "SELECT p.id AS id FROM tl_iso_products AS p LEFT OUTER JOIN (SELECT i.product_id AS pid, SUM(i.product_quantity) AS volume FROM tl_iso_order_items AS i JOIN tl_iso_orders AS o ON o.id = i.pid WHERE o.config_id = ? GROUP BY i.product_id) AS s ON s.pid = p.id WHERE p.pid IS NULL OR p.pid = 0 ORDER BY s.volume DESC";
-			if($this->iso_bestseller_productTypes)
+			
+			if ($this->iso_bestseller_productTypes)
 			{
 				$arrProductTypes = deserialize($this->iso_bestseller_productTypes, true);
 				
 				$strProductTypes = " AND p.type IN(".implode(',',$arrProductTypes).")";
-				
 			}
 			
-			if(!$this->iso_bestseller_limitByType)
+			if (!$this->iso_bestseller_limitByType)
 			{
-			
 				$strQuery = "SELECT DISTINCT p.* FROM tl_iso_product_categories c, tl_iso_products p LEFT OUTER JOIN (SELECT i.product_id AS pid, SUM(i.product_quantity) AS volume FROM tl_iso_order_items AS i JOIN tl_iso_orders AS o ON o.id = i.pid WHERE o.config_id = ? GROUP BY i.product_id) AS s ON s.pid=p.id WHERE (p.id=c.pid OR p.pid=c.pid)" . (BE_USER_LOGGED_IN ? '' : " AND published='1'") . " AND volume>{$this->iso_bestseller_qty}$strProductTypes AND c.page_id IN (" . implode(',', $arrCategories) . ") ORDER BY volume DESC";
 			}
 			else
@@ -72,17 +70,15 @@ class ModuleIsotopeBestsellers extends ModuleIsotopeProductList
 		}
 		else
 		{
-			
-			$strManualIds = implode(',',deserialize($this->iso_bestseller_products,true));
-			
+			$strManualIds = implode(',', deserialize($this->iso_bestseller_products, true));
+
 			$strQuery = "SELECT DISTINCT p.id AS id, p.* FROM tl_iso_product_categories c, tl_iso_products p WHERE (p.id=c.pid OR p.pid=c.pid) AND p.id IN($strManualIds)" . (BE_USER_LOGGED_IN ? '' : " AND published='1'") . " AND c.page_id IN (" . implode(',', $arrCategories) . ")";
-		
-			//$strQuery = "SELECT id FROM tl_iso_products WHERE pid IS NULL OR pid = 0 AND id IN($strManualIds) AND ";	
 		}
+
 		if($this->Input->get('test')==1)
 			echo  'query: '.$strQuery;
 		
-		if(!$objBestsellers->numRows)	//must check in case we already queried for product types individually
+		if (!$objBestsellers->numRows)	//must check in case we already queried for product types individually
 		{
 			$objBestsellers = $this->Database->prepare($strQuery)->limit($this->iso_bestseller_amt)->execute($this->Isotope->Config->id);
 		
@@ -90,7 +86,6 @@ class ModuleIsotopeBestsellers extends ModuleIsotopeProductList
 		}
 		
 		return $this->getProducts($arrIds);
-		
 	}
-	
 }
+
