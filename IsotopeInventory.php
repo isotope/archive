@@ -196,7 +196,7 @@ class IsotopeInventory extends Controller
   <tbody>';
 
 		// Get current quantites from inventory
-		$objQty = $this->Database->query("SELECT id, name, (SELECT SUM(quantity) FROM tl_iso_inventory WHERE tl_iso_inventory.pid=tl_iso_warehouses.id AND tl_iso_inventory.product_id=$intId) AS total_quantity FROM tl_iso_warehouses");
+		$objQty = $this->Database->execute("SELECT id, name, (SELECT SUM(quantity) FROM tl_iso_inventory WHERE tl_iso_inventory.pid=tl_iso_warehouses.id AND tl_iso_inventory.product_id=$intId) AS total_quantity FROM tl_iso_warehouses");
 
 		if(!$objQty->numRows)
 		{
