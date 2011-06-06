@@ -55,7 +55,7 @@ class IsotopeExport extends BackendModule
 		{
 			$arrFields = $this->Input->post('export_fields');
 			$strRows = '';
-			$objRows = $this->Database->query("SELECT ".implode(',', $arrFields)." FROM tl_iso_products");
+			$objRows = $this->Database->execute("SELECT ".implode(',', $arrFields)." FROM tl_iso_products");
 
 			while($objRows->next())
 			{
@@ -158,7 +158,7 @@ class IsotopeExport extends BackendModule
 	{
 		$arrLabels = array();
 
-		$arrLabels = $this->Database->query("SELECT name,field_name FROM tl_iso_attributes WHERE field_name IN('".implode("','",$arrAttributeKeys)."')")->fetchAllAssoc();
+		$arrLabels = $this->Database->execute("SELECT name,field_name FROM tl_iso_attributes WHERE field_name IN('".implode("','",$arrAttributeKeys)."')")->fetchAllAssoc();
 
 		if(count($arrLabels))
 		{
