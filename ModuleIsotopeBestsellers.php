@@ -31,10 +31,8 @@ class ModuleIsotopeBestsellers extends ModuleIsotopeProductList
 
 	protected function findProducts() 
 	{
-		$arrCategories = $this->findCategories($this->iso_category_scope);
-
-		$arrIds = array();
-
+		$arrCategories = $this->findCategoryProducts($this->iso_category_scope);
+		
 		if ($this->iso_bestseller_mode == 'calculated')
 		{
 			//$strQuery = "SELECT p.id AS id FROM tl_iso_products AS p LEFT OUTER JOIN (SELECT i.product_id AS pid, SUM(i.product_quantity) AS volume FROM tl_iso_order_items AS i JOIN tl_iso_orders AS o ON o.id = i.pid WHERE o.config_id = ? GROUP BY i.product_id) AS s ON s.pid = p.id WHERE p.pid IS NULL OR p.pid = 0 ORDER BY s.volume DESC";
@@ -48,7 +46,7 @@ class ModuleIsotopeBestsellers extends ModuleIsotopeProductList
 			
 			if (!$this->iso_bestseller_limitByType)
 			{
-				$strQuery = "SELECT DISTINCT p.* FROM tl_iso_product_categories c, tl_iso_products p LEFT OUTER JOIN (SELECT i.product_id AS pid, SUM(i.product_quantity) AS volume FROM tl_iso_order_items AS i JOIN tl_iso_orders AS o ON o.id = i.pid WHERE o.config_id = ? GROUP BY i.product_id) AS s ON s.pid=p.id WHERE (p.id=c.pid OR p.pid=c.pid)" . (BE_USER_LOGGED_IN ? '' : " AND published='1'") . " AND volume>{$this->iso_bestseller_qty}$strProductTypes AND c.page_id IN (" . implode(',', $arrCategories) . ") ORDER BY volume DESC";
+				$strQuery = "SELECT DISTINCT p.* FROM tl_iso_products p LEFT OUTER JOIN (SELECT i.product_id AS pid, SUM(i.product_quantity) AS volume FROM tl_iso_order_items AS i JOIN tl_iso_orders AS o ON o.id = i.pid WHERE o.config_id = ? GROUP BY i.product_id) AS s ON s.pid=p.id WHERE volume>{$this->iso_bestseller_qty}$strProductTypes AND p.id IN (" . implode(',', $arrCategories) . ")" . (BE_USER_LOGGED_IN ? '' : " AND published='1'") . " ORDER BY volume DESC";
 			}
 			else
 			{
@@ -57,7 +55,7 @@ class ModuleIsotopeBestsellers extends ModuleIsotopeProductList
 					
 					$strProductTypes = " AND p.type=$type";
 					
-					$strQuery = "SELECT DISTINCT p.* FROM tl_iso_product_categories c, tl_iso_products p LEFT OUTER JOIN (SELECT i.product_id AS pid, SUM(i.product_quantity) AS volume FROM tl_iso_order_items AS i JOIN tl_iso_orders AS o ON o.id = i.pid WHERE o.config_id = ? GROUP BY i.product_id) AS s ON s.pid=p.id WHERE (p.id=c.pid OR p.pid=c.pid)" . (BE_USER_LOGGED_IN ? '' : " AND published='1'") . " AND volume>{$this->iso_bestseller_qty}$strProductTypes AND c.page_id IN (" . implode(',', $arrCategories) . ") ORDER BY volume DESC";
+					$strQuery = "SELECT DISTINCT p.* FROM tl_iso_products p LEFT OUTER JOIN (SELECT i.product_id AS pid, SUM(i.product_quantity) AS volume FROM tl_iso_order_items AS i JOIN tl_iso_orders AS o ON o.id = i.pid WHERE o.config_id = ? GROUP BY i.product_id) AS s ON s.pid=p.id WHERE volume>{$this->iso_bestseller_qty}$strProductTypes AND p.id IN (" . implode(',', $arrCategories) . ")" . (BE_USER_LOGGED_IN ? '' : " AND published='1'") . " ORDER BY volume DESC";
 					
 					$objBestsellers = $this->Database->prepare($strQuery)->limit($this->iso_bestseller_amt)->execute($this->Isotope->Config->id);
 					
@@ -72,7 +70,7 @@ class ModuleIsotopeBestsellers extends ModuleIsotopeProductList
 		{
 			$strManualIds = implode(',', deserialize($this->iso_bestseller_products, true));
 
-			$strQuery = "SELECT DISTINCT p.id AS id, p.* FROM tl_iso_product_categories c, tl_iso_products p WHERE (p.id=c.pid OR p.pid=c.pid) AND p.id IN($strManualIds)" . (BE_USER_LOGGED_IN ? '' : " AND published='1'") . " AND c.page_id IN (" . implode(',', $arrCategories) . ")";
+			$strQuery = "SELECT DISTINCT p.id AS id, p.* FROM tl_iso_products p WHERE AND p.id IN($strManualIds)" . (BE_USER_LOGGED_IN ? '' : " AND published='1'") . " AND p.id IN (" . implode(',', $arrCategories) . ")";
 		}
 
 		if($this->Input->get('test')==1)
