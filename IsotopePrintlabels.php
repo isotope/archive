@@ -65,7 +65,7 @@ class IsotopePrintlabels extends IsotopePOS
 		{
 			$varValue = $this->Input->post('status');
 
-			$objOrders = $this->Database->query("SELECT id FROM tl_iso_orders WHERE status='$varValue'");
+			$objOrders = $this->Database->execute("SELECT id FROM tl_iso_orders WHERE status='$varValue'");
 
 			if($objOrders->numRows)
 			{
@@ -138,7 +138,7 @@ class IsotopePrintlabels extends IsotopePOS
 
 		$strIds = implode(',', $arrIds);
 
-		$objOrders = $this->Database->query("SELECT * FROM tl_iso_orders WHERE id IN($strIds)");
+		$objOrders = $this->Database->execute("SELECT * FROM tl_iso_orders WHERE id IN($strIds)");
 
 		$arrIDs = array();
 		while($objOrders->next())
