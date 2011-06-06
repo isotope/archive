@@ -65,7 +65,7 @@ class IsotopePackingslip extends IsotopePOS
 		{
 			$varValue = $this->Input->post('status');
 
-			$objOrders = $this->Database->query("SELECT id FROM tl_iso_orders WHERE status='$varValue'");
+			$objOrders = $this->Database->execute("SELECT id FROM tl_iso_orders WHERE status='$varValue'");
 
 			if($objOrders->numRows)
 			{
