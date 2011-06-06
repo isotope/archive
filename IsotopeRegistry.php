@@ -260,7 +260,7 @@ class IsotopeRegistry extends IsotopeProductCollection
 			while( $objItems->next() )
 			{
 				//we can possibly simplify this if we have access to a the product's PID but as we're dealing with cart items, we don't by default.
-				$objVariantData = $this->Database->query("SELECT * FROM tl_iso_products WHERE id={$objItems->product_id}");
+				$objVariantData = $this->Database->execute("SELECT * FROM tl_iso_products WHERE id={$objItems->product_id}");
 
 				$intProductId = ($objVariantData->pid ? $objVariantData->pid : $objVariantData->id);
 
