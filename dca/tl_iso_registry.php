@@ -22,6 +22,7 @@
  * @copyright  Winans Creative 2009, Intelligent Spark 2010, iserv.ch GmbH 2010
  * @author     Fred Bliss <fred.bliss@intelligentspark.com>
  * @author     Andreas Schempp <andreas@schempp.ch>
+ * @author     Christian de la Haye <service@delahaye.de>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
@@ -155,7 +156,7 @@ $GLOBALS['TL_DCA']['tl_iso_registry'] = array
 			'flag'					  => 8,
 			'filter'				  => true,
 			'sorting'				  => true,
-			'eval'                    => array('rgxp'=>'date', 'mandatory'=>true, 'datepicker'=>$this->getDatePickerString(), 'tl_class'=>'w50 wizard')
+			'eval'                    => array('rgxp'=>'date', 'mandatory'=>true, 'datepicker'=>(method_exists($this,'getDatePickerString') ? $this->getDatePickerString() : true), 'tl_class'=>'w50 wizard')
 		),
 		'event_type' => array
 		(
@@ -460,6 +461,3 @@ class tl_iso_registry extends Backend
 
 
 }
-
-
-
