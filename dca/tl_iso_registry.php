@@ -320,6 +320,7 @@ class tl_iso_registry extends Backend
 <form action="'.ampersand($this->Environment->request, true).'" id="tl_iso_order_item_edit" class="tl_form" method="post">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_iso_order_item_edit" />
+<input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">
 
 <div class="tl_tbox block">
 <table width="100%" border="0" cellpadding="5" cellspacing="0" summary="">
