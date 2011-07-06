@@ -7,9 +7,9 @@
 -- *                                                        *
 -- **********************************************************
 
--- 
+--
 -- Table `tl_content`
--- 
+--
 
 CREATE TABLE `tl_content` (
   `iso_bundle` blob NULL,

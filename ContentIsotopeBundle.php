@@ -10,12 +10,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
@@ -30,27 +30,27 @@
 
 class ContentIsotopeBundle extends ContentIsotope
 {
-	
+
 	/**
 	 * Template
 	 * @var string
 	 */
 	protected $strTemplate = 'ce_iso_bundle';
-	
-	
+
+
 	public function generate()
 	{
 		$this->iso_bundle = deserialize($this->iso_bundle);
-		
+
 		if (!is_array($this->iso_bundle) || !count($this->iso_bundle))
 		{
 			return '';
 		}
-		
+
 		return parent::generate();
 	}
-	
-	
+
+
 	protected function compile()
 	{
 		$arrProducts = $this->getProducts(array_keys($this->iso_bundle));
@@ -62,7 +62,7 @@ class ContentIsotopeBundle extends ContentIsotope
 			$this->Template->message = $GLOBALS['TL_LANG']['MSC']['noProducts'];
 			return;
 		}
-		
+
 		if ($this->Input->get('bundle') == $this->id)
 		{
 			foreach( $arrProducts as $objProduct )
