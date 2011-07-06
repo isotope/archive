@@ -11,6 +11,7 @@
 <form action="<?php echo $this->action; ?>" class="tl_form" method="post" onsubmit="ExportRequest.startExport(this, 'start'); return false;" >
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_export" />
+<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}" />
 <h3><?php echo $this->checkboxWidget->generateLabel(); ?></h3>
 <?php echo $this->checkboxWidget->generateWithError(); ?>
 <br /><br />
