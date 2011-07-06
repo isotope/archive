@@ -10,12 +10,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
@@ -31,7 +31,7 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'iso_bestseller_
 
 $GLOBALS['TL_DCA']['tl_module']['palettes']['iso_bestsellers'] = '{title_legend},name,headline,type,iso_bestseller_mode;{display_legend},iso_bestseller_qty,iso_cols;{config_legend},iso_use_quantity,iso_category_scope;{redirect_legend},iso_reader_jumpTo,iso_addProductJumpTo;{template_legend:hide},iso_list_layout,iso_buttons;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 
-$GLOBALS['TL_DCA']['tl_module']['subpalettes']['iso_bestseller_mode_calculated'] = 'iso_bestseller_amt,iso_bestseller_productTypes,iso_bestseller_limitByType'; 
+$GLOBALS['TL_DCA']['tl_module']['subpalettes']['iso_bestseller_mode_calculated'] = 'iso_bestseller_amt,iso_bestseller_productTypes,iso_bestseller_limitByType';
 
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['iso_bestseller_mode_manual'] = 'iso_bestseller_amt,iso_bestseller_products';
 
@@ -70,7 +70,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['iso_bestseller_productTypes'] = array
 	'exclude'				  => true,
 	'inputType'				  => 'checkbox',
 	'foreignKey'			  => 'tl_iso_producttypes.name',
-	'eval'					  => array('multiple'=>true, 'tl_class'=>'clr')	
+	'eval'					  => array('multiple'=>true, 'tl_class'=>'clr')
 );
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['iso_bestseller_limitByType'] = array

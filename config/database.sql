@@ -10,9 +10,9 @@
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table `tl_module`
--- 
+--
 
 CREATE TABLE `tl_module` (
   `iso_bestseller_mode` varchar(64) NOT NULL default '',
