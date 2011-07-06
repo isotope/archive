@@ -56,6 +56,7 @@ class IsotopePackingslip extends IsotopePOS
 <h2 class="sub_headline">'.$GLOBALS['TL_LANG']['tl_iso_orders']['print_packing'][0].'</h2>
 <form action="'.$this->Environment->request.'"  id="tl_print_packing" class="tl_form" method="post">
 <input type="hidden" name="FORM_SUBMIT" value="tl_print_packing" />
+<input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">
 <div class="tl_formbody_edit">
 <div class="tl_tbox block">';
 
