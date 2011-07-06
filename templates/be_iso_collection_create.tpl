@@ -8,6 +8,7 @@
 <form action="<?php echo $this->request; ?>" id="tl_iso_collectionmanager" class="tl_form" method="post">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_iso_collectionmanager" />
+<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}" />
 
 <div class="tl_tbox block">
 <?php foreach ($this->fields as $field): ?>
