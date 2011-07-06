@@ -14,6 +14,7 @@
 <form action="<?php echo $this->action; ?>" class="tl_form" method="post">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_import_setdb" />
+<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}" />
 <fieldset class="tl_tbox block">
 <div>
 <h3><label for="import_db">Old Database Name</label></h3>
@@ -28,6 +29,7 @@
 <form action="<?php echo $this->action; ?>" class="tl_form" method="post">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_import_setcats" />
+<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}" />
 <fieldset class="tl_tbox block">
 <h3>Old Database Name: <?php echo $this->oldDb; ?></h3>
 <div>
@@ -61,6 +63,7 @@
 <form action="<?php echo $this->action; ?>" class="tl_form" method="post">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_import_confirm" />
+<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}" />
 <fieldset class="tl_tbox block">
 <h2>Please confirm the following information:</h2>
 <h3>Old Database Name: <?php echo $this->oldDb; ?></h3>
@@ -89,6 +92,7 @@
 <form action="<?php echo $this->action; ?>" class="tl_form" method="post" onsubmit="ImportRequest.startImport(this, 'start'); return false;" >
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_import" />
+<input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}" />
 <div class="tl_submit_container">
 <input type="submit" name="clear" id="clear" class="tl_submit" value="<?php echo $this->importSubmit; ?>" />
 </div>
