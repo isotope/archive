@@ -10,12 +10,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
@@ -62,8 +62,8 @@ class IsotopeMember extends Frontend
 			return call_user_func_array(array($this, 'addMember'), $arrParam);
 		}
 	}
-	
-	
+
+
 	/**
 	 * Create a new member on checkout
 	 * @param object
@@ -80,7 +80,7 @@ class IsotopeMember extends Frontend
 		{
 			$blnCreateMember = false;
 			$arrProducts = $objCart->getProducts();
-			
+
 			foreach( $arrProducts as $objProduct )
 			{
 				if ($objProduct->createMember)
@@ -89,7 +89,7 @@ class IsotopeMember extends Frontend
 					break;
 				}
 			}
-			
+
 			if (!$blnCreateMember)
 				return true;
 		}
@@ -98,14 +98,14 @@ class IsotopeMember extends Frontend
 			// @todo add guest option
 			return true;
 		}
-		
+
 		// Prepare address. This will dynamically use all fields available in both member and address
 		$arrAddress = deserialize($objOrder->billing_address, true);
 		$arrData = array_intersect_key($arrAddress, array_flip($this->Database->getFieldNames('tl_member')));
 		unset($arrData['id'], $arrData['pid']);
 		$arrData['street'] = (string)$arrAddress['street_1'];
 		$arrData['username'] = $arrData['username'] ? $arrData['username'] : (string)$arrData['email'];
-		
+
 		// Verify the user does not yet exist (especially when using email address)
 		$objMember = $this->Database->prepare("SELECT * FROM tl_member WHERE username=?")->execute($arrData['username']);
 		if ($objMember->numRows)
@@ -113,8 +113,8 @@ class IsotopeMember extends Frontend
 			$this->log('Could not create member for order ID '.$objOrder->id.', username "'.$arrData['username'].'" exists.', __METHOD__, TL_ERROR);
 			return true;
 		}
-		
-		
+
+
 		// Create member, based on ModuleRegistration::createMember from Contao 2.9
 		$arrData['tstamp'] = time();
 		$arrData['login'] = $arrData['username'] ? '1' : '';
@@ -125,7 +125,7 @@ class IsotopeMember extends Frontend
 
 		// Disable account
 		$arrData['disable'] = 1;
-		
+
 		// Create random password
 		$strPassword = $this->createRandomPassword();
 		$strSalt = substr(md5(uniqid(mt_rand(), true)), 0, 23);
@@ -162,10 +162,10 @@ class IsotopeMember extends Frontend
 				$this->$callback[0]->$callback[1]($insertId, $arrData);
 			}
 		}
-		
+
 		$arrData['password'] = $strPassword;
 		$arrData['domain'] = $this->Environment->host;
-		
+
 		// Generate activation link
 		global $objPage;
 		$objJump = $this->Database->execute("SELECT * FROM tl_page WHERE id=(SELECT iso_activateAccount FROM tl_page WHERE id={$objPage->rootId})");
@@ -206,11 +206,11 @@ class IsotopeMember extends Frontend
 			$objOrder->pid = $insertId;
 			$objOrder->save();
 		}
-		
+
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * Assign current member to the product groups
 	 * @param object
@@ -221,8 +221,8 @@ class IsotopeMember extends Frontend
 	{
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * Backward-compatible function for Isotope 0.2
 	 */
@@ -230,14 +230,14 @@ class IsotopeMember extends Frontend
 	{
 		if (!$blnCheckout || FE_USER_LOGGED_IN || !$this->Isotope->Config->createMember)
 			return $blnCheckout;
-		
+
 		$objOrder = new IsotopeOrder();
 		if (!$objOrder->findBy('id', $orderId))
 		{
 			$this->log('Could not create member for order ID '.$orderId.' (Order not found).', __METHOD__, TL_ERROR);
 			return $blnCheckout;
 		}
-		
+
 		$strCustomerName = '';
 		$strCustomerEmail = '';
 
@@ -251,23 +251,23 @@ class IsotopeMember extends Frontend
 			$strCustomerName = $objOrder->shippingAddress['firstname'] . ' ' . $objOrder->shippingAddress['lastname'];
 			$strCustomerEmail = $objOrder->shippingAddress['email'];
 		}
-		
+
 		if (trim($strCustomerName) != '')
 		{
 			$strCustomerEmail = sprintf('%s <%s>', $strCustomerName, $strCustomerEmail);
 		}
-		
+
 		if ($strCustomerEmail != '')
 		{
 			$objOrder->iso_customer_email = $strCustomerEmail;
 		}
-		
+
 		$objOrder->iso_sales_email = $GLOBALS['TL_ADMIN_NAME'] != '' ? sprintf('%s <%s>', $GLOBALS['TL_ADMIN_NAME'], $GLOBALS['TL_ADMIN_EMAIL']) : $GLOBALS['TL_ADMIN_EMAIL'];
-		
+
 		return $this->addMember($objOrder, $this->Isotope->Cart);
 	}
 
-	
+
 	/**
 	 * Backward-compatible function for Isotope 0.2
 	 */

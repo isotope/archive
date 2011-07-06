@@ -7,9 +7,9 @@
 -- *                                                        *
 -- **********************************************************
 
--- 
+--
 -- Table `tl_iso_config`
--- 
+--
 
 CREATE TABLE `tl_iso_config` (
   `createMember` varchar(8) NOT NULL default '',
@@ -23,9 +23,9 @@ CREATE TABLE `tl_iso_config` (
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table `tl_iso_products`
--- 
+--
 
 CREATE TABLE `tl_iso_products` (
   `createMember` char(1) NOT NULL default '',
@@ -34,9 +34,9 @@ CREATE TABLE `tl_iso_products` (
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table `tl_page`
--- 
+--
 
 CREATE TABLE `tl_page` (
   `iso_activateAccount` int(10) unsigned NOT NULL default '0',
