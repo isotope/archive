@@ -40,6 +40,7 @@
 
 
   <input type="hidden" name="FORM_SUBMIT" value="tl_quantities">
+  <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}" />
   <div class="items tl_formbody_edit">
       <?php if($this->products): ?>
       <?php foreach ( $this->products as $product ) : ?>
