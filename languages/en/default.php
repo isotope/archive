@@ -31,5 +31,12 @@
 /**
  * Payment modules
  */
+$GLOBALS['ISO_LANG']['PAY']['epay_window']			= array('ePay Payment Window', 'See <a href="http://www.epay.eu/" onclick="window.open(this.href); return false">www.epay.eu</a> for more information about ePay.');
 $GLOBALS['ISO_LANG']['PAY']['epay_form']			= array('ePay HTML Form', 'See <a href="http://www.epay.eu/" onclick="window.open(this.href); return false">www.epay.eu</a> for more information about ePay.');
+
+
+/**
+ * Miscellaneous
+ */
+$GLOBALS['TL_LANG']['MSC']['backendPaymentEPay']	= 'Please use the following address to access the ePay admin panel';
 

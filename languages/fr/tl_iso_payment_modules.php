@@ -21,23 +21,19 @@
  * Software Foundation website at <http://www.gnu.org/licenses/>.
  *
  * PHP version 5
- * @copyright  Andreas Schempp 2011
+ * @copyright  2009-2011 Isotope eCommerce Workgroup
  * @author     Andreas Schempp <andreas@schempp.ch>
+ * @author     Rebecca Jutzi <rebecca.jutzi@bluewin.ch>
+ * @author     Simon Moos <cc@simonmoos.com>
+ * @author     Cyril Ponce <cyril@contao.fr>
+ * @author     Stéphane Cagni <stephane@cagni.fr>
+ * @author     Katelle Ave <contact@graphikat.net>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  * @version    $Id$
  */
 
-
-/**
- * Payment modules
- */
-$GLOBALS['ISO_PAY']['epay_window']			= 'PaymentEPay';
-$GLOBALS['ISO_PAY']['epay_form']			= 'PaymentEPayForm';
-
-
-/**
- * Hooks
- */
-$GLOBALS['TL_HOOKS']['generatePage'][] = array('EpayRelay', 'overwriteBase');
-$GLOBALS['TL_HOOKS']['generateFrontendUrl'][] = array('EpayRelay', 'rewriteUrls');
+$GLOBALS['TL_LANG']['tl_iso_payment_modules']['epay_merchantnumber'][0] = 'Numéro de marchand';
+$GLOBALS['TL_LANG']['tl_iso_payment_modules']['epay_merchantnumber'][1] = 'Le numéro de commerçant unique créé dans ePay. Ce numéro de commerçant se trouve dans votre contrat avec PBS.';
+$GLOBALS['TL_LANG']['tl_iso_payment_modules']['epay_secretkey'][0] = 'Clé secrète';
+$GLOBALS['TL_LANG']['tl_iso_payment_modules']['epay_secretkey'][1] = 'La clé secrète mise en place dans votre configuration ePay.';
 

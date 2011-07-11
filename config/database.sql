@@ -7,6 +7,18 @@
 -- *                                                        *
 -- **********************************************************
 
+
+--
+-- Table `tl_iso_payment_modules`
+--
+
+CREATE TABLE `tl_iso_payment_modules` (
+  `epay_merchantnumber` varchar(7) NOT NULL default '',
+  `epay_secretkey` varchar(255) NOT NULL default '',
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
 --
 -- Table `tl_page`
 --

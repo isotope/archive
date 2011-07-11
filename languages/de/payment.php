@@ -21,23 +21,18 @@
  * Software Foundation website at <http://www.gnu.org/licenses/>.
  *
  * PHP version 5
- * @copyright  Andreas Schempp 2011
- * @author     Andreas Schempp <andreas@schempp.ch>
+ * @copyright  2009-2011 Isotope eCommerce Workgroup
+ * @author     Andreas Burg <ab@andreasburg.de>
+ * @author     Nikolas Runde <info@nrmedia.de>
+ * @author     Patrick Grob <grob@a-sign.ch>
+ * @author     Frank Berger <berger@mediastuff.de>
+ * @author     Angelica Schempp <aschempp@gmx.net>
+ * @author     Oliver Hoff <oliver@hoff.com>
+ * @author     Stefan Preiss <stefan@preiss-at-work.de>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  * @version    $Id$
  */
 
-
-/**
- * Payment modules
- */
-$GLOBALS['ISO_PAY']['epay_window']			= 'PaymentEPay';
-$GLOBALS['ISO_PAY']['epay_form']			= 'PaymentEPayForm';
-
-
-/**
- * Hooks
- */
-$GLOBALS['TL_HOOKS']['generatePage'][] = array('EpayRelay', 'overwriteBase');
-$GLOBALS['TL_HOOKS']['generateFrontendUrl'][] = array('EpayRelay', 'rewriteUrls');
+$GLOBALS['TL_LANG']['MSG']['epay'][-5603] = 'Der Shop erlaubt diesen Kartentyp nicht.';
+$GLOBALS['TL_LANG']['MSG']['epay'][-5602] = 'Es wurde ein ungültiger Währungscode benutzt.';
 

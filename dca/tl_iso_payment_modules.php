@@ -31,5 +31,26 @@
 /**
  * Palettes
  */
+$GLOBALS['TL_DCA']['tl_iso_payment_modules']['palettes']['epay_window'] = '{type_legend},name,label,type;{note_legend:hide},note;{config_legend},new_order_status,trans_type,minimum_total,maximum_total,countries,shipping_modules,product_types;{gateway_legend},epay_merchantnumber,epay_secretkey;{price_legend:hide},price,tax_class;{expert_legend:hide},guests,protected;{enabled_legend},enabled';
 $GLOBALS['TL_DCA']['tl_iso_payment_modules']['palettes']['epay_form'] = '{type_legend},type,name,label;{note_legend:hide},note;{config_legend},new_order_status,trans_type,minimum_total,maximum_total,countries,shipping_modules,product_types;{gateway_legend},epay_merchantnumber,epay_secretkey;{price_legend:hide},price,tax_class;{expert_legend:hide},guests,protected;{enabled_legend},enabled';
+
+
+/**
+ * Fields
+ */
+$GLOBALS['TL_DCA']['tl_iso_payment_modules']['fields']['epay_merchantnumber'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_iso_payment_modules']['epay_merchantnumber'],
+	'exclude'                 => true,
+	'inputType'               => 'text',
+	'eval'                    => array('mandatory'=>true, 'maxlength'=>7, 'tl_class'=>'w50'),
+);
+
+$GLOBALS['TL_DCA']['tl_iso_payment_modules']['fields']['epay_secretkey'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_iso_payment_modules']['epay_secretkey'],
+	'exclude'                 => true,
+	'inputType'               => 'text',
+	'eval'                    => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50'),
+);
 

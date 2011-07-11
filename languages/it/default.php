@@ -29,15 +29,7 @@
 
 
 /**
- * Payment modules
+ * Miscellaneous
  */
-$GLOBALS['ISO_PAY']['epay_window']			= 'PaymentEPay';
-$GLOBALS['ISO_PAY']['epay_form']			= 'PaymentEPayForm';
-
-
-/**
- * Hooks
- */
-$GLOBALS['TL_HOOKS']['generatePage'][] = array('EpayRelay', 'overwriteBase');
-$GLOBALS['TL_HOOKS']['generateFrontendUrl'][] = array('EpayRelay', 'rewriteUrls');
+$GLOBALS['TL_LANG']['MSC']['backendPaymentEPay'] = 'Per cortesia usi il seguente indirizzo per accedere al pannello amministratore di ePay';
 
