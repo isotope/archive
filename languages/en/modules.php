@@ -29,7 +29,7 @@
 
 
 /**
- * Frontend modules
+ * Extension folder
  */
-$GLOBALS['TL_LANG']['MOD']['isotope_epayform'] = array('Isotope eCommerce: ePay Form with relay script support');
+$GLOBALS['TL_LANG']['MOD']['isotope_epay'] = array('Isotope eCommerce: ePay payment methods');
 
