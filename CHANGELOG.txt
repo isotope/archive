@@ -1,0 +1,10 @@
+================================
+Isotope eCommerce Changelog
+--------------------------------
+Removes all existing products
+from cart when adding a new one.
+================================
+
+Version 1.0.0 stable (2011-??-??)
+---------------------------------
+- Inital release
