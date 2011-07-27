@@ -30,5 +30,5 @@
 /**
  * Content elements
  */
-$GLOBALS['TL_CTE']['includes']['iso_quickproducts'] = 'ContentIsotopeQuickProducts';
+$GLOBALS['TL_CTE']['isotope']['iso_quickproducts'] = 'ContentIsotopeQuickProducts';
 
