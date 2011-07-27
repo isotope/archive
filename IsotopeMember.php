@@ -213,9 +213,11 @@ class IsotopeMember extends Frontend
 
 	/**
 	 * Assign current member to the product groups
-	 * @param object
-	 * @param object
-	 * @return bool
+	 *
+	 * @param	object
+	 * @param	object
+	 * @return	bool
+	 * @todo	implement assignGroups function
 	 */
 	protected function assignGroups($objOrder, $objCart)
 	{
@@ -270,6 +272,8 @@ class IsotopeMember extends Frontend
 
 	/**
 	 * Backward-compatible function for Isotope 0.2
+	 *
+	 * @todo implement assignGroupsCompatible function
 	 */
 	protected function assignGroupsCompatible($orderId, $blnCheckout, $objModule)
 	{
@@ -278,14 +282,18 @@ class IsotopeMember extends Frontend
 
 
 	/**
+	 * Generate a random password with 8 characters
+	 *
 	 * The letter l (lowercase L) and the number 1 have been removed,
 	 * as they can be mistaken for each other.
-	 * From http://www.totallyphp.co.uk/code/create_a_random_password.htm
+	 *
+	 * @param	void
+	 * @return	string
+	 * @link	http://www.totallyphp.co.uk/code/create_a_random_password.htm
 	 */
 	private function createRandomPassword()
 	{
 	    $chars = "abcdefghijkmnopqrstuvwxyz023456789";
-	    srand((double)microtime()*1000000);
 	    $i = 0;
 	    $pass = '' ;
 
