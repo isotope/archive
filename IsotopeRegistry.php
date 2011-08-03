@@ -42,13 +42,6 @@ class IsotopeRegistry extends IsotopeProductCollection
 	protected $ctable = 'tl_iso_registry_items';
 
 
-	/**
-	 * Cache Registry data
-	 * @var array
-	 */
-	protected $arrCache = array();
-
-
 	protected $arrSurcharges;
 
 
