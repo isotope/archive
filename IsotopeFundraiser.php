@@ -58,12 +58,6 @@ class IsotopeFundraiser extends IsotopeProductCollection
 	 */
 	protected $strCookie = 'ISOTOPE_TEMP_FUND';
 
-	/**
-	 * Cache cart data
-	 * @var array
-	 */
-	protected $arrCache = array();
-
 
 	protected $arrSurcharges;
 
