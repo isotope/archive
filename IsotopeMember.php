@@ -100,20 +100,33 @@ class IsotopeMember extends Frontend
 		}
 
 		// Prepare address. This will dynamically use all fields available in both member and address
-		$arrAddress = deserialize($objOrder->billing_address, true);
+		$arrAddress = $objOrder->billing_address;
 		$arrData = array_intersect_key($arrAddress, array_flip($this->Database->getFieldNames('tl_member')));
 		unset($arrData['id'], $arrData['pid']);
 		$arrData['street'] = (string)$arrAddress['street_1'];
-		$arrData['username'] = $arrData['username'] ? $arrData['username'] : (string)$arrData['email'];
+		
+		// HOOK: generate member callback
+		if (isset($GLOBALS['ISO_HOOKS']['generateMember']) && is_array($GLOBALS['ISO_HOOKS']['generateMember']))
+		{
+			foreach ($GLOBALS['ISO_HOOKS']['generateMember'] as $callback)
+			{
+				$this->import($callback[0]);
+				$arrData = $this->$callback[0]->$callback[1]($arrData, $objOrder);
+			}
+		}
+
+		if ($arrData['username'] == '')
+		{
+			$arrData['username'] = (string)$arrData['email'];
+		}
 
 		// Verify the user does not yet exist (especially when using email address)
 		$objMember = $this->Database->prepare("SELECT * FROM tl_member WHERE username=?")->execute($arrData['username']);
 		if ($objMember->numRows)
 		{
-			$this->log('Could not create member for order ID '.$objOrder->id.', username "'.$arrData['username'].'" exists.', __METHOD__, TL_ERROR);
+			$this->log('Could not create member for order ID '.$objOrder->id.' (username "'.$arrData['username'].'" exists).', __METHOD__, TL_ERROR);
 			return true;
 		}
-
 
 		// Create member, based on ModuleRegistration::createMember from Contao 2.9
 		$arrData['tstamp'] = time();
@@ -127,12 +140,18 @@ class IsotopeMember extends Frontend
 		$arrData['disable'] = 1;
 
 		// Create random password
-		$strPassword = $this->createRandomPassword();
+		$arrData['password_raw'] = $this->createRandomPassword();
 		$strSalt = substr(md5(uniqid(mt_rand(), true)), 0, 23);
-		$arrData['password'] = sha1($strSalt . $strPassword) . ':' . $strSalt;
+		$arrData['password'] = sha1($strSalt . $arrData['password_raw']) . ':' . $strSalt;
+		
+		$arrSet = $arrData;
+		if (!$this->Database->fieldExists('password_raw', 'tl_member'))
+		{
+			unset($arrSet['password_raw']);
+		}
 
 		// Create user
-		$objNewUser = $this->Database->prepare("INSERT INTO tl_member %s")->set($arrData)->execute();
+		$objNewUser = $this->Database->prepare("INSERT INTO tl_member %s")->set($arrSet)->execute();
 		$insertId = $objNewUser->insertId;
 
 		// Assign home directory
@@ -163,7 +182,6 @@ class IsotopeMember extends Frontend
 			}
 		}
 
-		$arrData['password'] = $strPassword;
 		$arrData['domain'] = $this->Environment->host;
 
 		// Generate activation link
@@ -183,6 +201,12 @@ class IsotopeMember extends Frontend
 			$arrData['channel'] = $arrData['channels'] = implode("\n", $objChannels->fetchEach('title'));
 		}
 		unset($arrData['newsletter']);
+		
+		// Format data for email
+		foreach( $arrData as $field => $value )
+		{
+			$arrData[$field] = $this->Isotope->formatValue('tl_member', $field, $value);
+		}
 
 		// Send activation e-mail
 		if ($this->Isotope->Config->createMember_mail && $objOrder->iso_customer_email)

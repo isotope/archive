@@ -38,5 +38,5 @@ $GLOBALS['FE_MOD']['user']['activateaccount'] = 'ModuleActivateAccount';
  * Hooks
  */
 $GLOBALS['TL_HOOKS']['iso_writeOrder'][] = array('IsotopeMember', 'triggerAction');	// Isotope 0.2
-$GLOBALS['ISO_HOOKS']['checkout'][] = array('IsotopeMember', 'triggerAction');		// Isotope 1.3+
+$GLOBALS['ISO_HOOKS']['preCheckout'][] = array('IsotopeMember', 'triggerAction');	// Isotope 1.3+
 
