@@ -103,7 +103,11 @@ class IsotopeMember extends Frontend
 		$arrAddress = $objOrder->billing_address;
 		$arrData = array_intersect_key($arrAddress, array_flip($this->Database->getFieldNames('tl_member')));
 		unset($arrData['id'], $arrData['pid']);
-		$arrData['street'] = (string)$arrAddress['street_1'];
+		
+		if ($arrData['street'] == '')
+		{
+			$arrData['street'] = (string)$arrAddress['street_1'];
+		}
 		
 		// HOOK: generate member callback
 		if (isset($GLOBALS['ISO_HOOKS']['generateMember']) && is_array($GLOBALS['ISO_HOOKS']['generateMember']))
