@@ -31,6 +31,7 @@
 /**
  * Hooks
  */
-$GLOBALS['TL_HOOKS']['iso_addProductToCollection'][] = array('IsotopeOneProduct', 'emptyCart');	// Isotope 0.2
-$GLOBALS['ISO_HOOKS']['addProductToCollection'][] = array('IsotopeOneProduct', 'emptyCart');	// Isotope 1.3+
+$GLOBALS['TL_HOOKS']['iso_addProductToCollection'][] = array('IsotopeOneProduct', 'addProductToCollection');	// Isotope 0.2
+$GLOBALS['ISO_HOOKS']['addProductToCollection'][] = array('IsotopeOneProduct', 'addProductToCollection');		// Isotope 1.3+
+$GLOBALS['ISO_HOOKS']['transferCollection'][] = array('IsotopeOneProduct', 'transferCollection');
 

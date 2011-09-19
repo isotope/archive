@@ -34,7 +34,23 @@ class IsotopeOneProduct extends Frontend
 	/**
 	 * Callback for Isotope Hook "addProductToCollection"
 	 */
-	public function emptyCart($objProduct, $intQuantity, $objCollection)
+	public function addProductToCollection($objProduct, $intQuantity, $objCollection)
+	{
+		$this->emptyCart($objCollection);
+		return $intQuantity;
+	}
+	
+	/**
+	 * Callback for Isotope Hook "transferCollection"
+	 */
+	public function transferCollection($objOldItems, $objNewItems, $objSourceCollection, $objTargetCollection, $blnTransfer)
+	{
+		$this->emptyCart($objTargetCollection);
+		return $blnTransfer;
+	}
+	
+	
+	protected function emptyCart($objCollection)
 	{
 		if ($objCollection instanceof IsotopeCart)
 		{
@@ -45,8 +61,6 @@ class IsotopeOneProduct extends Frontend
 				$objCollection->deleteProduct($product);
 			}
 		}
-		
-		return $intQuantity;
 	}
 }
 
