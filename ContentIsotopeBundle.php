@@ -53,7 +53,7 @@ class ContentIsotopeBundle extends ContentIsotope
 
 	protected function compile()
 	{
-		$arrProducts = $this->getProducts(array_keys($this->iso_bundle));
+		$arrProducts = IsotopeFrontend::getProducts(array_keys($this->iso_bundle), $this->iso_reader_jumpTo);
 
 		if (!is_array($arrProducts) || !count($arrProducts))
 		{
