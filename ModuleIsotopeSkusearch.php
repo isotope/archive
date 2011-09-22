@@ -68,18 +68,8 @@ class ModuleIsotopeSkusearch extends ModuleIsotopeProductList
 			$strKeywords = str_replace('*', '%', $strKeywords);
 		}
 
-		$arrProducts = array();
 		$arrIds = $this->Database->prepare("SELECT id FROM tl_iso_products WHERE sku LIKE ? AND published='1'")->execute($strKeywords)->fetchEach('id');
-
-		foreach( $arrIds as $intId )
-		{
-			$objProduct = $this->getProduct($intId);
-
-			if (is_object($objProduct))
-			{
-				$arrProducts[] = $objProduct;
-			}
-		}
+		$arrProducts = IsotopeFrontend::getProducts($arrIds, $this->iso_reader_jumpTo);
 
 		// No products found, display message
 		if (!count($arrProducts))
