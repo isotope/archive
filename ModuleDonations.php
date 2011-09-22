@@ -121,7 +121,7 @@ class ModuleDonations extends ModuleIsotope
 
 		if($this->Input->post('FORM_SUBMIT') == $this->strFormId && !$this->doNotSubmit)
 		{
-			$objProduct = $this->getProduct($this->iso_donationProduct);
+			$objProduct = IsotopeFrontend::getProduct($this->iso_donationProduct, $this->iso_reader_jumpTo);
 
 			//Manually cobble together a product
 			$objProduct->price = $this->Input->post('donation_amount');
@@ -194,27 +194,5 @@ class ModuleDonations extends ModuleIsotope
 		$objWidget->required = true;
 
 		return $objWidget;
-	}
-
-
-	/**
-	 * Shortcut for a single product by ID
-	 */
-	protected function getProduct($intId)
-	{
-		$objProductData = $this->Database->prepare("SELECT *, (SELECT class FROM tl_iso_producttypes WHERE tl_iso_products.type=tl_iso_producttypes.id) AS product_class FROM tl_iso_products WHERE id=?")
-										 ->limit(1)
-										 ->executeUncached($intId);
-
-		$strClass = $GLOBALS['ISO_PRODUCT'][$objProductData->product_class]['class'];
-
-		if (!$this->classFileExists($strClass))
-		{
-			return null;
-		}
-
-		$objProduct = new $strClass($objProductData->row());
-
-		return $objProduct;
 	}
 }
