@@ -44,7 +44,7 @@ class ContentIsotopeQuickProducts extends ContentIsotope
 	{
 		if (TL_MODE == 'BE')
 		{
-			$arrProducts = $this->getProducts(deserialize($this->productsAlias));
+			$arrProducts = IsotopeFrontend::getProducts(deserialize($this->productsAlias));
 
 			foreach($arrProducts as $i => $objProduct)
 			{
@@ -69,7 +69,7 @@ class ContentIsotopeQuickProducts extends ContentIsotope
 	 */
 	protected function compile()
 	{
-		$arrProducts = $this->getProducts(deserialize($this->productsAlias));
+		$arrProducts = IsotopeFrontend::getProducts(deserialize($this->productsAlias), $this->iso_reader_jumpTo);
 
 		if (!is_array($arrProducts) || !count($arrProducts))
 		{
