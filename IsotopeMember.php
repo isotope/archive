@@ -103,12 +103,12 @@ class IsotopeMember extends Frontend
 		$arrAddress = $objOrder->billing_address;
 		$arrData = array_intersect_key($arrAddress, array_flip($this->Database->getFieldNames('tl_member')));
 		unset($arrData['id'], $arrData['pid']);
-		
+
 		if ($arrData['street'] == '')
 		{
 			$arrData['street'] = (string)$arrAddress['street_1'];
 		}
-		
+
 		// HOOK: generate member callback
 		if (isset($GLOBALS['ISO_HOOKS']['generateMember']) && is_array($GLOBALS['ISO_HOOKS']['generateMember']))
 		{
@@ -147,7 +147,7 @@ class IsotopeMember extends Frontend
 		$arrData['password_raw'] = $this->createRandomPassword();
 		$strSalt = substr(md5(uniqid(mt_rand(), true)), 0, 23);
 		$arrData['password'] = sha1($strSalt . $arrData['password_raw']) . ':' . $strSalt;
-		
+
 		$arrSet = $arrData;
 		if (!$this->Database->fieldExists('password_raw', 'tl_member'))
 		{
@@ -205,7 +205,7 @@ class IsotopeMember extends Frontend
 			$arrData['channel'] = $arrData['channels'] = implode("\n", $objChannels->fetchEach('title'));
 		}
 		unset($arrData['newsletter']);
-		
+
 		// Format data for email
 		foreach( $arrData as $field => $value )
 		{
