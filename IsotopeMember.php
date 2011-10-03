@@ -76,6 +76,8 @@ class IsotopeMember extends Frontend
 		if ($this->Isotope->Config->createMember != 'always' && $this->Isotope->Config->createMember != 'product' && $this->Isotope->Config->createMember != 'guest')
 			return true;
 
+		$intExpiration = 0;
+
 		if ($this->Isotope->Config->createMember == 'product')
 		{
 			$blnCreateMember = false;
@@ -86,7 +88,16 @@ class IsotopeMember extends Frontend
 				if ($objProduct->createMember)
 				{
 					$blnCreateMember = true;
-					break;
+				}
+				
+				if ($objProduct->memberExpiration != '')
+				{
+					if ($intExpiration == 0)
+					{
+						$intExpiration = $this->User->stop > 0 ? $this->User->stop : time();
+					}
+					
+					$intExpiration = strtotime($objProduct->memberExpiration, $intExpiration);
 				}
 			}
 
@@ -97,6 +108,10 @@ class IsotopeMember extends Frontend
 		{
 			// @todo add guest option
 			return true;
+		}
+		elseif ($this->Isotope->Config->createMember_expiration != '')
+		{
+			$intExpiration = strtotime($this->Isotope->Config->createMember_expiration);
 		}
 
 		// Prepare address. This will dynamically use all fields available in both member and address
@@ -139,6 +154,12 @@ class IsotopeMember extends Frontend
 		$arrData['dateAdded'] = $arrData['tstamp'];
 		$arrData['groups'] = serialize($this->Isotope->Config->createMember_groups);
 		$arrData['newsletter'] = in_array('newsletter', $this->Config->getActiveModules()) ? deserialize($this->Isotope->Config->createMember_newsletters, true) : array();
+
+		// Set expiration date if enabled
+		if ($intExpiration > 0)
+		{
+			$arrData['stop'] = $intExpiration;
+		}
 
 		// Disable account
 		$arrData['disable'] = 1;
@@ -245,10 +266,45 @@ class IsotopeMember extends Frontend
 	 * @param	object
 	 * @param	object
 	 * @return	bool
-	 * @todo	implement assignGroups function
 	 */
 	protected function assignGroups($objOrder, $objCart)
 	{
+		$arrGroups = array();
+		$intExpiration = 0;
+		
+		// Search for products with expiration date
+		foreach( $objCard->getProducts() as $objProduct )
+		{
+			if (is_array($objProduct->assignMemberGroups))
+			{
+				$arrGroups = array_merge($arrGroups, $objProduct->assignMemberGroups);
+			}
+			
+			if ($objProduct->memberExpiration != '')
+			{
+				if ($intExpiration == 0)
+				{
+					$intExpiration = $this->User->stop > 0 ? $this->User->stop : time();
+				}
+				
+				$intExpiration = strtotime($objProduct->memberExpiration, $intExpiration);
+			}
+		}
+		
+		if ($intExpiration > 0)
+		{
+			$this->Database->prepare("UPDATE tl_member SET stop=? WHERE id=?")->executeUncached($intExpiration, $this->User->id);
+			$this->User->stop = $intExpiration;
+		}
+		
+		if (count($arrGroups))
+		{
+			$arrGroups = array_merge((array)$this->User->groups, array_unique($arrGroups));
+			
+			$this->Database->prepare("UPDATE tl_member SET groups=? WHERE id=?")->executeUncached(serialize($arrGroups), $this->User->id);
+			$this->User->groups = $arrGroups;
+		}
+		
 		return true;
 	}
 
@@ -300,11 +356,16 @@ class IsotopeMember extends Frontend
 
 	/**
 	 * Backward-compatible function for Isotope 0.2
-	 *
-	 * @todo implement assignGroupsCompatible function
 	 */
 	protected function assignGroupsCompatible($orderId, $blnCheckout, $objModule)
 	{
+		$objOrder = new IsotopeOrder();
+		
+		if ($objOrder->findBy('id', $orderId))
+		{
+			$this->assignGroups($objOrder, $this->Isotope->Cart);
+		}
+		
 		return $blnCheckout;
 	}
 

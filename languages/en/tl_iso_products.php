@@ -32,4 +32,5 @@
  */
 $GLOBALS['TL_LANG']['tl_iso_products']['createMember']			= array('Create member', 'Create a member account after a guest checkout (also see store configuration!).');
 $GLOBALS['TL_LANG']['tl_iso_products']['assignMemberGroups']	= array('Assign member groups', 'Select the groups an exiting member is assigned to when buying this product.');
+$GLOBALS['TL_LANG']['tl_iso_products']['memberExpiration']		= array('Set/Extend member lifetime', 'Enter a format to set or extend the member stop date. See <a href="http://php.net/strtotime" target="_blank">php.net/strtotime</a> for a reference. This will set the member "stop" date.');
 

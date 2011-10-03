@@ -37,6 +37,7 @@ $GLOBALS['TL_LANG']['tl_iso_config']['createMember_mail']			= array('Customer no
 $GLOBALS['TL_LANG']['tl_iso_config']['createMember_adminMail']		= array('Admin notification', 'Select the mail template for admin notification.');
 $GLOBALS['TL_LANG']['tl_iso_config']['createMember_assignDir']		= array('Set home directory', 'Define a home directory for the member.');
 $GLOBALS['TL_LANG']['tl_iso_config']['createMember_homeDir']		= array('Home directory', 'Please select a folder from the files directory.');
+$GLOBALS['TL_LANG']['tl_iso_config']['createMember_expiration']		= array('Set member lifetime', 'Enter a format to set the member stop date. See <a href="http://php.net/strtotime" target="_blank">php.net/strtotime</a> for a reference. This will set the member "stop" date.');
 
 
 

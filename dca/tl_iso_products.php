@@ -48,3 +48,11 @@ $GLOBALS['TL_DCA']['tl_iso_products']['fields']['assignMemberGroups'] = array
 	'attributes'	=> array('legend'=>'options_legend'),
 );
 
+$GLOBALS['TL_DCA']['tl_iso_products']['fields']['memberExpiration'] = array
+(
+	'label'			=> &$GLOBALS['TL_LANG']['tl_iso_products']['memberExpiration'],
+	'inputType'		=> 'text',
+	'eval'			=> array('maxlength'=>32, 'tl_class'=>'clr'),
+	'attributes'	=> array('legend'=>'options_legend'),
+);
+

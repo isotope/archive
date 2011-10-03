@@ -19,6 +19,7 @@ CREATE TABLE `tl_iso_config` (
   `createMember_adminMail` int(10) unsigned NOT NULL default '0',
   `createMember_assignDir` char(1) NOT NULL default '',
   `createMember_homeDir` varchar(255) NOT NULL default '',
+  `createMember_expiration` varchar(32) NOT NULL default '',
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -29,7 +30,8 @@ CREATE TABLE `tl_iso_config` (
 
 CREATE TABLE `tl_iso_products` (
   `createMember` char(1) NOT NULL default '',
-  `assignMember_groups` blob NULL,
+  `assignMemberGroups` blob NULL,
+  `memberExpiration` varchar(32) NOT NULL default '',
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

@@ -33,9 +33,9 @@
 $GLOBALS['TL_DCA']['tl_iso_config']['palettes']['__selector__'][] = 'createMember';
 $GLOBALS['TL_DCA']['tl_iso_config']['palettes']['__selector__'][] = 'createMember_assignDir';
 $GLOBALS['TL_DCA']['tl_iso_config']['palettes']['default'] .= ';{createMember_legend:hide},createMember';
-$GLOBALS['TL_DCA']['tl_iso_config']['subpalettes']['createMember_always'] = 'createMember_groups,createMember_newsletters,createMember_mail,createMember_adminMail,createMember_assignDir';
+$GLOBALS['TL_DCA']['tl_iso_config']['subpalettes']['createMember_always'] = 'createMember_groups,createMember_expiration,createMember_newsletters,createMember_mail,createMember_adminMail,createMember_assignDir';
 $GLOBALS['TL_DCA']['tl_iso_config']['subpalettes']['createMember_product'] = 'createMember_groups,createMember_newsletters,createMember_mail,createMember_adminMail,createMember_assignDir';
-$GLOBALS['TL_DCA']['tl_iso_config']['subpalettes']['createMember_guest'] = 'createMember_groups,createMember_newsletters,createMember_mail,createMember_adminMail,createMember_assignDir';
+$GLOBALS['TL_DCA']['tl_iso_config']['subpalettes']['createMember_guest'] = 'createMember_groups,createMember_expiration,createMember_newsletters,createMember_mail,createMember_adminMail,createMember_assignDir';
 $GLOBALS['TL_DCA']['tl_iso_config']['subpalettes']['createMember_assignDir'] = 'createMember_homeDir';
 
 
@@ -101,5 +101,12 @@ $GLOBALS['TL_DCA']['tl_iso_config']['fields']['createMember_adminMail'] = array
 	'inputType'		=> 'select',
 	'foreignKey'	=> 'tl_iso_mail.name',
 	'eval'			=> array('includeBlankOption'=>true, 'tl_class'=>'w50'),
+);
+
+$GLOBALS['TL_DCA']['tl_iso_config']['fields']['createMember_expiration'] = array
+(
+	'label'			=> &$GLOBALS['TL_LANG']['tl_iso_config']['createMember_expiration'],
+	'inputType'		=> 'text',
+	'eval'			=> array('maxlength'=>32, 'tl_class'=>'clr'),
 );
 
