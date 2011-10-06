@@ -115,7 +115,7 @@ class IsotopeMember extends Frontend
 		}
 
 		// Prepare address. This will dynamically use all fields available in both member and address
-		$arrAddress = $objOrder->billing_address;
+		$arrAddress = deserialize($objOrder->billing_address, true);
 		$arrData = array_intersect_key($arrAddress, array_flip($this->Database->getFieldNames('tl_member')));
 		unset($arrData['id'], $arrData['pid']);
 
@@ -273,7 +273,7 @@ class IsotopeMember extends Frontend
 		$intExpiration = 0;
 		
 		// Search for products with expiration date
-		foreach( $objCard->getProducts() as $objProduct )
+		foreach( $objCart->getProducts() as $objProduct )
 		{
 			if (is_array($objProduct->assignMemberGroups))
 			{
