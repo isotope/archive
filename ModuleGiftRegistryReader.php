@@ -60,10 +60,6 @@ class ModuleGiftRegistryReader extends ModuleIsotope
 			return '';
 		}
 
-		global $objPage;
-
-		$this->iso_reader_jumpTo = $objPage->id;
-
 		return parent::generate();
 	}
 
