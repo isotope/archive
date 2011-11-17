@@ -83,7 +83,7 @@ class ModuleIsotopeBestsellers extends ModuleIsotopeProductList
 			$arrIds = $objBestsellers->fetchEach('id');
 		}
 
-		return IsotopeFrontend::getProducts($arrIds, $this->iso_reader_jumpTo);
+		return IsotopeFrontend::getProducts($arrIds, IsotopeFrontend::getReaderPageId(null, $this->iso_reader_jumpTo));
 	}
 }
 
