@@ -69,7 +69,7 @@ class ContentIsotopeQuickProducts extends ContentIsotope
 	 */
 	protected function compile()
 	{
-		$arrProducts = IsotopeFrontend::getProducts(deserialize($this->productsAlias), $this->iso_reader_jumpTo);
+		$arrProducts = IsotopeFrontend::getProducts(deserialize($this->productsAlias), IsotopeFrontend::getReaderPageId(null, $this->iso_reader_jumpTo));
 
 		if (!is_array($arrProducts) || !count($arrProducts))
 		{
