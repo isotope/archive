@@ -69,7 +69,7 @@ class ModuleIsotopeSkusearch extends ModuleIsotopeProductList
 		}
 
 		$arrIds = $this->Database->prepare("SELECT id FROM tl_iso_products WHERE sku LIKE ? AND published='1'")->execute($strKeywords)->fetchEach('id');
-		$arrProducts = IsotopeFrontend::getProducts($arrIds, $this->iso_reader_jumpTo);
+		$arrProducts = IsotopeFrontend::getProducts($arrIds, IsotopeFrontend::getReaderPageId(null, $this->iso_reader_jumpTo));
 
 		// No products found, display message
 		if (!count($arrProducts))
@@ -79,11 +79,9 @@ class ModuleIsotopeSkusearch extends ModuleIsotopeProductList
 		}
 
 		// One product found, redirect to reader page
-		elseif (count($arrProducts) == 1 && $this->iso_reader_jumpTo > 0)
+		elseif (count($arrProducts) == 1)
 		{
 			$objProduct = reset($arrProducts);
-
-			$objProduct->reader_jumpTo = $this->iso_reader_jumpTo;
 
 			$this->redirect($objProduct->href_reader);
 		}
