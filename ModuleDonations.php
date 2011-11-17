@@ -121,7 +121,7 @@ class ModuleDonations extends ModuleIsotope
 
 		if($this->Input->post('FORM_SUBMIT') == $this->strFormId && !$this->doNotSubmit)
 		{
-			$objProduct = IsotopeFrontend::getProduct($this->iso_donationProduct, $this->iso_reader_jumpTo);
+			$objProduct = IsotopeFrontend::getProduct($this->iso_donationProduct, IsotopeFrontend::getReaderPageId(null, $this->iso_reader_jumpTo));
 
 			//Manually cobble together a product
 			$objProduct->price = $this->Input->post('donation_amount');
