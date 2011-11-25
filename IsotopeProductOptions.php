@@ -40,7 +40,7 @@ class IsotopeProductOptions extends Frontend
 	 */
 	public function renderProductOptions($strField, $arrData, &$objProduct=null)
 	{
-		if (TL_MODE == 'FE' && $objProduct instanceof IsotopeProduct)
+		if (TL_MODE == 'FE' && $objProduct !== null)
 		{
 			if (count($objProduct->{$strField}))
 			{
