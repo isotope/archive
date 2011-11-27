@@ -47,7 +47,13 @@ class ModuleCollectionManager extends BackendModule
 	 */
 	protected $blnAdvanced = true;
 
-
+	public function __construct()
+	{
+		parent::__construct();
+		
+		$this->import('Isotope');	
+	}
+	
 	/**
 	 * Generate the module
 	 */
@@ -216,6 +222,9 @@ class ModuleCollectionManager extends BackendModule
 			}
 
 		}
+		
+		$this->Template->store = $this->Isotope->Config->id;
+		
 		$this->Template->fields = $arrFields;
 
 		// Save cart
@@ -289,6 +298,7 @@ class ModuleCollectionManager extends BackendModule
 			// Go back
 			$this->redirect(str_replace('&act=create', '&act=edit', $this->Environment->request) . '&id=' . $intId);
 		}
+
 
 		$this->Template->submit = $GLOBALS['TL_LANG']['tl_iso_collectionmanager']['createSubmit'];
 		$this->Template->titleLabel = $GLOBALS['TL_LANG']['tl_iso_collectionmanager']['title'][0];
