@@ -69,11 +69,16 @@ var CollectionWizard = new Class(
 		{
 			el.destroy();
 		});
-		var rows = Elements.from(responseText, false);
+		
+		var objResponse = JSON.decode(responseText);	//Ajax requests now return a JSON object with token and content elements
+		
+		var rows = Elements.from(objResponse.content, false);
 		$$(('#ctrl_'+this.element+' tbody')).adopt(rows);
 		rows.each( function(row)
 		{
-			row.getElement('input[type=checkbox]').addEvent('change', this.checked);
+			var txtBox = row.getElement('input[type=checkbox]');
+			if(txtBox) txtBox.addEvent('change', this.checked);
+
 		}.bind(this));
 	},
 
@@ -84,8 +89,8 @@ var CollectionWizard = new Class(
 			var count = $$(('#ctrl_'+this.element+' tbody tr.existing')).length;
 			var row = event.target.getParent('tr');
 			var options = row.getElement('select[class=tl_select]');
-			var qty = row.getElement('input[class=qty]');
-			var price = row.getElement('input[class=price]');
+			var qty = row.getElement('input[name=products-qty]');
+			var price = row.getElement('input[name=products-price]');
 			row.removeClass('found').inject($$(('#ctrl_'+this.element+' tr.search'))[0], 'before').addClass('existing');
 			event.target.set('name', 'products['+(count)+'][product]');
 			if(options)
@@ -103,4 +108,3 @@ var CollectionWizard = new Class(
 		}
 	}
 });
-
