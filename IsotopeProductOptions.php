@@ -40,10 +40,17 @@ class IsotopeProductOptions extends Frontend
 	 */
 	public function renderProductOptions($strField, $arrData, &$objProduct=null)
 	{
-		if (TL_MODE == 'FE' && $objProduct !== null)
+		if (TL_MODE == 'FE' && $objProduct instanceof IsotopeProduct)
 		{
 			if (count($objProduct->{$strField}))
 			{
+				$arrData['options'] = array();
+				
+				if ($arrData['attributes']['productoptions_includeBlankOption'])
+				{
+					$arrData['options'][''] = $arrData['attributes']['productoptions_blankOptionLabel'] ? $arrData['attributes']['productoptions_blankOptionLabel'] : '-';
+				}
+				
 				foreach($objProduct->{$strField} as $value)
 				{
 					$arrData['options'][$value['value']]=$value['label'];

@@ -29,32 +29,8 @@
 
 
 /**
- * Palettes
- */
-$GLOBALS['TL_DCA']['tl_iso_attributes']['palettes']['__selector__'][] = 'productoptions_includeBlankOption';
-$GLOBALS['TL_DCA']['tl_iso_attributes']['palettes']['productOptions'] = '{attribute_legend},name,field_name,type,legend;{description_legend:hide},description;{config_legend},mandatory,multiple,size,productoptions_includeBlankOption';
-
-
-/**
- * Subpalettes
- */
-$GLOBALS['TL_DCA']['tl_iso_attributes']['subpalettes']['productoptions_includeBlankOption'] = 'productoptions_blankOptionLabel';
-
-
-/**
  * Fields
  */
-$GLOBALS['TL_DCA']['tl_iso_attributes']['fields']['productoptions_includeBlankOption'] = array
-(
-	'label'			=> &$GLOBALS['TL_LANG']['tl_iso_attributes']['productoptions_includeBlankOption'],
-	'inputType'		=> 'checkbox',
-	'eval'			=> array('submitOnChange'=>true, 'tl_class'=>'clr'),
-);
-
-$GLOBALS['TL_DCA']['tl_iso_attributes']['fields']['productoptions_blankOptionLabel'] = array
-(
-	'label'			=> &$GLOBALS['TL_LANG']['tl_iso_attributes']['productoptions_blankOptionLabel'],
-	'inputType'		=> 'text',
-	'eval'			=> array('maxlength'=>255, 'tl_class'=>'clr'),
-);
+$GLOBALS['TL_LANG']['tl_iso_attributes']['productoptions_includeBlankOption'] = array('Include blank option', 'Check here to include a blank option.');
+$GLOBALS['TL_LANG']['tl_iso_attributes']['productoptions_blankOptionLabel'] = array('Blank Option Label', 'Please enter a label for the blank option.');
 
