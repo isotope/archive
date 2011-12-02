@@ -41,11 +41,7 @@ $GLOBALS['TL_DCA']['tl_iso_fundraiser'] = array
 		'onload_callback' => array
 		(
 			array('tl_iso_fundraiser', 'checkPermission'),
-		),
-		'ondelete_callback'			  => array
-		(
-			array('tl_iso_fundraiser', 'archiveRecord'),
-		),
+		)
 	),
 
 	// List
@@ -188,15 +184,5 @@ class tl_iso_fundraiser extends Backend
 				break;
 		}
 	}
-
-
-	/**
-	 * Record is deleted, archive if necessary
-	 */
-	public function archiveRecord($dc)
-	{
-	}
-
-
 }
 
