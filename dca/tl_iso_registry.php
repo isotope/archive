@@ -47,11 +47,7 @@ $GLOBALS['TL_DCA']['tl_iso_registry'] = array
 		'onload_callback' 			  => array
 		(
 			array('tl_iso_registry', 'checkPermission'),
-		),
-		'ondelete_callback'			  => array
-		(
-			array('tl_iso_registry', 'archiveRecord'),
-		),
+		)
 	),
 
 	// List
@@ -284,13 +280,6 @@ class tl_iso_registry extends Backend
 		}
 	}
 
-
-	/**
-	 * Record is deleted, archive if necessary
-	 */
-	public function archiveRecord($dc)
-	{
-	}
 
 	public function injectPrintCSS($strBuffer)
 	{
