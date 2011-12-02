@@ -45,11 +45,8 @@ $GLOBALS['TL_DCA']['tl_iso_warehouses'] = array
 		'onload_callback' => array
 		(
 			array('tl_iso_warehouses', 'checkPermission'),
-		),
-		'ondelete_callback'			  => array
-		(
-			array('tl_iso_warehouses', 'archiveRecord'),
-		),*/
+		)
+		*/
 	),
 
 	// List
@@ -330,14 +327,5 @@ class tl_iso_warehouses extends Backend
 				break;
 		}
 	}
-
-
-	/**
-	 * Record is deleted, archive if necessary
-	 */
-	public function archiveRecord($dc)
-	{
-	}
-
 }
 
