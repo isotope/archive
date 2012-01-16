@@ -55,6 +55,7 @@ class GoogleMerchant extends Controller
 		parent::__construct();
 		$this->import('Database');
 		$this->import('Isotope');
+		$this->import('Files');
 	}
 
 	/**
@@ -114,7 +115,7 @@ class GoogleMerchant extends Controller
 						->execute($this->Input->get('productid'));
 						
 				$this->saveParentVariants($objProduct);
- 				$this->onProductNew($objProduct);			
+ 				$this->onProductNew($objProduct);		
  				$redirectUrl = str_replace('&key=pub', '', $this->Environment->request);
  				$redirectUrl = str_replace('&productid=' . $objProduct->id, '', $redirectUrl);
  				$this->redirect($redirectUrl);
@@ -162,20 +163,20 @@ class GoogleMerchant extends Controller
 			$counter = 0;
 			$intErrors = 0;
 				
-			$strDir = TL_ROOT . '/isotope/cache/' . $objConfig->id . '/';
+			$strDir = '/isotope/cache/' . $objConfig->id . '/';
 	
 			$xml = '';
 			$xml .= '<?xml version="1.0" encoding="' . $GLOBALS['TL_CONFIG']['characterSet'] . '"?>' . "\n";
 			$xml .= "<feed xmlns='http://www.w3.org/2005/Atom' xmlns:batch='http://schemas.google.com/gdata/batch'>" . "\n";
 			
-			if (is_dir($strDir)) 
+			if (is_dir(TL_ROOT . $strDir)) 
 			{
-	 		   foreach (scan($strDir) as $v)
+	 		   foreach (scan(TL_ROOT . $strDir) as $v)
 	 		   {
 					// set upper limit to 500 requests per batch
 					if ($counter < 500) 
 					{
-						$objFile = new File($v);
+						$objFile = new File($strDir . $v);
 						$xml .= "<entry>" . "\n";
 						$xml .= "<batch:operation type='DELETE'/>" . "\n";
 						$xml .= "<id>https://content.googleapis.com/content/v1/".$objConfig->google_merchant_accountID."/items/products/schema/online:en:US:". $v->basename ."</id>" . "\n";
@@ -240,7 +241,7 @@ class GoogleMerchant extends Controller
 		while ($objProduct->next())
 		{
 			$xml = $this->generateRequests($objProduct);
-			$this->cacheXML($xml, $objProducts->sku);
+			$this->cacheXML($xml, $objProduct->sku);
 		}
 		$this->constructCache();
 	}
@@ -255,14 +256,17 @@ class GoogleMerchant extends Controller
 	{
 		foreach ($arrData as $data)
 		{
+			$objXML = new File('/isotope/cache/' . $data['config_id'] . '/' . $sku . '.xml');
+
 			if ($data['xml'] != ''){
-				$objXML = new File('/isotope/cache/' . $data['config_id'] . '/' . $sku . '.xml');
 				$objXML->write($data['xml']);
-				$objXML->close();
+			}
+			else
+			{
+				$objXML->delete();
 			}
 		}
 	}
-
 
 	/**
 	 * Opens and scans the cache for a given config, returning an array of all XML contents 
@@ -271,14 +275,14 @@ class GoogleMerchant extends Controller
 	 */
 	public function scanCache($intConfig)
 	{
-		$strDir = TL_ROOT . '/isotope/cache/' . $intConfig . '/';
+		$strDir = '/isotope/cache/' . $intConfig . '/';
 		$arrFiles = array();
 		
-		if (is_dir($strDir)) 
+		if (is_dir(TL_ROOT . $strDir)) 
 		{
- 		   foreach (scan($strDir) as $v)
+ 		   foreach (scan(TL_ROOT . $strDir) as $v)
  		   {
-				$objFile = new File($v);
+				$objFile = new File($strDir . $v);
  		    	array_push($arrFiles, $objFile->getContent());
  		   }
 		}
@@ -411,7 +415,7 @@ class GoogleMerchant extends Controller
  				case 'post':
 					if (!strstr($arrResponse[$i]['response'],'error'))
 					{
-						$this->cacheXML($arrRequest, $objProduct->sku);
+						$this->cacheXML($arrRequest, $objRecord->sku);
 					}
 					else
 					{	
@@ -545,9 +549,7 @@ class GoogleMerchant extends Controller
 				}
 			}
 			
-			$filepath = TL_ROOT . '/isotope/cache/' . $this->Database->execute("SELECT * FROM tl_iso_config WHERE id=" .  $arrRequest[$i]['config_id'])->id . '/' . $objProduct->sku . '.xml';
-			 
-			@unlink($filepath);
+			$this->cacheXML($arrRequest, $objProduct->sku);
 		}  
 
 		if ($intErrors == 0)
@@ -634,6 +636,7 @@ class GoogleMerchant extends Controller
 					'url'=>'https://content.googleapis.com/content/v1/ACC_ID/items/products/schema/online:en:US:' . $objRecord->sku,
 					'config_id'=>$objConfig->id
 				);
+				$this->cacheXML($arrRequest, $objRecord->sku);
 				continue;
 			}
 				
@@ -671,6 +674,7 @@ class GoogleMerchant extends Controller
 						'url'=>'https://content.googleapis.com/content/v1/ACC_ID/items/products/schema/online:en:US:' .$objRecord->sku,
 						'config_id'=>$objConfig->id
 					);
+					$this->cacheXML($arrRequest, $objRecord->sku);
 					continue;		
 				}
 								
