@@ -39,7 +39,7 @@ class FlowplayerGallery extends InlineGallery
 	public function generateMainImage($strType='medium')
 	{
 		if (!count($this->arrFiles))
-			return '<div class="iso_attribute" id="' . $this->name . '_' . $strType . 'size"> </div>';
+			return '<div class="iso_attribute images '.strtolower($strType).'" id="' . $this->name . '_' . $strType . 'size"> </div>';
 
 		$arrFile = reset($this->arrFiles);
 
