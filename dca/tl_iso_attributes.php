@@ -32,7 +32,7 @@
  * Palettes
  */
 $GLOBALS['TL_DCA']['tl_iso_attributes']['palettes']['__selector__'][] = 'productoptions_includeBlankOption';
-$GLOBALS['TL_DCA']['tl_iso_attributes']['palettes']['productOptions'] = '{attribute_legend},name,field_name,type,legend;{description_legend:hide},description;{config_legend},mandatory,multiple,size,productoptions_includeBlankOption';
+$GLOBALS['TL_DCA']['tl_iso_attributes']['palettes']['productOptions'] = '{attribute_legend},name,field_name,type,legend;{description_legend:hide},description;{config_legend},mandatory,multiple,size,productoptions_includeBlankOption;{search_filters_legend},fe_search';
 
 
 /**
