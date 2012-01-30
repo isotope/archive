@@ -19,28 +19,14 @@
  * Software Foundation website at <http://www.gnu.org/licenses/>.
  *
  * PHP version 5
- * @copyright  Winans Creative 2009, Intelligent Spark 2010, iserv.ch GmbH 2010
- * @author     Fred Bliss <fred.bliss@intelligentspark.com>
+ * @copyright  Isotope eCommerce Workgroup 2009-2012
  * @author     Andreas Schempp <andreas@schempp.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
 
 /**
- * Palettes
+ * Fields
  */
-$GLOBALS['TL_DCA']['tl_content']['palettes']['attributeLinkRepeater'] = 'type,headline;iso_filters;url,target;guests,protected;align,space,cssID';
-
-
-/**
- * Add fields to tl_content
- */
-$GLOBALS['TL_DCA']['tl_content']['fields']['iso_filters'] = array
-(
-	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['iso_filters'],
-	'exclude'                 => true,
-	'inputType'               => 'select',
-	'eval'                    => array('includeBlankOption'=>true),
-	'options_callback'		  => array('tl_content_isotope', 'getFilters'),
-);
+$GLOBALS['TL_LANG']['tl_content']['iso_filters'] = array('Listing Filter','Select a product listing filter');
 
