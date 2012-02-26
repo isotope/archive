@@ -46,6 +46,11 @@ class ProductCollectionWizard extends Widget
 	 * @var array
 	 */
 	protected $arrIds = false;
+	
+	/**
+	 * SQL search operator
+	 */
+	protected $strOperator = ' OR ';
 
 
 	/**
@@ -97,6 +102,16 @@ class ProductCollectionWizard extends Widget
 					}
 				}
 				parent::__set($strKey, $arrFields);
+				break;
+				
+			case 'foreignTable':
+				$this->loadDataContainer($varValue);
+				$this->loadLanguageFile($varValue);
+				parent::__set($strKey, $varValue);
+				break;
+				
+			case 'matchAllKeywords':
+				$this->strOperator = $varValue ? ' AND ' : ' OR ';
 				break;
 
 			case 'mandatory':
@@ -151,7 +166,9 @@ class ProductCollectionWizard extends Widget
 		}
 		
 		$GLOBALS['TL_CSS'][] = 'system/modules/collectionwizard/html/collectionwizard.css';
-		$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/collectionwizard/html/collectionwizard.js';
+		
+		if (!$this->Input->get('noajax'))
+			$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/collectionwizard/html/collectionwizard.js';
 
 		$this->loadLanguageFile($this->foreignTable);
 
@@ -166,7 +183,7 @@ class ProductCollectionWizard extends Widget
 		$arrProducts = $objCollection->getProducts();
 		$strResults = $this->listResults($arrProducts);
 
-			$strResults .= '
+		$strResults .= '
     <tr class="search" style="display:none">
       <td colspan="' . (count($this->listFields)+5) . '"><label for="ctrl_' . $this->strId . '_search">' . ($this->searchLabel=='' ? $GLOBALS['TL_LANG']['MSC']['searchLabel'] : $this->searchLabel) . ':</label> <input type="text" id="ctrl_' . $this->strId . '_search" name="keywords" class="tl_text" autocomplete="off" /></td>
     </tr>
@@ -174,7 +191,12 @@ class ProductCollectionWizard extends Widget
       <td colspan="' . (count($this->listFields)+5) . '"><a href="' . $this->addToUrl('noajax=1') . '">' . $GLOBALS['TL_LANG']['MSC']['tlwJavascript'] . '</a></td>
     </tr>'
     ;
-
+		
+		// inject JS in HTML5 style from Contao 2.10
+		$strScriptBegin = (version_compare(VERSION, '2.9', '>') ? '<script>' : '<script type="text/javascript">
+<!--//--><![CDATA[//><!--');
+		$strScriptEnd = (version_compare(VERSION, '2.9', '>') ? '</script>' : '//--><!]]>
+</script>');
 
 		$strBuffer = '
 <table cellspacing="0" cellpadding="0" id="ctrl_' . $this->strId . '" class="tl_collectionwizard" summary="Table data">
@@ -204,20 +226,17 @@ class ProductCollectionWizard extends Widget
 ' . $strResults . '
   </tbody>
 </table>
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--' . "
-window.addEvent('domready', function() {
-  new CollectionWizard('" . $this->strId . "');
+'.$strScriptBegin.'
+window.addEvent("domready", function() {
+  new CollectionWizard("' . $this->strId . '");
 });
-" . '//--><!]]>
-</script>';
+'.$strScriptEnd;
 		return $strBuffer;
 	}
 
 
 	public function generateAjax()
 	{
-
 		$arrKeywords = trimsplit(' ', $this->Input->get('keywords'));
 
 		$strFilter = '';
@@ -230,16 +249,14 @@ window.addEvent('domready', function() {
 				continue;
 
 			$arrProcedures[] .= implode(' LIKE ? OR ', $this->searchFields) . ' LIKE ?';
-			foreach($this->searchFields as $field)
-			{
-				$arrValues[] = '%'.$keyword.'%';
-			}
+			$arrValues = array_merge($arrValues, array_fill(0, count($this->searchFields), '%'.$keyword.'%'));
 		}
 
 		if (!count($arrProcedures))
 			return '';
 
-		$typeArray = $this->Input->post($this->strName);
+		$typeArray = $this->Input->get($this->strName);
+
 		if (is_array($typeArray) && count($typeArray))
 		{
 			foreach($typeArray as $product)
@@ -255,12 +272,12 @@ window.addEvent('domready', function() {
 			$strFilter = ") AND id NOT IN (" . $typeData;
 		}
 
-		$objItems = $this->Database->prepare("SELECT * FROM {$this->foreignTable} WHERE (" . implode(' OR ', $arrProcedures) . $strFilter . ")" . (strlen($this->sqlWhere) ? " AND {$this->sqlWhere}" : ''))
+		$objItems = $this->Database->prepare("SELECT * FROM {$this->foreignTable} WHERE (" . implode( $this->strOperator, $arrProcedures) . $strFilter . ")" . (strlen($this->sqlWhere) ? " AND {$this->sqlWhere}" : ''))
 									  ->execute($arrValues);
 
 		while( $objItems->next() )
 		{
-			$objProductData = $this->Database->prepare("SELECT *, (SELECT class FROM tl_iso_producttypes WHERE tl_iso_products.type=tl_iso_producttypes.id) AS product_class FROM tl_iso_products WHERE pid={$objItems->id} OR id={$objItems->id}")->limit(1)->execute();
+			$objProductData = $this->Database->prepare("SELECT *, (SELECT class FROM tl_iso_producttypes WHERE tl_iso_products.type=tl_iso_producttypes.id) AS product_class FROM tl_iso_products WHERE id=". ($objItems->pid > 0 ? $objItems->pid : $objItems->id))->limit(1)->execute();
 
 			$strClass = $GLOBALS['ISO_PRODUCT'][$objProductData->product_class]['class'];
 
@@ -273,12 +290,12 @@ window.addEvent('domready', function() {
 				$objProduct = new IsotopeProduct(array('id'=>$objItems->product_id, 'sku'=>$objItems->product_sku, 'name'=>$objItems->product_name, 'price'=>$objItems->price));
 			}
 
-			$arrResults[] = $objProduct;
+			$arrResults[$objProduct->id] = $objProduct;
 		}
 		$strBuffer .= $this->listResults($arrResults, true);
 
 		if (!strlen($strBuffer))
-			return '<tr class="found empty"><td colspan="' . (count($this->listFields)+1) . '">' . sprintf($GLOBALS['TL_LANG']['MSC']['tlwNoResults'], $this->Input->post('keywords')) . '</td></tr>';
+			return '<tr class="found empty"><td colspan="' . (count($this->listFields)+1) . '">' . sprintf($GLOBALS['TL_LANG']['MSC']['tlwNoResults'], $this->Input->get('keywords')) . '</td></tr>';
 
 		return $strBuffer;
 	}
@@ -292,7 +309,7 @@ window.addEvent('domready', function() {
 		if(count($arrProducts))
 		{
 			foreach( $arrProducts as $objProduct)
-			{
+			{			
 				if (is_array($this->arrIds) && !in_array($objProduct->id, $this->arrIds))
 					continue;
 
@@ -338,19 +355,33 @@ window.addEvent('domready', function() {
 		$arrAttributes = $objProduct->getAttributes();
 		foreach($arrAttributes as $attribute => $varValue )
 		{
-			if ($GLOBALS['TL_DCA']['tl_iso_products']['fields'][$attribute]['attributes']['customer_defined'] && $GLOBALS['TL_DCA']['tl_iso_products']['fields'][$attribute]['attributes']['add_to_product_variants'])
+			if ($GLOBALS['TL_DCA']['tl_iso_products']['fields'][$attribute]['attributes']['customer_defined'] || $GLOBALS['TL_DCA']['tl_iso_products']['fields'][$attribute]['attributes']['variant_option'])
 			{
 				$arrOptionKeys[] = $attribute;
 			}
 		}
-		$productId = $objProduct->pid ? $objProduct->pid : $objProduct->id;
+				
+		$intSelectedOption = '';
 		$arrProductOptions = array();
 		$arrDetails = $GLOBALS['TL_DCA']['tl_iso_products'];
 		if(count($arrOptionKeys))
 		{
-			$objVariants = $this->Database->prepare("SELECT id, price, ". implode(', ', $arrOptionKeys) ." FROM tl_iso_products WHERE pid=?")->execute($productId);
+			$objVariants = $this->Database->prepare("SELECT id, price, ". implode(', ', $arrOptionKeys) ." FROM tl_iso_products WHERE pid=?")->execute($objProduct->id);
 			while($objVariants->next())
 			{
+				$objVariantData = $this->Database->prepare("SELECT *, (SELECT class FROM tl_iso_producttypes WHERE tl_iso_products.type=tl_iso_producttypes.id) AS product_class FROM tl_iso_products WHERE id=?")->limit(1)->execute($objVariants->id);
+
+				$strClass = $GLOBALS['ISO_PRODUCT'][$objVariantData->product_class]['class'];
+
+				try
+				{
+					$objVariant = new $strClass($objVariantData->row());
+				}
+				catch (Exception $e)
+				{
+					$objVariant = new IsotopeProduct(array('id'=>$objVariantData->id,'pid'=>$objVariantData->pid));
+				}
+				
 				$strLabel= '';
 				for($i=0; $i<count($arrOptionKeys); $i++)
 				{
@@ -363,9 +394,17 @@ window.addEvent('domready', function() {
 							$strLabel .= $objVariants->$arrOptionKeys[$i] . ' - ';
 							break;
 					}
+					
 				}
-				$strLabel .= $objVariants->price;
-				$arrProductOptions['options'][] = array('value'=>$objVariants->id,'label'=>$strLabel);
+				$strLabel .= $objVariant->price;
+				$arrProductOptions['options'][] = array('value'=>$objVariant->id,'label'=>$strLabel);
+				
+				$arrCompare = array_diff_assoc($objVariant->getOptions(true), $objProduct->getOptions(true));
+				
+				if(empty($arrCompare))
+				{
+					$intSelectedOption = $objVariant->id;
+				}
 			}
 		}
 
@@ -376,9 +415,9 @@ window.addEvent('domready', function() {
 				$arrData = deserialize($options);
 				$widget = new SelectMenu();
 				$widget->id = $name;
-				$widget->name = $blnAjax ? $this->strName . '-options' :  $this->strName . '['.$intOrder.'][product]';
+				$widget->name = $blnAjax ? $this->strName . '-options' :  $this->strName . '['.$intOrder.'][options]';
 				$widget->mandatory = true;
-				$widget->value = $objProduct->id;
+				$widget->value = $intSelectedOption;
 				$widget->label = $this->getOptionLabel($objProduct->type);
 				$widget->options = $arrData;
 				$strResults .= '
