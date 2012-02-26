@@ -58,8 +58,6 @@ class ProductCollectionWizard extends Widget
 
 		parent::__construct($arrAttributes);
 
-		$_SESSION['AJAX-FFL'][$this->strId]['type'] = 'collectionWizard';
-
 		$this->import('Database');
 	}
 
@@ -133,6 +131,25 @@ class ProductCollectionWizard extends Widget
 	 */
 	public function generate()
 	{
+		if ($this->Input->get('productCollectionWizard') == $this->strId)
+		{
+			while(ob_end_clean());
+
+			if (version_compare(VERSION, '2.10', '<'))
+			{
+				echo $this->generateAjax();
+			}
+			else
+			{
+				echo json_encode(array
+				(
+					'content'	=> $this->generateAjax(),
+					'token'		=> REQUEST_TOKEN,
+				));
+			}
+			exit;
+		}
+		
 		$GLOBALS['TL_CSS'][] = 'system/modules/collectionwizard/html/collectionwizard.css';
 		$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/collectionwizard/html/collectionwizard.js';
 
@@ -201,7 +218,7 @@ window.addEvent('domready', function() {
 	public function generateAjax()
 	{
 
-		$arrKeywords = trimsplit(' ', $this->Input->post('keywords'));
+		$arrKeywords = trimsplit(' ', $this->Input->get('keywords'));
 
 		$strFilter = '';
 		$arrProcedures = array();
