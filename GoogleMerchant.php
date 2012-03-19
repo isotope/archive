@@ -554,7 +554,14 @@ class GoogleMerchant extends Controller
 
 		if ($intErrors == 0)
 		{
-			$this->addConfirmationMessage(sprintf($GLOBALS['TL_LANG']['GOOG']['google_req_success']));
+			if (version_compare(VERSION, '2.10', '<'))
+			{
+				
+			}
+			else
+			{
+				$this->addConfirmationMessage(sprintf($GLOBALS['TL_LANG']['GOOG']['google_req_success']));
+			}
 		}
 		
 	}
@@ -912,7 +919,6 @@ class GoogleMerchant extends Controller
 	public function checkAuthorization($arrData=array())
 	{	
 		$arrStores = array();
-		
 		// creates a session data table since authorization may redirect browser
 		if (!$_SESSION['GOOGLEMERCHANT'])
 		{
@@ -935,7 +941,7 @@ class GoogleMerchant extends Controller
 		foreach ($arrStores as $store) 
 		{
 			// get the store config and pull its access token and credentials
-			$objConfig = $this->Database->executeUncached("SELECT * FROM tl_iso_config WHERE id=" . $store);
+			$objConfig = $this->Database->executeUncached("SELECT * FROM tl_iso_config WHERE id='" . $store ."'");
 			
 			$arrAccessToken = deserialize($objConfig->google_token);
 			$timeStamp = $objConfig->google_token_tstamp;			
@@ -1074,6 +1080,32 @@ class GoogleMerchant extends Controller
 		}
 
 		return $arrReturn;
+	}
+	
+	
+	
+	public function addConfirmationMessage($strMessage)
+	{
+		if (version_compare(VERSION, '2.11', '<'))
+		{
+			$_SESSION['TL_CONFIRM']['VERF'] = $strMessage;
+		}
+		else
+		{
+			parent::addConfirmationMessage($strMessage);
+		}
+	}
+	
+	public function addErrorMessage($strMessage)
+	{
+		if (version_compare(VERSION, '2.11', '<'))
+		{
+			$_SESSION['TL_ERROR']['VERF'] = $strMessage;
+		}
+		else
+		{
+			parent::addErrorMessage($strMessage);
+		}
 	}
 
  	
