@@ -44,6 +44,5 @@ if(TL_MODE=='BE')
  * Hooks
  */
 $GLOBALS['TL_HOOKS']['removeOldFeeds'][] = array('GoogleMerchant', 'preserveFeeds');
-$GLOBALS['TL_HOOKS']['generatePage'][] = array('IsotopeFeeds', 'addFeedToLayout');
 
 ?>
