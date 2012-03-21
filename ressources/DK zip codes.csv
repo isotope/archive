@@ -1,0 +1,595 @@
+country,from,to,city
+dk,1000,1499,"København K"
+dk,1500,1799,"København V"
+dk,1800,1999,"Frederiksberg C"
+dk,2000,,Frederiksberg
+dk,2100,,"København Ø"
+dk,2200,,"København N"
+dk,2300,,"København S"
+dk,2400,,"København NV"
+dk,2450,,"København SV"
+dk,2500,,Valby
+dk,2600,,Glostrup
+dk,2605,,Brøndby
+dk,2610,,Rødovre
+dk,2620,,Albertslund
+dk,2625,,Vallensbæk
+dk,2630,,Taastrup
+dk,2633,,"Taastrup Nordsjællands Postcenter"
+dk,2635,,Ishøj
+dk,2640,,Hedehusene
+dk,2650,,Hvidovre
+dk,2660,,"Brøndby Strand"
+dk,2665,,"Vallensbæk Strand"
+dk,2670,,Greve
+dk,2680,,"Solrød Strand"
+dk,2690,,Karlslunde
+dk,2700,,Brønshøj
+dk,2720,,Vanløse
+dk,2730,,Herlev
+dk,2740,,Skovlunde
+dk,2750,,Ballerup
+dk,2760,,Måløv
+dk,2765,,Smørum
+dk,2770,,Kastrup
+dk,2791,,Dragør
+dk,2800,,"Kongens Lyngby"
+dk,2820,,Gentofte
+dk,2830,,Virum
+dk,2840,,Holte
+dk,2850,,Nærum
+dk,2860,,Søborg
+dk,2870,,Dyssegård
+dk,2880,,Bagsværd
+dk,2900,,Hellerup
+dk,2920,,Charlottenlund
+dk,2930,,Klampenborg
+dk,2942,,Skodsborg
+dk,2950,,Vedbæk
+dk,2960,,"Rungsted Kyst"
+dk,2970,,Hørsholm
+dk,2980,,Kokkedal
+dk,2990,,Nivå
+dk,3000,,Helsingør
+dk,3050,,Humlebæk
+dk,3060,,Espergærde
+dk,3070,,Snekkersten
+dk,3080,,Tikøb
+dk,3100,,Hornbæk
+dk,3120,,Dronningmølle
+dk,3140,,Ålsgårde
+dk,3150,,Hellebæk
+dk,3200,,Helsinge
+dk,3210,,Vejby
+dk,3220,,Tisvildeleje
+dk,3230,,Græsted
+dk,3250,,Gilleleje
+dk,3300,,Frederiksværk
+dk,3310,,Ølsted
+dk,3320,,Skævinge
+dk,3330,,Gørløse
+dk,3360,,Liseleje
+dk,3370,,Melby
+dk,3390,,Hundested
+dk,3400,,Hillerød
+dk,3450,,Allerød
+dk,3460,,Birkerød
+dk,3480,,Fredensborg
+dk,3490,,Kvistgård
+dk,3500,,Værløse
+dk,3520,,Farum
+dk,3540,,Lynge
+dk,3550,,Slangerup
+dk,3600,,Frederikssund
+dk,3630,,Jægerspris
+dk,3650,,Ølstykke
+dk,3660,,Stenløse
+dk,3670,,"Veksø Sjælland"
+dk,3700,,Rønne
+dk,3720,,Aakirkeby
+dk,3730,,Nexø
+dk,3740,,Svaneke
+dk,3751,,Østermarie
+dk,3760,,Gudhjem
+dk,3770,,Allinge
+dk,3782,,Klemensker
+dk,3790,,Hasle
+dk,4000,,Roskilde
+dk,4040,,Jyllinge
+dk,4050,,Skibby
+dk,4060,,"Kirke Såby"
+dk,4070,,"Kirke Hyllinge"
+dk,4100,,Ringsted
+dk,4105,,"Ringsted Midtsjællands Postcenter"
+dk,4130,,"Viby Sjælland"
+dk,4140,,Borup
+dk,4160,,Herlufmagle
+dk,4171,,Glumsø
+dk,4173,,Fjenneslev
+dk,4174,,"Jystrup Midtsjælland"
+dk,4180,,Sorø
+dk,4190,,"Munke Bjergby"
+dk,4200,,Slagelse
+dk,4220,,Korsør
+dk,4230,,Skælskør
+dk,4241,,Vemmelev
+dk,4242,,Boeslunde
+dk,4243,,Rude
+dk,4250,,Fuglebjerg
+dk,4261,,Dalmose
+dk,4262,,Sandved
+dk,4270,,Høng
+dk,4281,,Gørlev
+dk,4291,,"Ruds Vedby"
+dk,4293,,Dianalund
+dk,4295,,Stenlille
+dk,4296,,Nyrup
+dk,4300,,Holbæk
+dk,4320,,Lejre
+dk,4330,,Hvalsø
+dk,4340,,Tølløse
+dk,4350,,Ugerløse
+dk,4360,,"Kirke Eskilstrup"
+dk,4370,,"Store Merløse"
+dk,4390,,Vipperød
+dk,4400,,Kalundborg
+dk,4420,,Regstrup
+dk,4440,,Mørkøv
+dk,4450,,Jyderup
+dk,4460,,Snertinge
+dk,4470,,Svebølle
+dk,4480,,"Store Fuglede"
+dk,4490,,"Jerslev Sjælland"
+dk,4500,,"Nykøbing Sjælland"
+dk,4520,,Svinninge
+dk,4532,,Gislinge
+dk,4534,,Hørve
+dk,4540,,Fårevejle
+dk,4550,,Asnæs
+dk,4560,,Vig
+dk,4571,,Grevinge
+dk,4572,,"Nørre Asmindrup"
+dk,4573,,Højby
+dk,4581,,Rørvig
+dk,4583,,"Sjællands Odde"
+dk,4591,,Føllenslev
+dk,4592,,Sejerø
+dk,4593,,Eskebjerg
+dk,4600,,Køge
+dk,4621,,Gadstrup
+dk,4622,,Havdrup
+dk,4623,,"Lille Skensved"
+dk,4632,,Bjæverskov
+dk,4640,,Fakse
+dk,4652,,Hårlev
+dk,4653,,Karise
+dk,4654,,"Fakse Ladeplads"
+dk,4660,,"Store Heddinge"
+dk,4671,,Strøby
+dk,4672,,Klippinge
+dk,4673,,"Rødvig Stevns"
+dk,4681,,Herfølge
+dk,4682,,Tureby
+dk,4683,,Rønnede
+dk,4684,,Holmegaard
+dk,4690,,Haslev
+dk,4700,,Næstved
+dk,4720,,Præstø
+dk,4733,,Tappernøje
+dk,4735,,Mern
+dk,4736,,Karrebæksminde
+dk,4750,,Lundby
+dk,4760,,Vordingborg
+dk,4771,,Kalvehave
+dk,4772,,Langebæk
+dk,4773,,Stensved
+dk,4780,,Stege
+dk,4791,,Borre
+dk,4792,,Askeby
+dk,4793,,"Bogø By"
+dk,4800,,"Nykøbing Falster"
+dk,4840,,"Nørre Alslev"
+dk,4850,,Stubbekøbing
+dk,4862,,Guldborg
+dk,4863,,Eskilstrup
+dk,4871,,Horbelev
+dk,4872,,Idestrup
+dk,4873,,Væggerløse
+dk,4874,,Gedser
+dk,4880,,Nysted
+dk,4891,,"Toreby Lolland"
+dk,4892,,Kettinge
+dk,4894,,"Øster Ulslev"
+dk,4895,,Errindlev
+dk,4900,,Nakskov
+dk,4912,,Harpelunde
+dk,4913,,Horslunde
+dk,4920,,Søllested
+dk,4930,,Maribo
+dk,4941,,Bandholm
+dk,4943,,"Torrig Lolland"
+dk,4944,,Fejø
+dk,4951,,Nørreballe
+dk,4952,,Stokkemarke
+dk,4953,,Vesterborg
+dk,4960,,Holeby
+dk,4970,,Rødby
+dk,4983,,Dannemare
+dk,4990,,Sakskøbing
+dk,5000,,"Odense C"
+dk,5090,,"Odense C Fyns Postcenter"
+dk,5200,,"Odense V"
+dk,5210,,"Odense NV"
+dk,5220,,"Odense SØ"
+dk,5230,,"Odense M"
+dk,5240,,"Odense NØ"
+dk,5250,,"Odense SV"
+dk,5260,,"Odense S"
+dk,5270,,"Odense N"
+dk,5290,,Marslev
+dk,5300,,Kerteminde
+dk,5320,,Agedrup
+dk,5330,,Munkebo
+dk,5350,,Rynkeby
+dk,5370,,Mesinge
+dk,5380,,Dalby
+dk,5390,,Martofte
+dk,5400,,Bogense
+dk,5450,,Otterup
+dk,5462,,Morud
+dk,5463,,Harndrup
+dk,5464,,"Brenderup Fyn"
+dk,5466,,Asperup
+dk,5471,,Søndersø
+dk,5474,,Veflinge
+dk,5485,,Skamby
+dk,5491,,Blommenslyst
+dk,5492,,Vissenbjerg
+dk,5500,,Middelfart
+dk,5540,,Ullerslev
+dk,5550,,Langeskov
+dk,5560,,Aarup
+dk,5580,,"Nørre Aaby"
+dk,5591,,Gelsted
+dk,5592,,Ejby
+dk,5600,,Faaborg
+dk,5610,,Assens
+dk,5620,,Glamsbjerg
+dk,5631,,Ebberup
+dk,5642,,Millinge
+dk,5672,,Broby
+dk,5683,,Haarby
+dk,5690,,Tommerup
+dk,5700,,Svendborg
+dk,5750,,Ringe
+dk,5762,,"Vester Skerninge"
+dk,5771,,Stenstrup
+dk,5772,,Kværndrup
+dk,5792,,Årslev
+dk,5800,,Nyborg
+dk,5853,,Ørbæk
+dk,5854,,Gislev
+dk,5856,,Ryslinge
+dk,5863,,"Ferritslev Fyn"
+dk,5871,,Frørup
+dk,5874,,Hesselager
+dk,5881,,"Skårup Fyn"
+dk,5882,,Vejstrup
+dk,5883,,Oure
+dk,5884,,Gudme
+dk,5892,,"Gudbjerg Sydfyn"
+dk,5900,,Rudkøbing
+dk,5932,,Humble
+dk,5935,,Bagenkop
+dk,5953,,Tranekær
+dk,5960,,Marstal
+dk,5970,,Ærøskøbing
+dk,5985,,"Søby Ærø"
+dk,6000,,Kolding
+dk,6040,,Egtved
+dk,6051,,Almind
+dk,6052,,Viuf
+dk,6064,,Jordrup
+dk,6070,,Christiansfeld
+dk,6091,,Bjert
+dk,6092,,"Sønder Stenderup"
+dk,6093,,Sjølund
+dk,6094,,Hejls
+dk,6100,,Haderslev
+dk,6200,,Aabenraa
+dk,6230,,Rødekro
+dk,6240,,Løgumkloster
+dk,6261,,Bredebro
+dk,6270,,Tønder
+dk,6280,,Højer
+dk,6300,,Gråsten
+dk,6310,,Broager
+dk,6320,,Egernsund
+dk,6330,,Padborg
+dk,6340,,Kruså
+dk,6360,,Tinglev
+dk,6372,,Bylderup-Bov
+dk,6392,,Bolderslev
+dk,6400,,Sønderborg
+dk,6430,,Nordborg
+dk,6440,,Augustenborg
+dk,6470,,Sydals
+dk,6500,,Vojens
+dk,6510,,Gram
+dk,6520,,Toftlund
+dk,6534,,Agerskov
+dk,6535,,"Branderup Jylland"
+dk,6541,,Bevtoft
+dk,6560,,Sommersted
+dk,6580,,Vamdrup
+dk,6600,,Vejen
+dk,6621,,Gesten
+dk,6622,,Bække
+dk,6623,,Vorbasse
+dk,6630,,Rødding
+dk,6640,,Lunderskov
+dk,6650,,Brørup
+dk,6660,,Lintrup
+dk,6670,,Holsted
+dk,6682,,Hovborg
+dk,6683,,Føvling
+dk,6690,,Gørding
+dk,6700,,Esbjerg
+dk,6705,,"Esbjerg Ø"
+dk,6710,,"Esbjerg V"
+dk,6715,,"Esbjerg N"
+dk,6720,,Fanø
+dk,6731,,Tjæreborg
+dk,6740,,Bramming
+dk,6752,,Glejbjerg
+dk,6753,,Agerbæk
+dk,6760,,Ribe
+dk,6771,,Gredstedbro
+dk,6780,,Skærbæk
+dk,6792,,Rømø
+dk,6800,,Varde
+dk,6818,,Årre
+dk,6823,,Ansager
+dk,6830,,"Nørre Nebel"
+dk,6840,,Oksbøl
+dk,6851,,"Janderup Vestjylland"
+dk,6852,,Billum
+dk,6853,,"Vejers Strand"
+dk,6854,,Henne
+dk,6855,,Outrup
+dk,6857,,Blåvand
+dk,6862,,Tistrup
+dk,6870,,Ølgod
+dk,6880,,Tarm
+dk,6893,,Hemmet
+dk,6900,,Skjern
+dk,6920,,Videbæk
+dk,6933,,Kibæk
+dk,6940,,"Lem St."
+dk,6950,,Ringkøbing
+dk,6960,,"Hvide Sande"
+dk,6971,,Spjald
+dk,6973,,Ørnhøj
+dk,6980,,Tim
+dk,6990,,Ulfborg
+dk,7000,,Fredericia
+dk,7007,,"Fredericia Sydjyllands Postcenter"
+dk,7080,,Børkop
+dk,7100,,Vejle
+dk,7120,,"Vejle Øst"
+dk,7130,,Juelsminde
+dk,7140,,Stouby
+dk,7150,,Barrit
+dk,7160,,Tørring
+dk,7171,,Uldum
+dk,7173,,Vonge
+dk,7182,,Bredsten
+dk,7183,,Randbøl
+dk,7184,,Vandel
+dk,7190,,Billund
+dk,7200,,Grindsted
+dk,7250,,Hejnsvig
+dk,7260,,"Sønder Omme"
+dk,7270,,Stakroge
+dk,7280,,"Sønder Felding"
+dk,7300,,Jelling
+dk,7321,,Gadbjerg
+dk,7323,,Give
+dk,7330,,Brande
+dk,7361,,Ejstrupholm
+dk,7362,,Hampen
+dk,7400,,Herning
+dk,7401,,"Herning Vestjyllands Postcenter"
+dk,7430,,Ikast
+dk,7441,,Bording
+dk,7442,,Engesvang
+dk,7451,,Sunds
+dk,7470,,"Karup Jylland"
+dk,7480,,Vildbjerg
+dk,7490,,Aulum
+dk,7500,,Holstebro
+dk,7540,,Haderup
+dk,7550,,Sørvad
+dk,7560,,Hjerm
+dk,7570,,Vemb
+dk,7600,,Struer
+dk,7620,,Lemvig
+dk,7650,,Bøvlingbjerg
+dk,7660,,Bækmarksbro
+dk,7673,,Harboøre
+dk,7680,,Thyborøn
+dk,7700,,Thisted
+dk,7730,,Hanstholm
+dk,7741,,Frøstrup
+dk,7742,,Vesløs
+dk,7752,,Snedsted
+dk,7755,,"Bedsted Thy"
+dk,7760,,"Hurup Thy"
+dk,7770,,Vestervig
+dk,7790,,Thyholm
+dk,7800,,Skive
+dk,7830,,Vinderup
+dk,7840,,Højslev
+dk,7850,,"Stoholm Jylland"
+dk,7860,,Spøttrup
+dk,7870,,Roslev
+dk,7884,,Fur
+dk,7900,,"Nykøbing Mors"
+dk,7950,,Erslev
+dk,7960,,Karby
+dk,7970,,"Redsted Mors"
+dk,7980,,Vils
+dk,7990,,"Øster Assels"
+dk,8000,,"Århus C"
+dk,8011,,"Århus C Østjyllands Postcenter"
+dk,8200,,"Århus N"
+dk,8210,,"Århus V"
+dk,8220,,Brabrand
+dk,8230,,Åbyhøj
+dk,8240,,Risskov
+dk,8245,,"Risskov Ø Østjyllands Postcenter"
+dk,8250,,Egå
+dk,8260,,"Viby Jylland"
+dk,8270,,Højbjerg
+dk,8300,,Odder
+dk,8305,,Samsø
+dk,8310,,"Tranbjerg Jylland"
+dk,8320,,Mårslet
+dk,8330,,Beder
+dk,8340,,Malling
+dk,8350,,Hundslund
+dk,8355,,Solbjerg
+dk,8361,,Hasselager
+dk,8362,,Hørning
+dk,8370,,Hadsten
+dk,8380,,Trige
+dk,8381,,Tilst
+dk,8382,,Hinnerup
+dk,8400,,Ebeltoft
+dk,8410,,Rønde
+dk,8420,,Knebel
+dk,8444,,Balle
+dk,8450,,Hammel
+dk,8462,,"Harlev Jylland"
+dk,8464,,Galten
+dk,8471,,Sabro
+dk,8472,,Sporup
+dk,8500,,Grenaa
+dk,8520,,Lystrup
+dk,8530,,Hjortshøj
+dk,8541,,Skødstrup
+dk,8543,,Hornslet
+dk,8544,,Mørke
+dk,8550,,Ryomgård
+dk,8560,,Kolind
+dk,8570,,Trustrup
+dk,8581,,Nimtofte
+dk,8585,,Glesborg
+dk,8586,,"Ørum Djurs"
+dk,8592,,Anholt
+dk,8600,,Silkeborg
+dk,8620,,Kjellerup
+dk,8632,,Lemming
+dk,8641,,Sorring
+dk,8643,,"Ans By"
+dk,8653,,Them
+dk,8654,,Bryrup
+dk,8660,,Skanderborg
+dk,8670,,Låsby
+dk,8680,,Ry
+dk,8700,,Horsens
+dk,8721,,Daugård
+dk,8722,,Hedensted
+dk,8723,,Løsning
+dk,8732,,Hovedgård
+dk,8740,,Brædstrup
+dk,8751,,Gedved
+dk,8752,,Østbirk
+dk,8762,,Flemming
+dk,8763,,"Rask Mølle"
+dk,8765,,Klovborg
+dk,8766,,"Nørre Snede"
+dk,8781,,Stenderup
+dk,8783,,Hornsyld
+dk,8800,,Viborg
+dk,8830,,Tjele
+dk,8831,,Løgstrup
+dk,8832,,Skals
+dk,8840,,Rødkærsbro
+dk,8850,,Bjerringbro
+dk,8860,,Ulstrup
+dk,8870,,Langå
+dk,8881,,Thorsø
+dk,8882,,Fårvang
+dk,8883,,Gjern
+dk,8900,,Randers
+dk,8950,,Ørsted
+dk,8961,,Allingåbro
+dk,8963,,Auning
+dk,8970,,Havndal
+dk,8981,,Spentrup
+dk,8983,,"Gjerlev Jylland"
+dk,8990,,Fårup
+dk,9000,,Aalborg
+dk,9020,,"Aalborg Nordjyllands Postcenter"
+dk,9200,,"Aalborg SV"
+dk,9210,,"Aalborg SØ"
+dk,9220,,"Aalborg Øst"
+dk,9230,,"Svenstrup Jylland"
+dk,9240,,Nibe
+dk,9260,,Gistrup
+dk,9270,,Klarup
+dk,9280,,Storvorde
+dk,9293,,Kongerslev
+dk,9300,,Sæby
+dk,9310,,Vodskov
+dk,9320,,Hjallerup
+dk,9330,,Dronninglund
+dk,9340,,Asaa
+dk,9352,,Dybvad
+dk,9362,,Gandrup
+dk,9370,,Hals
+dk,9380,,Vestbjerg
+dk,9381,,Sulsted
+dk,9382,,Tylstrup
+dk,9400,,Nørresundby
+dk,9430,,Vadum
+dk,9440,,Aabybro
+dk,9460,,Brovst
+dk,9480,,Løkken
+dk,9490,,Pandrup
+dk,9492,,Blokhus
+dk,9493,,Saltum
+dk,9500,,Hobro
+dk,9510,,Arden
+dk,9520,,Skørping
+dk,9530,,Støvring
+dk,9541,,Suldrup
+dk,9550,,Mariager
+dk,9560,,Hadsund
+dk,9574,,Bælum
+dk,9575,,Terndrup
+dk,9600,,Aars
+dk,9610,,Nørager
+dk,9620,,Aalestrup
+dk,9631,,Gedsted
+dk,9632,,Møldrup
+dk,9640,,Farsø
+dk,9670,,Løgstør
+dk,9681,,Ranum
+dk,9690,,Fjerritslev
+dk,9700,,Brønderslev
+dk,9740,,"Jerslev Jylland"
+dk,9750,,Østervrå
+dk,9760,,Vrå
+dk,9800,,Hjørring
+dk,9830,,Tårs
+dk,9850,,Hirtshals
+dk,9870,,Sindal
+dk,9881,,Bindslev
+dk,9900,,Frederikshavn
+dk,9940,,Læsø
+dk,9970,,Strandby
+dk,9981,,Jerup
+dk,9982,,Ålbæk
+dk,9990,,Skagen
