@@ -111,6 +111,32 @@ class tl_iso_products_dimensions extends Controller
 			{
 				throw new Exception(sprintf($GLOBALS['ISO_LANG']['ERR']['dimensionMaxWidth'], $objProduct->dimensions_max[0]));
 			}
+			
+			// Area size
+			if ($objProduct->area_min > 0 || $objProduct->area_max > 0)
+			{
+				$this->import('Database');
+				$this->loadLanguageFile('tl_product_dimensions');
+				
+				$objGroup = $this->Database->execute("SELECT * FROM tl_product_dimensions WHERE id=" . (int)$objProduct->dimensions);
+
+				if ($objGroup->numRows)
+				{
+					$arrOptions = $objProduct->getOptions(true);
+					$fltArea = ($this->Input->post('dimension_x') * $this->Input->post('dimension_y')) * $objProduct->quantity_requested;
+					
+					if ($objProduct->area_min > $fltArea)
+					{
+						$strArea = ($objProduct->area_min / $objGroup->multiply_per) . ' ' . $GLOBALS['TL_LANG']['tl_product_dimensions'][$objGroup->multiply_unit];
+						throw new Exception(sprintf($GLOBALS['ISO_LANG']['ERR']['areaMin'], $strArea));
+					}
+					elseif ($objProduct->area_max > 0 && $objProduct->area_max < $fltArea)
+					{
+						$strArea = ($objProduct->area_max / $objGroup->multiply_per) . ' ' . $GLOBALS['TL_LANG']['tl_product_dimensions'][$objGroup->multiply_unit];
+						throw new Exception(sprintf($GLOBALS['ISO_LANG']['ERR']['areaMax'], $strArea));
+					}
+				}
+			}
 		}
 
 		return $varValue;

@@ -39,4 +39,6 @@ $GLOBALS['ISO_LANG']['ERR']['dimensionMinWidth']	= 'Die minimale Breite beträgt
 $GLOBALS['ISO_LANG']['ERR']['dimensionMaxWidth']	= 'Die maximale Breite beträgt %s';
 $GLOBALS['ISO_LANG']['ERR']['dimensionMinHeight']	= 'Die minimale Höhe beträgt %s';
 $GLOBALS['ISO_LANG']['ERR']['dimensionMaxHeight']	= 'Die maximale Höhe beträgt %s';
+$GLOBALS['ISO_LANG']['ERR']['areaMin']				= 'Die minimale Fläche beträgt %s';
+$GLOBALS['ISO_LANG']['ERR']['areaMax']				= 'Die maximale Fläche beträgt %s';
 
