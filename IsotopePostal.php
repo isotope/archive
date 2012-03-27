@@ -27,7 +27,7 @@
  */
 
 
-class IsotopeCheckout extends Frontend
+class IsotopePostal extends Frontend
 {
 	
 	/**

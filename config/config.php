@@ -43,11 +43,11 @@ array_insert($GLOBALS['ISO_MOD']['config'], 1, array
 /**
  * Checkout steps
  */
-$GLOBALS['ISO_CHECKOUT_STEPS']['address'][] = array('IsotopeCheckout', 'autocompleteCheckoutAddresses');
+$GLOBALS['ISO_CHECKOUT_STEPS']['address'][] = array('IsotopePostal', 'autocompleteCheckoutAddresses');
 
 
 /**
  * Ajax requests
  */
-$GLOBALS['TL_HOOKS']['dispatchAjax'][] = array('IsotopeCheckout', 'findCity');
+$GLOBALS['TL_HOOKS']['dispatchAjax'][] = array('IsotopePostal', 'findCity');
 
