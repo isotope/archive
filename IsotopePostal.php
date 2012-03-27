@@ -48,6 +48,23 @@ window.addEvent('domready', function() { IsotopePostal.checkoutAddresses() });
 	}
 	
 	
+	/**
+	 * Inject javascript to autocomplete registration and personal data.
+	 * @link http://www.contao.org/callbacks.html#onload_callback
+	 */
+	public function autocompleteMemberData()
+	{
+		if (TL_MODE == 'FE')
+		{
+			$GLOBALS['TL_MOOTOOLS'][] = "
+<script src=\"system/modules/isotope_postal/html/IsotopePostal.js\"></script>
+<script>
+window.addEvent('domready', function() { IsotopePostal.memberData() });
+</script>";
+		}
+	}
+	
+	
 	public function findCity()
 	{
 		if ($this->Input->get('action') != 'isotope_postal')

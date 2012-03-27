@@ -10,32 +10,49 @@ var IsotopePostal = {
 			
 			if (country && postal && city)
 			{
-				var timer,
-					xhr = new Request.JSON(
-					{
-						url: 'ajax.php?action=isotope_postal',
-						chain: 'cancel',
-						onRequest: function()
-						{
-							city.setStyle('background', 'url(\'system/modules/isotope_postal/html/loading.gif\') right center no-repeat');
-						},
-						onComplete: function(result, xml)
-						{
-							city.setStyle('background', 'none');
-							city.set('value', result.content.city || '');
-						}
-					});
-				
-				postal.addEvent('keyup', function()
-				{
-					clearTimeout(timer);
-					
-					timer = setTimeout( function()
-					{
-						xhr.get(('country=' + country.value + '&postal=' + postal.value));
-					}, 300);
-				});
+				IsotopePostal.enable(country, postal, city);
 			}
+		});
+	},
+	
+	memberData: function()
+	{
+		var country = document.id('ctrl_country'),
+			postal = document.id('ctrl_postal'),
+			city = document.id('ctrl_city');
+		
+		if (country && postal && city)
+		{
+			IsotopePostal.enable(country, postal, city);
+		}
+	},
+	
+	enable: function(country, postal, city)
+	{
+		var timer,
+			xhr = new Request.JSON(
+			{
+				url: 'ajax.php?action=isotope_postal',
+				chain: 'cancel',
+				onRequest: function()
+				{
+					city.setStyle('background', 'url(\'system/modules/isotope_postal/html/loading.gif\') right center no-repeat');
+				},
+				onComplete: function(result, xml)
+				{
+					city.setStyle('background', 'none');
+					city.set('value', result.content.city || '');
+				}
+			});
+		
+		postal.addEvent('keyup', function()
+		{
+			clearTimeout(timer);
+			
+			timer = setTimeout( function()
+			{
+				xhr.get(('country=' + country.value + '&postal=' + postal.value));
+			}, 300);
 		});
 	}
 }
