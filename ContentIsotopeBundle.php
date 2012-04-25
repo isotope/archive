@@ -40,6 +40,13 @@ class ContentIsotopeBundle extends ContentIsotope
 
 	public function generate()
 	{
+		if (TL_MODE == 'BE')
+		{
+			$objTemplate = new BackendTemplate('be_wildcard');
+			$objTemplate->wildcard = '### ISOTOPE BUNDLE ###';
+			return $objTemplate->parse();
+		}
+		
 		$this->iso_bundle = deserialize($this->iso_bundle);
 
 		if (!is_array($this->iso_bundle) || !count($this->iso_bundle))
