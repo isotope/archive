@@ -31,7 +31,7 @@
 /**
  * Palettes
  */
-$GLOBALS['TL_DCA']['tl_page']['palettes']['regular'] = str_replace(';{publish_legend}', ';{isotope_legend:hide},epay_relay;{publish_legend}', $GLOBALS['TL_DCA']['tl_page']['palettes']['regular']);
+$GLOBALS['TL_DCA']['tl_page']['palettes']['regular'] = str_replace('iso_setReaderJumpTo', 'iso_setReaderJumpTo,epay_relay', $GLOBALS['TL_DCA']['tl_page']['palettes']['regular']);
 
 
 /**
