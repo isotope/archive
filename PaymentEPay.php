@@ -43,8 +43,6 @@ class PaymentEPay extends IsotopePayment
 				if (!array_key_exists($this->Isotope->Config->currency, $this->arrCurrencies))
 					return false;
 
-				return parent::__get($strKey);
-
 			default:
 				return parent::__get($strKey);
 		}
@@ -71,22 +69,26 @@ class PaymentEPay extends IsotopePayment
 	 */
 	public function processPayment()
 	{
-		$objOrder = $this->Database->prepare("SELECT * FROM tl_iso_orders WHERE cart_id=?")->limit(1)->executeUncached($this->Isotope->Cart->id);
-		$intTotal = $this->Isotope->Cart->grandTotal * 100;
-
-		// Check basic order data
-		if ($this->Input->get('orderid') == $objOrder->id && $this->Input->get('cur') == $this->arrCurrencies[$this->Isotope->Config->currency] && $this->Input->get('amount') == $intTotal)
+		$objOrder = new IsotopeOrder();
+		
+		if ($objOrder->findBy('cart_id', $this->Isotope->Cart->id))
 		{
-			// Validate MD5 secret key
-			if (md5($intTotal . $objOrder->id . $this->Input->get('tid') . $this->epay_secretkey) == $this->Input->get('eKey'))
+			$intTotal = $this->Isotope->Cart->grandTotal * 100;
+	
+			// Check basic order data
+			if ($this->Input->get('orderid') == $objOrder->id && $this->Input->get('cur') == $this->arrCurrencies[$this->Isotope->Config->currency] && $this->Input->get('amount') == (string) $intTotal)
 			{
-				return true;
+				// Validate MD5 secret key
+				if (md5($intTotal . $objOrder->id . $this->Input->get('tid') . $this->epay_secretkey) == $this->Input->get('eKey'))
+				{
+					return true;
+				}
 			}
 		}
+		
+		$this->log('Invalid ePay payment data received.', __METHOD__, TL_ERROR);
 
-		global $objPage;
-		$this->log('Invalid payment data received.', 'PaymentEPay processPayment()', TL_ERROR);
-		$this->redirect($this->generateFrontendUrl($objPage->row(), '/step/failed'));
+		return false;
 	}
 
 

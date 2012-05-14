@@ -32,33 +32,6 @@ class PaymentEPayForm extends PaymentEPay
 {
 
 	/**
-	 * processPayment function.
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function processPayment()
-	{
-		$objOrder = $this->Database->prepare("SELECT * FROM tl_iso_orders WHERE cart_id=?")->limit(1)->executeUncached($this->Isotope->Cart->id);
-		$intTotal = $this->Isotope->Cart->grandTotal * 100;
-
-		// Check basic order data
-		if ($this->Input->get('orderid') == $objOrder->id && $this->Input->get('cur') == $this->arrCurrencies[$this->Isotope->Config->currency] && $this->Input->get('amount') == (string)$intTotal)
-		{
-			// Validate MD5 secret key
-			if (md5($intTotal . $objOrder->id . $this->Input->get('tid') . $this->epay_secretkey) == $this->Input->get('eKey'))
-			{
-				return true;
-			}
-		}
-
-		global $objPage;
-		$this->log('Invalid payment data received.', __METHOD__, TL_ERROR);
-		$this->redirect($this->generateFrontendUrl($objPage->row(), '/step/process'));
-	}
-
-
-	/**
 	 * Return the payment form.
 	 *
 	 * @access public
