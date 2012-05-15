@@ -8,8 +8,6 @@
 -- **********************************************************
 
 
--- --------------------------------------------------------
-
 --
 -- Table `tl_iso_products`
 --
@@ -20,3 +18,4 @@ CREATE TABLE `tl_iso_products` (
   `message` text NULL,
   `shipto_address` text NULL,
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
