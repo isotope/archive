@@ -14,3 +14,4 @@
 CREATE TABLE `tl_module` (
   `showProduct` char(1) NOT NULL default '',
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+

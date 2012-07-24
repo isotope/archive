@@ -21,11 +21,9 @@
  * Software Foundation website at <http://www.gnu.org/licenses/>.
  *
  * PHP version 5
- * @copyright  Leo Feyer 2005-2010
- * @author     Leo Feyer <http://www.contao.org>
- * @package    Frontend
- * @license    LGPL
- * @filesource
+ * @copyright  Isotope eCommerce Workgroup 2010-2012
+ * @author     Blair Winans <blair@winanscreative.com>
+ * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
 
@@ -33,11 +31,7 @@
  * Front end modules
  */
 array_insert($GLOBALS['FE_MOD']['navigationMenu'], 10, array
-	(
-		'isotope_breadcrumb'     => 'ModuleIsotopeBreadcrumb',
-	)
-);
+(
+	'isotope_breadcrumb'     => 'ModuleIsotopeBreadcrumb',
+));
 
-
-
-?>

@@ -21,22 +21,13 @@
  * Software Foundation website at <http://www.gnu.org/licenses/>.
  *
  * PHP version 5
- * @copyright  Leo Feyer 2005-2010
- * @author     Leo Feyer <http://www.contao.org>
- * @package    Frontend
- * @license    LGPL
- * @filesource
- */
-
-
-/**
- * Class ModuleIsotopeBreadcrumb
- *
- * Front end module "isotope_breadcrumb".
- * @copyright  Winans Creative 2010
+ * @copyright  Isotope eCommerce Workgroup 2010-2012
  * @author     Blair Winans <blair@winanscreative.com>
- * @package    Isotope
+ * @author     Andreas Schempp <andreas@schempp.ch>
+ * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
+
+
 class ModuleIsotopeBreadcrumb extends ModuleBreadcrumb
 {
 
@@ -320,4 +311,3 @@ class ModuleIsotopeBreadcrumb extends ModuleBreadcrumb
 
 }
 
-?>
