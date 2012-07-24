@@ -142,43 +142,43 @@ class ModuleIsotopeBreadcrumb extends ModuleBreadcrumb
 			);
 		}
 
-			// Active product
-			$items[] = array
-			(
-				'isRoot' => false,
-				'isActive' => $this->showProduct ? false : true,
-				'href' => $this->generateFrontendUrl($pages[0]),
-				'title' => (strlen($pages[0]['pageTitle']) ? specialchars($pages[0]['pageTitle']) : specialchars($pages[0]['title'])),
-				'link' => $pages[0]['title']
-			);
+		// Active product
+		$items[] = array
+		(
+			'isRoot' => false,
+			'isActive' => $this->showProduct ? false : true,
+			'href' => $this->generateFrontendUrl($pages[0]),
+			'title' => (strlen($pages[0]['pageTitle']) ? specialchars($pages[0]['pageTitle']) : specialchars($pages[0]['title'])),
+			'link' => $pages[0]['title']
+		);
 
 
-			if($this->showProduct)
+		if($this->showProduct)
+		{
+			$strProductAlias = $this->Input->get('product');
+
+			if (is_null($strProductAlias))
 			{
-				$strProductAlias = $this->Input->get('product');
-
-				if (is_null($strProductAlias))
-				{
-					//@todo: Make this editable in a language file
-					$strProductAlias = 'Product';
-				}
-
-				// Get product title
-				$objProduct= $this->Database->prepare("SELECT name FROM tl_iso_products WHERE id=? OR alias=?")
-											 ->limit(1)
-											 ->execute((is_numeric($strProductAlias) ? $strProductAlias : 0), $strProductAlias);
-
-				if ($objProduct->numRows)
-				{
-					$items[] = array
-					(
-						'isRoot' => false,
-						'isActive' => true,
-						'title' => specialchars($objProduct->name),
-						'link' => $objProduct->name
-					);
-				}
+				//@todo: Make this editable in a language file
+				$strProductAlias = 'Product';
 			}
+
+			// Get product title
+			$objProduct= $this->Database->prepare("SELECT name FROM tl_iso_products WHERE id=? OR alias=?")
+										 ->limit(1)
+										 ->execute((is_numeric($strProductAlias) ? $strProductAlias : 0), $strProductAlias);
+
+			if ($objProduct->numRows)
+			{
+				$items[] = array
+				(
+					'isRoot' => false,
+					'isActive' => true,
+					'title' => specialchars($objProduct->name),
+					'link' => $objProduct->name
+				);
+			}
+		}
 
 		$this->Template->items = $items;
 	}
@@ -227,7 +227,7 @@ class ModuleIsotopeBreadcrumb extends ModuleBreadcrumb
 	{
 		global $objPage;
 
-		$objProduct = $this->getProductByAlias($this->Input->get('product'));
+		$objProduct = IsotopeFrontend::getProductByAlias($this->Input->get('product'));
 		$arrTrails = $this->getProductPageTrails($objProduct);
 		$intRefId = $this->getReferringPageID();
 		$arrPages = array();
@@ -251,16 +251,18 @@ class ModuleIsotopeBreadcrumb extends ModuleBreadcrumb
 		return $arrPages;
 	}
 
+
 	protected function getProductPageTrails($objProduct)
 	{
-
 		$arrCats = deserialize($objProduct->pages);
 
 		$arrReturn = array();
 
-		//Add the referring page just in case there are no cats
-		if(!count($arrCats))
-			$arrCats=array($this->getReferringPageID());
+		// Add the referring page just in case there are no cats
+		if (!is_array($arrCats) || empty($arrCats))
+		{
+			$arrCats = array($this->getReferringPageID());
+		}
 
 		foreach($arrCats as $cat)
 		{
@@ -294,20 +296,5 @@ class ModuleIsotopeBreadcrumb extends ModuleBreadcrumb
 
 		return $arrReturn;
 	}
-
-	/**
-	 * Shortcut for a single product's pages by alias
-	 */
-	protected function getProductByAlias($strAlias, $blnCheckAvailability=true)
-	{
-		// Get product pages
-		$objProduct= $this->Database->prepare("SELECT pages FROM tl_iso_products WHERE id=? OR alias=?")
-									 ->limit(1)
-									 ->execute((is_numeric($strAlias) ? $strAlias : 0), $strAlias);
-
-		return $objProduct;
-	}
-
-
 }
 
