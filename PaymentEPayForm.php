@@ -75,7 +75,7 @@ class PaymentEPayForm extends PaymentEPay
 
 		$objTemplate->merchantnumber = $this->epay_merchantnumber;
 		$objTemplate->orderid = $objOrder->id;
-		$objTemplate->description = $this->Isotope->generateAddressString($this->Isotope->Cart->billingAddress, $this->Isotope->Config->billing_fields);
+		$objTemplate->description = $this->Isotope->Cart->billingAddress->generateHtml($this->Isotope->Config->billing_fields);
 		$objTemplate->currency = $this->arrCurrencies[$this->Isotope->Config->currency];
 		$objTemplate->amount = $intTotal;
 		$objTemplate->accepturl = $this->generateFrontendUrl($objPage->row(), '/step/complete');
