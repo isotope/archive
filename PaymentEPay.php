@@ -70,11 +70,11 @@ class PaymentEPay extends IsotopePayment
 	public function processPayment()
 	{
 		$objOrder = new IsotopeOrder();
-		
+
 		if ($objOrder->findBy('cart_id', $this->Isotope->Cart->id))
 		{
 			$intTotal = $this->Isotope->Cart->grandTotal * 100;
-	
+
 			// Check basic order data
 			if ($this->Input->get('orderid') == $objOrder->id && $this->Input->get('cur') == $this->arrCurrencies[$this->Isotope->Config->currency] && $this->Input->get('amount') == (string) $intTotal)
 			{
@@ -85,7 +85,7 @@ class PaymentEPay extends IsotopePayment
 				}
 			}
 		}
-		
+
 		$this->log('Invalid ePay payment data received.', __METHOD__, TL_ERROR);
 
 		return false;
@@ -113,7 +113,7 @@ class PaymentEPay extends IsotopePayment
 <input type="hidden" name="language" value="' . (array_key_exists($GLOBALS['TL_LANGUAGE'], $this->arrLanguages) ? $this->arrLanguages[$GLOBALS['TL_LANGUAGE']] : 2) . '">
 <input type="hidden" name="merchantnumber" value="' . $this->epay_merchantnumber . '">
 <input type="hidden" name="orderid" value="' . $objOrder->id . '">
-<input type="hidden" name="description" value="' . $this->Isotope->generateAddressString($this->Isotope->Cart->billingAddress, $this->Isotope->Config->billing_fields) . '">
+<input type="hidden" name="description" value="' . $this->Isotope->Cart->billingAddress->generateText() . '">
 <input type="hidden" name="currency" value="' . $this->arrCurrencies[$this->Isotope->Config->currency] . '">
 <input type="hidden" name="amount" value="' . $intTotal . '">
 
