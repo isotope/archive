@@ -1,8 +1,8 @@
-<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
+<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2011 Leo Feyer
+ * Copyright (C) 2005-2010 Leo Feyer
  *
  * Formerly known as TYPOlight Open Source CMS.
  *
@@ -21,23 +21,18 @@
  * Software Foundation website at <http://www.gnu.org/licenses/>.
  *
  * PHP version 5
- * @copyright  Isotope eCommerce Workgroup 2009-2011
- * @author     Andreas Schempp <andreas@schempp.ch>
+ * @copyright  2009-2011 Isotope eCommerce Workgroup
+ * @author     Andreas Burg <ab@andreasburg.de>
+ * @author     Nikolas Runde <info@nrmedia.de>
+ * @author     Patrick Grob <grob@a-sign.ch>
+ * @author     Frank Berger <berger@mediastuff.de>
+ * @author     Angelica Schempp <aschempp@gmx.net>
+ * @author     Oliver Hoff <oliver@hoff.com>
+ * @author     Stefan Preiss <stefan@preiss-at-work.de>
+ * @author     Nina Gerling <gerling@ena-webstudio.de>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  * @version    $Id$
  */
 
-
-/**
- * Payment modules
- */
-$GLOBALS['ISO_PAY']['epay_window']			= 'PaymentEPay';
-$GLOBALS['ISO_PAY']['epay_form']			= 'PaymentEPayForm';
-
-
-/**
- * Hooks
- */
-$GLOBALS['TL_HOOKS']['generatePage'][] = array('EpayRelay', 'overwriteBase');
-$GLOBALS['TL_HOOKS']['generateFrontendUrl'][] = array('EpayRelay', 'rewriteUrls');
+$GLOBALS['TL_LANG']['MOD']['isotope_epayform'][0] = 'Isotope eCommerce: ePay Formular mit Weiterleitungsscript-Support';
 

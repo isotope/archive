@@ -1,8 +1,10 @@
-<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
+<?php if (!defined('TL_ROOT')) die('You cannot access this file directly!');
 
 /**
- * TYPOlight Open Source CMS
- * Copyright (C) 2005-2010 Leo Feyer
+ * Contao Open Source CMS
+ * Copyright (C) 2005-2011 Leo Feyer
+ *
+ * Formerly known as TYPOlight Open Source CMS.
  *
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,18 +21,13 @@
  * Software Foundation website at <http://www.gnu.org/licenses/>.
  *
  * PHP version 5
- * @copyright  Winans Creative 2009, Intelligent Spark 2010, iserv.ch GmbH 2010
- * @author     Fred Bliss <fred.bliss@intelligentspark.com>
+ * @copyright  Isotope eCommerce Workgroup 2009-2011
  * @author     Andreas Schempp <andreas@schempp.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
+ * @version    $Id$
  */
 
 
-/**
- * Handle Paypal payments
- *
- * @extends Payment
- */
 class PaymentEPay extends IsotopePayment
 {
 
@@ -45,8 +42,6 @@ class PaymentEPay extends IsotopePayment
 			case 'available':
 				if (!array_key_exists($this->Isotope->Config->currency, $this->arrCurrencies))
 					return false;
-
-				return parent::__get($strKey);
 
 			default:
 				return parent::__get($strKey);
@@ -74,22 +69,26 @@ class PaymentEPay extends IsotopePayment
 	 */
 	public function processPayment()
 	{
-		$objOrder = $this->Database->prepare("SELECT * FROM tl_iso_orders WHERE cart_id=?")->limit(1)->executeUncached($this->Isotope->Cart->id);
-		$intTotal = $this->Isotope->Cart->grandTotal * 100;
-
-		// Check basic order data
-		if ($this->Input->get('orderid') == $objOrder->id && $this->Input->get('cur') == $this->arrCurrencies[$this->Isotope->Config->currency] && $this->Input->get('amount') == $intTotal)
+		$objOrder = new IsotopeOrder();
+		
+		if ($objOrder->findBy('cart_id', $this->Isotope->Cart->id))
 		{
-			// Validate MD5 secret key
-			if (md5($intTotal . $objOrder->id . $this->Input->get('tid') . $this->epay_secretkey) == $this->Input->get('eKey'))
+			$intTotal = $this->Isotope->Cart->grandTotal * 100;
+	
+			// Check basic order data
+			if ($this->Input->get('orderid') == $objOrder->id && $this->Input->get('cur') == $this->arrCurrencies[$this->Isotope->Config->currency] && $this->Input->get('amount') == (string) $intTotal)
 			{
-				return true;
+				// Validate MD5 secret key
+				if (md5($intTotal . $objOrder->id . $this->Input->get('tid') . $this->epay_secretkey) == $this->Input->get('eKey'))
+				{
+					return true;
+				}
 			}
 		}
+		
+		$this->log('Invalid ePay payment data received.', __METHOD__, TL_ERROR);
 
-		global $objPage;
-		$this->log('Invalid payment data received.', 'PaymentEPay processPayment()', TL_ERROR);
-		$this->redirect($this->generateFrontendUrl($objPage->row(), '/step/failed'));
+		return false;
 	}
 
 

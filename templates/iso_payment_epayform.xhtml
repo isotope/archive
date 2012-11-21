@@ -23,21 +23,20 @@
 	</tr>
 </table>
 
+<input type="hidden" name="merchantnumber" value="<?php echo $this->merchantnumber; ?>" />
+<input type="hidden" name="orderid" value="<?php echo $this->orderid; ?>" />
+<input type="hidden" name="description" value="<?php echo $this->description; ?>" />
+<input type="hidden" name="currency" value="<?php echo $this->currency; ?>" />
+<input type="hidden" name="amount" value="<?php echo $this->amount; ?>" />
 
-<input type="hidden" name="merchantnumber" value="<?php echo $this->merchantnumber; ?>">
-<input type="hidden" name="orderid" value="<?php echo $this->orderid; ?>">
-<input type="hidden" name="description" value="<?php echo $this->description; ?>">
-<input type="hidden" name="currency" value="<?php echo $this->currency; ?>">
-<input type="hidden" name="amount" value="<?php echo $this->amount; ?>">
+<input type="hidden" name="accepturl" value="<?php echo $this->accepturl; ?>" />
+<input type="hidden" name="declineurl" value="<?php echo $this->declineurl; ?>" />
 
-<input type="hidden" name="accepturl" value="<?php echo $this->accepturl; ?>">
-<input type="hidden" name="declineurl" value="<?php echo $this->declineurl; ?>">
-
-<input type="hidden" name="language" value="2">
-<input type="hidden" name="instantcapture" value="<?php echo $this->instantcapture; ?>">
-<input type="hidden" name="md5key" value="<?php echo $this->md5key; ?>">
-<input type="hidden" name="cardtype" value="0">
-<input type="hidden" name="use3D" value="1">
+<input type="hidden" name="language" value="2" />
+<input type="hidden" name="instantcapture" value="<?php echo $this->instantcapture; ?>" />
+<input type="hidden" name="md5key" value="<?php echo $this->md5key; ?>" />
+<input type="hidden" name="cardtype" value="0" />
+<input type="hidden" name="use3D" value="1" />
 
 <div class="submit_container">
 <input type="submit" class="submit button" value="<?php echo $this->slabel; ?>" />

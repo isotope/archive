@@ -21,7 +21,7 @@
  * Software Foundation website at <http://www.gnu.org/licenses/>.
  *
  * PHP version 5
- * @copyright  Andreas Schempp 2011
+ * @copyright  Isotope eCommerce Workgroup 2009-2011
  * @author     Andreas Schempp <andreas@schempp.ch>
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  * @version    $Id$
@@ -31,7 +31,7 @@
 /**
  * Palettes
  */
-$GLOBALS['TL_DCA']['tl_page']['palettes']['regular'] = str_replace(';{publish_legend}', ';{isotope_legend:hide},epay_relay;{publish_legend}', $GLOBALS['TL_DCA']['tl_page']['palettes']['regular']);
+$GLOBALS['TL_DCA']['tl_page']['palettes']['regular'] = str_replace('iso_setReaderJumpTo', 'iso_setReaderJumpTo,epay_relay', $GLOBALS['TL_DCA']['tl_page']['palettes']['regular']);
 
 
 /**
