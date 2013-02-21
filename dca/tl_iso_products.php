@@ -69,26 +69,3 @@ $GLOBALS['TL_DCA']['tl_iso_products']['fields']['shipto_address'] = array
 	'attributes'	=> array('legend'=>'options_legend', 'customer_defined'=>true)
 );
 
-
-class tl_iso_products_flexprice extends Controller
-{
-	public function verifyValue($strRegexp, $varValue, Widget $objWidget)
-	{
-		if (TL_MODE == 'FE' && $objProduct instanceof FlexPriceProduct)
-		{
-			if ($strRegexp == 'valueGreaterThanZero')
-			{
-				if (!(float)$varValue>0)
-				{
-					$objWidget->addError('Value must be greater than zero.');
-				}
-
-				return true;
-			}
-
-			return false;
-		}
-	}
-
-}
-

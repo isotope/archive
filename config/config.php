@@ -52,4 +52,3 @@ foreach($GLOBALS['ISO_PRODUCT'] as $k=>$v)
 	}
 }
 
-$GLOBALS['TL_HOOKS']['addCustomRegexp'][] = array('tl_iso_products_flexprice', 'verifyValue');
