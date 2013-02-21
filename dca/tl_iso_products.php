@@ -53,19 +53,3 @@ $GLOBALS['TL_DCA']['tl_iso_products']['fields']['pMax'] = array
 	'attributes'			=> array('legend'=>'general_legend')
 );
 
-$GLOBALS['TL_DCA']['tl_iso_products']['fields']['message'] = array
-(
-	'label'			=> &$GLOBALS['TL_LANG']['tl_iso_products']['message'],
-	'inputType'		=> 'textarea',
-	'eval'			=> array('rgxp'=>'extnd'),
-	'attributes'	=> array('legend'=>'options_legend', 'customer_defined'=>true)
-);
-
-$GLOBALS['TL_DCA']['tl_iso_products']['fields']['shipto_address'] = array
-(
-	'label'			=> &$GLOBALS['TL_LANG']['tl_iso_products']['shipto_address'],
-	'inputType'		=> 'textarea',
-	'eval'			=> array('rgxp'=>'extnd'),
-	'attributes'	=> array('legend'=>'options_legend', 'customer_defined'=>true)
-);
-

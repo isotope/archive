@@ -33,6 +33,4 @@
 $GLOBALS['TL_LANG']['tl_iso_products']['amount']			= array('Amount','');
 $GLOBALS['TL_LANG']['tl_iso_products']['pMin']				= array('Minimum amount','');
 $GLOBALS['TL_LANG']['tl_iso_products']['pMax']				= array('Maximum amount','');
-$GLOBALS['TL_LANG']['tl_iso_products']['message']			= array('Message','If you would like to include a message, enter it here.');
-$GLOBALS['TL_LANG']['tl_iso_products']['shipto_address'] 	= array('Ship To Address','If you would like to ship this gift certificate somewhere, just provide an address!');
 
