@@ -69,24 +69,23 @@ class FlexPriceProduct extends IsotopeProduct
 				$fltMin = (float)($this->arrData['pMin'] ? $this->arrData['pMin'] : 10);
 				$fltMax = (float)($this->arrData['pMax'] ? $this->arrData['pMax'] : NULL);
 
-				if($fltPrice>=$fltMin)
-				{
-					if($fltMax && $fltPrice>$fltMax)
-						$fltPrice = $fltMax;
-
-					$this->arrData['price'] = $this->Isotope->calculatePrice($fltPrice, $this, 'price', $this->arrData['tax_class']);
-
-				}
-				else
+				if ($fltPrice < $fltMin)
 				{
 					unset($this->arrOptions['amount']);
 					return $this->Isotope->calculatePrice($fltMin, $this, 'price', $this->arrData['tax_class']);
 				}
-				 //we don't want this to show in options list.
+
+				if ($fltMax && $fltPrice > $fltMax)
+				{
+					$fltPrice = $fltMax;
+				}
+
+				// we don't want this to show in options list.
 				unset($this->arrOptions['amount']);
 
-				return $this->arrData['price'];
+                $this->arrData['price'] = $this->Isotope->calculatePrice($fltPrice, $this, 'price', $this->arrData['tax_class']);
 
+				return $this->arrData['price'];
 				break;
 		}
 
