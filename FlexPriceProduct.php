@@ -34,10 +34,6 @@ class FlexPriceProduct extends IsotopeProduct
 		//required for frontend widgets to behave, presumably.
 		$GLOBALS['TL_DCA']['tl_iso_products']['fields']['amount']['eval']['mandatory']  = true;
 
-		/* Could allow variants that would have "enter your own value" functionality*/
-		//if($arrData['price']>0)
-			//$GLOBALS['TL_DCA']['tl_iso_products']['fields']['amount']['attributes']['customer_defined'] = false;
-
 		$GLOBALS['TL_DCA']['tl_iso_products']['fields']['message'] = array
 		(
 			'label'			=> &$GLOBALS['TL_LANG']['tl_iso_products']['message'],
@@ -96,6 +92,4 @@ class FlexPriceProduct extends IsotopeProduct
 
 		return parent::__get($strKey);
 	}
-
-
 }

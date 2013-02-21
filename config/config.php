@@ -43,7 +43,7 @@ $arrEnabledFields = array
 
 foreach($GLOBALS['ISO_PRODUCT'] as $k=>$v)
 {
-	if($k=='flexprice')
+	if ($k == 'flexprice')
 		continue;
 
 	foreach($arrEnabledFields as $field)
